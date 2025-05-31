@@ -1,7 +1,11 @@
 using UnityEngine;
+using UnityEngine.SceneManagement; // <-- ADICIONADO: Necessário para SceneManager e PlayerPrefs
 
 public class NewMonoBehaviourScript : MonoBehaviour
 {
+    // --- NOVO: Para garantir que só exista uma personagem por cena (evita duplicatas se você voltar para uma cena) ---
+    public static NewMonoBehaviourScript Instance; 
+
     private Rigidbody2D _playerRigidbody2D;
     private Animator _playerAnimator;
     public float _playerSpeed;
@@ -11,11 +15,42 @@ public class NewMonoBehaviourScript : MonoBehaviour
     private bool _isFacingRight = true;
     private int _lastVerticalDirection = 0; // 0 = neutro/nenhum, 1 = cima, -1 = baixo
 
-    void Start()
+    // --- NOVO MÉTODO: Chamado antes de Start() ---
+    void Awake()
     {
+        // Lógica de Singleton para garantir que haja apenas uma instância do player
+        if (Instance == null)
+        {
+            Instance = this; // Define esta instância como a única
+            DontDestroyOnLoad(gameObject); // Faz com que o GameObject da personagem não seja destruído ao carregar novas cenas
+        }
+        else // Se já existe uma instância (ex: ao voltar para uma cena que já tem um player), destrua esta nova.
+        {
+            Destroy(gameObject); 
+            return; // Sai do método para evitar que o código de Start() seja executado nesta duplicata.
+        }
+
+        // É uma boa prática mover os GetComponent para Awake() quando se usa DontDestroyOnLoad
+        // para garantir que as referências estejam prontas antes de qualquer Start() ou Update()
         _playerRigidbody2D = GetComponent<Rigidbody2D>();
         _playerAnimator = GetComponent<Animator>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
+
+        // Boa prática: Verificar se os componentes foram encontrados (para depuração)
+        if (_playerRigidbody2D == null) Debug.LogError("Rigidbody2D not found on player!");
+        if (_playerAnimator == null) Debug.LogWarning("Animator not found on player!");
+        if (_spriteRenderer == null) Debug.LogWarning("SpriteRenderer not found on player!");
+    }
+
+    void Start()
+    {
+        // Se você moveu os GetComponents para Awake(), pode removê-los daqui
+        // if (_playerRigidbody2D == null) _playerRigidbody2D = GetComponent<Rigidbody2D>();
+        // if (_playerAnimator == null) _playerAnimator = GetComponent<Animator>();
+        // if (_spriteRenderer == null) _spriteRenderer = GetComponent<SpriteRenderer>();
+
+        // --- NOVO: Chama a lógica para posicionar a personagem no ponto de spawn na nova cena ---
+        SetSpawnPosition();
     }
 
     void Update()
@@ -39,9 +74,6 @@ public class NewMonoBehaviourScript : MonoBehaviour
         else if (Mathf.Abs(moveX) > 0.1f) // Movendo para os Lados
         {
             currentMovementState = 1; // 1 = Andando para o Lado
-            // Mantém _lastVerticalDirection para saber para qual idle voltar se parar
-            // ou reseta se preferir que o movimento lateral "cancele" a direção vertical para o idle
-            // _lastVerticalDirection = 0; // Descomente se quiser que o movimento lateral resete a direção do idle
         }
         else // Parado
         {
@@ -51,8 +83,6 @@ public class NewMonoBehaviourScript : MonoBehaviour
             }
             else if (_lastVerticalDirection == -1) // Estava movendo para baixo por último
             {
-                // Se o seu estado 0 já é "parado de frente", use ele.
-                // Se você criou um estado 5 para "parado de frente" específico, use-o.
                 currentMovementState = 0; // Ou 5, se você criou "ParadoDeFrente"
             }
             else // Parado e não houve movimento vertical recente (ou foi resetado)
@@ -67,7 +97,8 @@ public class NewMonoBehaviourScript : MonoBehaviour
 
     void FixedUpdate()
     {
-        _playerRigidbody2D.MovePosition(_playerRigidbody2D.position + _playerDirection * _playerSpeed * Time.fixedDeltaTime);
+        // --- CORREÇÃO FINAL: Use 'velocity' com 'v' minúsculo! ---
+        _playerRigidbody2D.linearVelocity = _playerDirection * _playerSpeed;
     }
 
     void Flip(float moveX, int currentMovementState)
@@ -86,9 +117,32 @@ public class NewMonoBehaviourScript : MonoBehaviour
                 _spriteRenderer.flipX = true;
             }
         }
-        else
+        // else { } // Pode remover este 'else' vazio se não faz nada
+    }
+
+    // --- NOVO MÉTODO: Para posicionar a personagem ao carregar uma nova cena ---
+    void SetSpawnPosition()
+    {
+        // Obtém o nome do ponto de spawn da PlayerPrefs que a porta salvou
+        string lastEnteredDoorName = PlayerPrefs.GetString("LastEnteredDoor", "");
+
+        if (!string.IsNullOrEmpty(lastEnteredDoorName))
         {
-            
+            // Tenta encontrar o GameObject do ponto de spawn na cena atual
+            GameObject spawnPoint = GameObject.Find(lastEnteredDoorName);
+            if (spawnPoint != null)
+            {
+                // Posiciona o Rigidbody da personagem no local do ponto de spawn
+                _playerRigidbody2D.position = spawnPoint.transform.position;
+                Debug.Log($"Personagem posicionada em {spawnPoint.name} ({spawnPoint.transform.position})");
+            }
+            else
+            {
+                Debug.LogWarning($"Ponto de spawn '{lastEnteredDoorName}' não encontrado na cena '{SceneManager.GetActiveScene().name}'. Verifique o nome no Inspector da porta e na cena de destino.");
+            }
+            // Limpa o PlayerPrefs para evitar spawn em local errado em cargas futuras
+            PlayerPrefs.DeleteKey("LastEnteredDoor");
+            PlayerPrefs.Save(); // Salva as alterações no PlayerPrefs
         }
     }
 }
