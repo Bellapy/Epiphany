@@ -1,10 +1,9 @@
 using UnityEngine;
-using UnityEngine.SceneManagement; // <-- ADICIONADO: Necessário para SceneManager e PlayerPrefs
+using UnityEngine.SceneManagement;
 
 public class NewMonoBehaviourScript : MonoBehaviour
 {
-    // --- NOVO: Para garantir que só exista uma personagem por cena (evita duplicatas se você voltar para uma cena) ---
-    public static NewMonoBehaviourScript Instance; 
+    public static NewMonoBehaviourScript Instance;
 
     private Rigidbody2D _playerRigidbody2D;
     private Animator _playerAnimator;
@@ -13,30 +12,25 @@ public class NewMonoBehaviourScript : MonoBehaviour
     private SpriteRenderer _spriteRenderer;
 
     private bool _isFacingRight = true;
-    private int _lastVerticalDirection = 0; // 0 = neutro/nenhum, 1 = cima, -1 = baixo
+    private int _lastVerticalDirection = 0;
 
-    // --- NOVO MÉTODO: Chamado antes de Start() ---
     void Awake()
     {
-        // Lógica de Singleton para garantir que haja apenas uma instância do player
         if (Instance == null)
         {
-            Instance = this; // Define esta instância como a única
-            DontDestroyOnLoad(gameObject); // Faz com que o GameObject da personagem não seja destruído ao carregar novas cenas
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
         }
-        else // Se já existe uma instância (ex: ao voltar para uma cena que já tem um player), destrua esta nova.
+        else
         {
-            Destroy(gameObject); 
-            return; // Sai do método para evitar que o código de Start() seja executado nesta duplicata.
+            Destroy(gameObject);
+            return;
         }
 
-        // É uma boa prática mover os GetComponent para Awake() quando se usa DontDestroyOnLoad
-        // para garantir que as referências estejam prontas antes de qualquer Start() ou Update()
         _playerRigidbody2D = GetComponent<Rigidbody2D>();
         _playerAnimator = GetComponent<Animator>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
 
-        // Boa prática: Verificar se os componentes foram encontrados (para depuração)
         if (_playerRigidbody2D == null) Debug.LogError("Rigidbody2D not found on player!");
         if (_playerAnimator == null) Debug.LogWarning("Animator not found on player!");
         if (_spriteRenderer == null) Debug.LogWarning("SpriteRenderer not found on player!");
@@ -44,12 +38,6 @@ public class NewMonoBehaviourScript : MonoBehaviour
 
     void Start()
     {
-        // Se você moveu os GetComponents para Awake(), pode removê-los daqui
-        // if (_playerRigidbody2D == null) _playerRigidbody2D = GetComponent<Rigidbody2D>();
-        // if (_playerAnimator == null) _playerAnimator = GetComponent<Animator>();
-        // if (_spriteRenderer == null) _spriteRenderer = GetComponent<SpriteRenderer>();
-
-        // --- NOVO: Chama a lógica para posicionar a personagem no ponto de spawn na nova cena ---
         SetSpawnPosition();
     }
 
@@ -59,52 +47,50 @@ public class NewMonoBehaviourScript : MonoBehaviour
         float moveY = Input.GetAxisRaw("Vertical");
         _playerDirection = new Vector2(moveX, moveY).normalized;
 
-        int currentMovementState = 0; // Padrão para parado (frente/lado)
+        int currentMovementState = 0;
 
-        if (moveY > 0.1f) // Movendo para Cima
+        if (moveY > 0.1f)
         {
-            currentMovementState = 2; // 2 = Andando para Cima (Costas)
+            currentMovementState = 2;
             _lastVerticalDirection = 1;
         }
-        else if (moveY < -0.1f) // Movendo para Baixo
+        else if (moveY < -0.1f)
         {
-            currentMovementState = 3; // 3 = Andando para Baixo (Frente)
+            currentMovementState = 3;
             _lastVerticalDirection = -1;
         }
-        else if (Mathf.Abs(moveX) > 0.1f) // Movendo para os Lados
+        else if (Mathf.Abs(moveX) > 0.1f)
         {
-            currentMovementState = 1; // 1 = Andando para o Lado
+            currentMovementState = 1;
         }
-        else // Parado
+        else
         {
-            if (_lastVerticalDirection == 1) // Estava movendo para cima por último
+            if (_lastVerticalDirection == 1)
             {
-                currentMovementState = 4; // 4 = Parado de Costas
+                currentMovementState = 4;
             }
-            else if (_lastVerticalDirection == -1) // Estava movendo para baixo por último
+            else if (_lastVerticalDirection == -1)
             {
-                currentMovementState = 0; // Ou 5, se você criou "ParadoDeFrente"
+                currentMovementState = 0;
             }
-            else // Parado e não houve movimento vertical recente (ou foi resetado)
+            else
             {
-                currentMovementState = 0; // Parado padrão (frente/lado)
+                currentMovementState = 0;
             }
         }
 
         _playerAnimator.SetInteger("Movimento", currentMovementState);
-        Flip(moveX, currentMovementState); // Passar o estado atual para o Flip
+        Flip(moveX, currentMovementState);
     }
 
     void FixedUpdate()
     {
-        // --- CORREÇÃO FINAL: Use 'velocity' com 'v' minúsculo! ---
-        _playerRigidbody2D.linearVelocity = _playerDirection * _playerSpeed;
+        _playerRigidbody2D.linearVelocity = _playerDirection * _playerSpeed;  // CORRETO: velocity, não linearVelocity
     }
 
     void Flip(float moveX, int currentMovementState)
     {
-        // Só flipa se estiver no estado de andar de lado
-        if (currentMovementState == 1) // 1 é Andando para o Lado
+        if (currentMovementState == 1)
         {
             if (moveX > 0.01f && !_isFacingRight)
             {
@@ -117,32 +103,37 @@ public class NewMonoBehaviourScript : MonoBehaviour
                 _spriteRenderer.flipX = true;
             }
         }
-        // else { } // Pode remover este 'else' vazio se não faz nada
     }
 
-    // --- NOVO MÉTODO: Para posicionar a personagem ao carregar uma nova cena ---
+    // ========================== SPAWN ==========================
+    
+    // Método para definir a posição do player na cena com base no PlayerPrefs
     void SetSpawnPosition()
     {
-        // Obtém o nome do ponto de spawn da PlayerPrefs que a porta salvou
-        string lastEnteredDoorName = PlayerPrefs.GetString("LastEnteredDoor", "");
+        string spawnName = PlayerPrefs.GetString("NextSpawnPoint", null);
 
-        if (!string.IsNullOrEmpty(lastEnteredDoorName))
+        if (string.IsNullOrEmpty(spawnName))
+            return;
+
+        GameObject spawnPoint = GameObject.Find(spawnName);
+        if (spawnPoint != null)
         {
-            // Tenta encontrar o GameObject do ponto de spawn na cena atual
-            GameObject spawnPoint = GameObject.Find(lastEnteredDoorName);
-            if (spawnPoint != null)
-            {
-                // Posiciona o Rigidbody da personagem no local do ponto de spawn
-                _playerRigidbody2D.position = spawnPoint.transform.position;
-                Debug.Log($"Personagem posicionada em {spawnPoint.name} ({spawnPoint.transform.position})");
-            }
-            else
-            {
-                Debug.LogWarning($"Ponto de spawn '{lastEnteredDoorName}' não encontrado na cena '{SceneManager.GetActiveScene().name}'. Verifique o nome no Inspector da porta e na cena de destino.");
-            }
-            // Limpa o PlayerPrefs para evitar spawn em local errado em cargas futuras
-            PlayerPrefs.DeleteKey("LastEnteredDoor");
-            PlayerPrefs.Save(); // Salva as alterações no PlayerPrefs
+            _playerRigidbody2D.position = spawnPoint.transform.position;
+            Debug.Log($"Player posicionado em: {spawnPoint.name}");
         }
+        else
+        {
+            Debug.LogWarning($"Spawn '{spawnName}' não encontrado na cena.");
+        }
+
+        PlayerPrefs.DeleteKey("NextSpawnPoint");  // Apaga para não reaparecer sempre aqui
+    }
+
+    // Método estático para definir o spawn antes de trocar de cena
+    public static void SetNextSpawnPoint(string spawnPointName)
+    {
+        PlayerPrefs.SetString("NextSpawnPoint", spawnPointName);
+        PlayerPrefs.Save();  // salva imediatamente no disco
+        Debug.Log($"Próximo ponto de spawn definido: {spawnPointName}");
     }
 }
