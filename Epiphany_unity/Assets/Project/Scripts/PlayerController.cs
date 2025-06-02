@@ -1,9 +1,11 @@
+// NewMonoBehaviourScript.cs (Seu PlayerController)
 using UnityEngine;
-using UnityEngine.SceneManagement;
+// Remova: using UnityEngine.SceneManagement; // Não é mais necessário aqui para o spawn
 
 public class NewMonoBehaviourScript : MonoBehaviour
 {
-    public static NewMonoBehaviourScript Instance;
+    // Remova o padrão Singleton daqui
+    // public static NewMonoBehaviourScript Instance;
 
     private Rigidbody2D _playerRigidbody2D;
     private Animator _playerAnimator;
@@ -12,33 +14,38 @@ public class NewMonoBehaviourScript : MonoBehaviour
     private SpriteRenderer _spriteRenderer;
 
     private bool _isFacingRight = true;
-    private int _lastVerticalDirection = 0;
+    private int _lastVerticalDirection = 0; // 0: idle/horizontal, 1: up, -1: down
 
     void Awake()
     {
-        if (Instance == null)
-        {
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            Destroy(gameObject);
-            return;
-        }
+        // Remova a lógica do Singleton DontDestroyOnLoad
+        // if (Instance == null)
+        // {
+        //     Instance = this;
+        //     DontDestroyOnLoad(gameObject);
+        // }
+        // else
+        // {
+        //     Destroy(gameObject);
+        //     return;
+        // }
 
         _playerRigidbody2D = GetComponent<Rigidbody2D>();
         _playerAnimator = GetComponent<Animator>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
 
         if (_playerRigidbody2D == null) Debug.LogError("Rigidbody2D not found on player!");
-        if (_playerAnimator == null) Debug.LogWarning("Animator not found on player!");
-        if (_spriteRenderer == null) Debug.LogWarning("SpriteRenderer not found on player!");
+        if (_playerAnimator == null) Debug.LogWarning("Animator not found on player!"); // Pode ser opcional dependendo do seu setup
+        if (_spriteRenderer == null) Debug.LogWarning("SpriteRenderer not found on player!"); // Pode ser opcional
     }
 
     void Start()
     {
-        SetSpawnPosition();
+        // Remova a chamada SetSpawnPosition daqui. O GameManager cuidará disso.
+        // SetSpawnPosition();
+        // Você pode querer definir um estado inicial aqui se necessário,
+        // mas o posicionamento será tratado pelo GameManager.
+        Debug.Log($"Player ({gameObject.name}) Start() chamado.");
     }
 
     void Update()
@@ -47,93 +54,77 @@ public class NewMonoBehaviourScript : MonoBehaviour
         float moveY = Input.GetAxisRaw("Vertical");
         _playerDirection = new Vector2(moveX, moveY).normalized;
 
-        int currentMovementState = 0;
+        int currentMovementState = 0; // 0: ParadoBaixo, 1: Correndo, 2: Cima, 3: Baixo, 4: ParadoCima
 
-        if (moveY > 0.1f)
+        if (moveY > 0.1f) // Movendo para Cima
         {
-            currentMovementState = 2;
+            currentMovementState = 2; // Andando Cima
             _lastVerticalDirection = 1;
         }
-        else if (moveY < -0.1f)
+        else if (moveY < -0.1f) // Movendo para Baixo
         {
-            currentMovementState = 3;
+            currentMovementState = 3; // Andando Baixo
             _lastVerticalDirection = -1;
         }
-        else if (Mathf.Abs(moveX) > 0.1f)
+        else if (Mathf.Abs(moveX) > 0.1f) // Movendo Horizontalmente
         {
-            currentMovementState = 1;
+            currentMovementState = 1; // Correndo
+            // Não resetar _lastVerticalDirection aqui, para saber qual idle usar
         }
-        else
+        else // Parado
         {
-            if (_lastVerticalDirection == 1)
+            if (_lastVerticalDirection == 1) // Última direção vertical foi para cima
             {
-                currentMovementState = 4;
+                currentMovementState = 4; // Parado Cima
             }
-            else if (_lastVerticalDirection == -1)
+            else // Última direção vertical foi para baixo ou estava andando horizontalmente
             {
-                currentMovementState = 0;
-            }
-            else
-            {
-                currentMovementState = 0;
+                currentMovementState = 0; // Parado Baixo (ou idle padrão)
             }
         }
+        
+        // Apenas atualiza o _lastVerticalDirection se houver movimento vertical,
+        // para que o idle correto seja mantido após movimento horizontal.
+        // Se não houver movimento vertical (moveY está próximo de zero),
+        // não altere _lastVerticalDirection, para que o idle correto seja mantido
+        // ao parar de andar horizontalmente.
 
-        _playerAnimator.SetInteger("Movimento", currentMovementState);
+        if (_playerAnimator != null)
+        {
+            _playerAnimator.SetInteger("Movimento", currentMovementState);
+        }
         Flip(moveX, currentMovementState);
     }
 
     void FixedUpdate()
     {
-        _playerRigidbody2D.linearVelocity = _playerDirection * _playerSpeed;  // CORRETO: velocity, não linearVelocity
+        if (_playerRigidbody2D != null)
+        {
+            // Mude _playerRigidbody2D.linearVelocity para _playerRigidbody2D.velocity
+            _playerRigidbody2D.linearVelocity = _playerDirection * _playerSpeed;
+        }
     }
 
     void Flip(float moveX, int currentMovementState)
     {
-        if (currentMovementState == 1)
+        // Só flipa se estiver no estado de corrida (ou qualquer estado horizontal)
+        if (currentMovementState == 1) // Correndo
         {
             if (moveX > 0.01f && !_isFacingRight)
             {
                 _isFacingRight = true;
-                _spriteRenderer.flipX = false;
+                if (_spriteRenderer != null) _spriteRenderer.flipX = false;
             }
             else if (moveX < -0.01f && _isFacingRight)
             {
                 _isFacingRight = false;
-                _spriteRenderer.flipX = true;
+                if (_spriteRenderer != null) _spriteRenderer.flipX = true;
             }
         }
     }
 
+    // Remova toda a seção de SPAWN daqui
     // ========================== SPAWN ==========================
-    
-    // Método para definir a posição do player na cena com base no PlayerPrefs
-    void SetSpawnPosition()
-    {
-        string spawnName = PlayerPrefs.GetString("NextSpawnPoint", null);
-
-        if (string.IsNullOrEmpty(spawnName))
-            return;
-
-        GameObject spawnPoint = GameObject.Find(spawnName);
-        if (spawnPoint != null)
-        {
-            _playerRigidbody2D.position = spawnPoint.transform.position;
-            Debug.Log($"Player posicionado em: {spawnPoint.name}");
-        }
-        else
-        {
-            Debug.LogWarning($"Spawn '{spawnName}' não encontrado na cena.");
-        }
-
-        PlayerPrefs.DeleteKey("NextSpawnPoint");  // Apaga para não reaparecer sempre aqui
-    }
-
-    // Método estático para definir o spawn antes de trocar de cena
-    public static void SetNextSpawnPoint(string spawnPointName)
-    {
-        PlayerPrefs.SetString("NextSpawnPoint", spawnPointName);
-        PlayerPrefs.Save();  // salva imediatamente no disco
-        Debug.Log($"Próximo ponto de spawn definido: {spawnPointName}");
-    }
+    // void SetSpawnPosition() { ... }
+    // public static void SetNextSpawnPoint(string spawnPointName) { ... }
 }

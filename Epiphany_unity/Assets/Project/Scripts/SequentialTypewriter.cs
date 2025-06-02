@@ -5,12 +5,15 @@ using System.Collections.Generic;
 
 public class SequentialTypewriter : MonoBehaviour
 {
-    public Text targetText; // Arraste o componente Text da UI para cá no Inspector
-    public float typeSpeed = 0.05f; // Tempo entre o aparecimento de cada letra
-    public float delayBetweenParagraphs = 1.5f; // Tempo de espera entre o desaparecimento de um parágrafo e o surgimento do próximo
+    public Text targetText;
+    public float typeSpeed = 0.05f;
+    public float delayBetweenParagraphs = 1.5f;
 
-    [TextArea(3, 10)] // Permite escrever parágrafos maiores no Inspector
-    public List<string> paragraphs; // A lista de parágrafos a serem exibidos sequencialmente
+    [TextArea(3, 10)]
+    public List<string> paragraphs;
+
+    // ---- NOVA LINHA ----
+    public CutsceneTransitionManager transitionManager; // Arraste o GameObject com o CutsceneTransitionManager aqui
 
     private string currentText = "";
     private int charIndex = 0;
@@ -22,14 +25,25 @@ public class SequentialTypewriter : MonoBehaviour
         if (targetText == null)
         {
             Debug.LogError("O componente Text alvo não foi atribuído no GameObject: " + gameObject.name);
+            enabled = false; // Desabilita o script se não houver texto
             return;
         }
 
         if (paragraphs == null || paragraphs.Count == 0)
         {
             Debug.LogWarning("A lista de parágrafos está vazia no GameObject: " + gameObject.name);
+            enabled = false; // Desabilita o script se não houver parágrafos
             return;
         }
+
+        // ---- NOVA LINHA ----
+        if (transitionManager == null)
+        {
+            Debug.LogError("O CutsceneTransitionManager não foi atribuído no SequentialTypewriter: " + gameObject.name);
+            // Você pode optar por desabilitar o script aqui também, ou apenas avisar.
+            // enabled = false; 
+        }
+
 
         StartCoroutine(PlaySequentialText());
     }
@@ -40,21 +54,26 @@ public class SequentialTypewriter : MonoBehaviour
         {
             isTyping = true;
             yield return StartCoroutine(TypeText(paragraphs[paragraphIndex]));
-
-            // Espera um pouco antes de apagar o texto e começar o próximo parágrafo
             yield return new WaitForSeconds(delayBetweenParagraphs);
-
-            // Apaga o texto
             targetText.text = "";
             currentText = "";
             charIndex = 0;
             isTyping = false;
-
             paragraphIndex++;
         }
 
-        // Opcional: Faça algo quando todos os parágrafos forem exibidos
         Debug.Log("Todos os parágrafos foram exibidos.");
+
+        // ---- BLOCO MODIFICADO/ADICIONADO ----
+        if (transitionManager != null)
+        {
+            transitionManager.StartPostTextSequence();
+        }
+        else
+        {
+            Debug.LogWarning("Transição pós-texto não iniciada: transitionManager não configurado.");
+        }
+        // ---- FIM DO BLOCO ----
     }
 
     IEnumerator TypeText(string paragraph)
@@ -70,20 +89,24 @@ public class SequentialTypewriter : MonoBehaviour
             charIndex++;
             yield return new WaitForSeconds(typeSpeed);
         }
-
         isTyping = false;
     }
+
+    // ... (resto do seu script: SetParagraphs, SetTypeSpeed, etc. permanecem iguais) ...
 
     public void SetParagraphs(List<string> newParagraphs)
     {
         paragraphs = newParagraphs;
         paragraphIndex = 0;
-        targetText.text = "";
+        if (targetText != null) targetText.text = "";
         currentText = "";
         charIndex = 0;
         isTyping = false;
-        StopAllCoroutines();
-        StartCoroutine(PlaySequentialText());
+        StopAllCoroutines(); // Para garantir que não haja corrotinas antigas rodando
+        if (gameObject.activeInHierarchy && paragraphs != null && paragraphs.Count > 0 && targetText != null)
+        {
+            StartCoroutine(PlaySequentialText());
+        }
     }
 
     public void SetTypeSpeed(float newSpeed)
@@ -103,9 +126,9 @@ public class SequentialTypewriter : MonoBehaviour
 
     public void SkipCurrentParagraph()
     {
-        if (isTyping)
+        if (isTyping && paragraphIndex < paragraphs.Count) // Adicionada verificação de paragraphIndex
         {
-            StopCoroutine(TypeText(paragraphs[paragraphIndex]));
+            StopCoroutine("TypeText"); // Pare a corrotina específica pelo nome
             isTyping = false;
             targetText.text = paragraphs[paragraphIndex];
         }
@@ -115,12 +138,31 @@ public class SequentialTypewriter : MonoBehaviour
     {
         StopAllCoroutines();
         isTyping = false;
-        paragraphIndex = paragraphs.Count;
-        string allText = "";
-        foreach (string paragraph in paragraphs)
+        
+        if (paragraphs != null && paragraphs.Count > 0 && targetText != null)
         {
-            allText += paragraph + "\n\n";
+            // Mostra o último parágrafo ou todos, dependendo da preferência
+            // Aqui, vamos apenas mostrar o último parágrafo completo
+            // Se quiser mostrar todos, teria que concatená-los.
+            // Para o propósito de pular para a transição, apenas terminar o texto atual é suficiente
+            // ou avançar paragraphIndex para o final e chamar a transição.
+
+            // Opção 1: Simplesmente preencher o texto com o último parágrafo
+            // targetText.text = paragraphs[paragraphs.Count - 1];
+
+            // Opção 2: Avançar para o final e chamar a transição (mais direto)
+            paragraphIndex = paragraphs.Count; // Marca como se todos tivessem sido exibidos
+            if (targetText != null) targetText.text = ""; // Limpa o texto atual
+            
+            Debug.Log("Todos os parágrafos pulados. Iniciando transição.");
+            if (transitionManager != null)
+            {
+                transitionManager.StartPostTextSequence();
+            }
+            else
+            {
+                Debug.LogWarning("Transição pós-texto não iniciada após SkipAll: transitionManager não configurado.");
+            }
         }
-        targetText.text = allText.TrimEnd('\n');
     }
 }
