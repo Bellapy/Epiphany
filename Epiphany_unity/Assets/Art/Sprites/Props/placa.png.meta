@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 00eb7e2dbd3151746867d556851c3960
+guid: 9216839263f5afd40a42e118e45f9a92
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -1343662055453692585
-    second: fundocena1_0
+      213: -1493234058564937952
+    second: placa_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -37,7 +37,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -75,7 +75,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: fundocena1_0
+      name: placa_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 2048
-        height: 1024
+        x: 31
+        y: 15
+        width: 850
+        height: 866
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 75de286ca7a5a5de0800000000000000
-      internalID: -1343662055453692585
+      spriteID: 027d8b40987f64be0800000000000000
+      internalID: -1493234058564937952
       vertices: []
       indices: 
       edges: []
@@ -134,7 +134,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      placa_0: -1493234058564937952
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
