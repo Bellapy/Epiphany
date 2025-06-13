@@ -1,49 +1,51 @@
 using UnityEngine;
-using UnityEngine.UI;
+// using UnityEngine.UI; // Esta linha não é mais necessária para o TextMeshPro.
+using TMPro; // <<< PASSO 1: Adicione esta linha para usar o TextMeshPro
 using System.Collections;
 using System.Collections.Generic;
 
 public class SequentialTypewriter : MonoBehaviour
 {
-    public Text targetText;
+    //                                         vvvvvvvvvvvvvvv
+    public TextMeshProUGUI targetText; // <<< PASSO 2: Mude o tipo de 'Text' para 'TextMeshProUGUI'
+    //                                         ^^^^^^^^^^^^^^^
     public float typeSpeed = 0.05f;
     public float delayBetweenParagraphs = 1.5f;
 
     [TextArea(3, 10)]
     public List<string> paragraphs;
 
-    // ---- NOVA LINHA ----
-    public CutsceneTransitionManager transitionManager; // Arraste o GameObject com o CutsceneTransitionManager aqui
+    // A referência ao seu TransitionManager continua a mesma.
+    public CutsceneTransitionManager transitionManager;
 
     private string currentText = "";
     private int charIndex = 0;
     private int paragraphIndex = 0;
     private bool isTyping = false;
 
+    // TODA A LÓGICA ABAIXO PERMANECE EXATAMENTE A MESMA.
+    // A única diferença é que agora 'targetText' se refere a um componente TextMeshPro.
+
     void Start()
     {
         if (targetText == null)
         {
-            Debug.LogError("O componente Text alvo não foi atribuído no GameObject: " + gameObject.name);
-            enabled = false; // Desabilita o script se não houver texto
+            Debug.LogError("O componente TextMeshProUGUI alvo não foi atribuído no GameObject: " + gameObject.name);
+            enabled = false;
             return;
         }
 
         if (paragraphs == null || paragraphs.Count == 0)
         {
             Debug.LogWarning("A lista de parágrafos está vazia no GameObject: " + gameObject.name);
-            enabled = false; // Desabilita o script se não houver parágrafos
+            enabled = false;
             return;
         }
-
-        // ---- NOVA LINHA ----
+        
         if (transitionManager == null)
         {
             Debug.LogError("O CutsceneTransitionManager não foi atribuído no SequentialTypewriter: " + gameObject.name);
-            // Você pode optar por desabilitar o script aqui também, ou apenas avisar.
-            // enabled = false; 
         }
-
 
         StartCoroutine(PlaySequentialText());
     }
@@ -63,8 +65,7 @@ public class SequentialTypewriter : MonoBehaviour
         }
 
         Debug.Log("Todos os parágrafos foram exibidos.");
-
-        // ---- BLOCO MODIFICADO/ADICIONADO ----
+        
         if (transitionManager != null)
         {
             transitionManager.StartPostTextSequence();
@@ -73,7 +74,6 @@ public class SequentialTypewriter : MonoBehaviour
         {
             Debug.LogWarning("Transição pós-texto não iniciada: transitionManager não configurado.");
         }
-        // ---- FIM DO BLOCO ----
     }
 
     IEnumerator TypeText(string paragraph)
@@ -92,8 +92,6 @@ public class SequentialTypewriter : MonoBehaviour
         isTyping = false;
     }
 
-    // ... (resto do seu script: SetParagraphs, SetTypeSpeed, etc. permanecem iguais) ...
-
     public void SetParagraphs(List<string> newParagraphs)
     {
         paragraphs = newParagraphs;
@@ -102,7 +100,7 @@ public class SequentialTypewriter : MonoBehaviour
         currentText = "";
         charIndex = 0;
         isTyping = false;
-        StopAllCoroutines(); // Para garantir que não haja corrotinas antigas rodando
+        StopAllCoroutines();
         if (gameObject.activeInHierarchy && paragraphs != null && paragraphs.Count > 0 && targetText != null)
         {
             StartCoroutine(PlaySequentialText());
@@ -126,9 +124,9 @@ public class SequentialTypewriter : MonoBehaviour
 
     public void SkipCurrentParagraph()
     {
-        if (isTyping && paragraphIndex < paragraphs.Count) // Adicionada verificação de paragraphIndex
+        if (isTyping && paragraphIndex < paragraphs.Count)
         {
-            StopCoroutine("TypeText"); // Pare a corrotina específica pelo nome
+            StopCoroutine("TypeText");
             isTyping = false;
             targetText.text = paragraphs[paragraphIndex];
         }
@@ -141,18 +139,8 @@ public class SequentialTypewriter : MonoBehaviour
         
         if (paragraphs != null && paragraphs.Count > 0 && targetText != null)
         {
-            // Mostra o último parágrafo ou todos, dependendo da preferência
-            // Aqui, vamos apenas mostrar o último parágrafo completo
-            // Se quiser mostrar todos, teria que concatená-los.
-            // Para o propósito de pular para a transição, apenas terminar o texto atual é suficiente
-            // ou avançar paragraphIndex para o final e chamar a transição.
-
-            // Opção 1: Simplesmente preencher o texto com o último parágrafo
-            // targetText.text = paragraphs[paragraphs.Count - 1];
-
-            // Opção 2: Avançar para o final e chamar a transição (mais direto)
-            paragraphIndex = paragraphs.Count; // Marca como se todos tivessem sido exibidos
-            if (targetText != null) targetText.text = ""; // Limpa o texto atual
+            paragraphIndex = paragraphs.Count;
+            if (targetText != null) targetText.text = "";
             
             Debug.Log("Todos os parágrafos pulados. Iniciando transição.");
             if (transitionManager != null)

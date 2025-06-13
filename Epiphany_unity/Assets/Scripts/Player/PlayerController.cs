@@ -1,162 +1,111 @@
 using UnityEngine;
-using UnityEngine.InputSystem; // Necessário para o novo Input System
-using Epiphany.Input;
+using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
-    private PlayerInputActions playerInputActions; // Referência ao asset de Input Actions
+    [Header("Configurações de Movimento")]
+    [SerializeField] private float moveSpeed = 5f;
 
-    private Rigidbody2D _playerRigidbody2D;
-    private Animator _playerAnimator;
-    public float _playerSpeed = 5f; // Boa prática: inicialize valores públicos no código
-    private Vector2 _playerDirection;
-    private SpriteRenderer _spriteRenderer;
+    [Header("Referências de Componentes")]
+    private Rigidbody2D rb;
+    private Animator animator;
+    private SpriteRenderer spriteRenderer;
 
-    private bool _isFacingRight = true;
-    private int _lastVerticalDirection = 0; // 0: idle/horizontal, 1: up, -1: down
+    [Header("Controle de Input e Estado")]
+    private Vector2 currentMovementInput;
+    private bool isFacingRight = true;
+    private int lastVerticalDirection = -1; // -1 para baixo, 1 para cima
 
+    // --- Ciclo de Vida: Awake() ---
     void Awake()
     {
-        // Inicializa a classe gerada do Input System
-        playerInputActions = new PlayerInputActions();
+        // Apenas pega as referências dos componentes.
+        rb = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
 
-        // Assina as ações de botão para chamar métodos específicos
-        // '.performed' significa que a ação foi completamente executada (tecla pressionada e solta, ou pressionada e mantida)
-        playerInputActions.Gameplay.Interact.performed += OnInteractPerformed;
-        playerInputActions.Gameplay.AdvanceDialogue.performed += OnAdvanceDialoguePerformed;
-        playerInputActions.Gameplay.OpenMenu.performed += OnOpenMenuPerformed;
-        playerInputActions.Gameplay.OpenMap.performed += OnOpenMapPerformed;
-
-        _playerRigidbody2D = GetComponent<Rigidbody2D>();
-        _playerAnimator = GetComponent<Animator>();
-        _spriteRenderer = GetComponent<SpriteRenderer>();
-
-        if (_playerRigidbody2D == null) Debug.LogError("Rigidbody2D not found on player!");
-        if (_playerAnimator == null) Debug.LogWarning("Animator not found on player!");
-        if (_spriteRenderer == null) Debug.LogWarning("SpriteRenderer not found on player!");
+        if (rb == null) Debug.LogError("Rigidbody2D não encontrado no jogador!");
+        if (animator == null) Debug.LogWarning("Animator não encontrado no jogador!");
+        if (spriteRenderer == null) Debug.LogWarning("SpriteRenderer não encontrado no jogador!");
     }
 
-    private void OnEnable()
+    // --- Ciclo de Vida: FixedUpdate() ---
+    void FixedUpdate()
     {
-        playerInputActions.Gameplay.Enable(); // Habilita o Action Map 'Gameplay' quando o GameObject é ativado
+        if (rb != null)
+        {
+            rb.linearVelocity = currentMovementInput * moveSpeed;
+        }
     }
-
-    private void OnDisable()
-    {
-        playerInputActions.Gameplay.Disable(); // Desabilita o Action Map 'Gameplay' quando o GameObject é desativado
-
-        // MUITO IMPORTANTE: Desassinar os eventos para evitar vazamento de memória e erros
-        playerInputActions.Gameplay.Interact.performed -= OnInteractPerformed;
-        playerInputActions.Gameplay.AdvanceDialogue.performed -= OnAdvanceDialoguePerformed;
-        playerInputActions.Gameplay.OpenMenu.performed -= OnOpenMenuPerformed;
-        playerInputActions.Gameplay.OpenMap.performed -= OnOpenMapPerformed;
-    }
-
-    void Start()
-    {
-        Debug.Log($"Player ({gameObject.name}) Start() chamado.");
-    }
-
+    
+    // --- Ciclo de Vida: Update() ---
     void Update()
     {
-        // Lê o valor da ação 'Move' do Input System (um Vector2)
-        _playerDirection = playerInputActions.Gameplay.Move.ReadValue<Vector2>();
+        UpdateAnimationsAndFlip();
+    }
 
-        // Usamos as componentes X e Y do _playerDirection para a lógica de animação e flip
-        float moveX = _playerDirection.x;
-        float moveY = _playerDirection.y;
+    // --- Métodos de Tratamento para as Ações de Input ---
+    // O componente Player Input na Unity vai chamar esses métodos automaticamente.
 
-        int currentMovementState = 0; // 0: ParadoBaixo, 1: Correndo, 2: Cima, 3: Baixo, 4: ParadoCima
+    // Este método é chamado quando a ação "Move" é ativada.
+    public void OnMove(InputValue value)
+    {
+        currentMovementInput = value.Get<Vector2>();
+    }
+    
+    // (Você pode adicionar os outros métodos OnInteract, OnOpenMenu, etc., aqui)
 
-        if (moveY > 0.1f) // Movendo para Cima
+    // --- Lógica de Animação e Visual ---
+    private void UpdateAnimationsAndFlip()
+    {
+        if (animator == null) return;
+
+        float moveX = currentMovementInput.x;
+        float moveY = currentMovementInput.y;
+
+        int currentMovementState = 0; // Estado padrão: Parado Baixo
+
+        if (moveY > 0.1f)
         {
-            currentMovementState = 2; // Andando Cima
-            _lastVerticalDirection = 1;
+            currentMovementState = 2; // Estado: Andando Cima
+            lastVerticalDirection = 1;
         }
-        else if (moveY < -0.1f) // Movendo para Baixo
+        else if (moveY < -0.1f)
         {
-            currentMovementState = 3; // Andando Baixo
-            _lastVerticalDirection = -1;
+            currentMovementState = 3; // Estado: Andando Baixo
+            lastVerticalDirection = -1;
         }
-        else if (Mathf.Abs(moveX) > 0.1f) // Movendo Horizontalmente
+        else if (Mathf.Abs(moveX) > 0.1f)
         {
-            currentMovementState = 1; // Correndo
-            // Não resetar _lastVerticalDirection aqui, para saber qual idle usar
+            currentMovementState = 1; // Estado: Correndo Lado
         }
-        else // Parado
+        else
         {
-            if (_lastVerticalDirection == 1) // Última direção vertical foi para cima
+            if (lastVerticalDirection == 1)
             {
-                currentMovementState = 4; // Parado Cima
+                currentMovementState = 4; // Estado: Parado Cima
             }
-            else // Última direção vertical foi para baixo ou estava andando horizontalmente
+            else
             {
-                currentMovementState = 0; // Parado Baixo (ou idle padrão)
+                currentMovementState = 0; // Estado: Parado Baixo
             }
         }
         
-        if (_playerAnimator != null)
-        {
-            _playerAnimator.SetInteger("MovementState", currentMovementState);
-            // Também podemos passar as direções X e Y para o Animator se ele as usar para blend tree
-            _playerAnimator.SetFloat("MoveX", moveX);
-            _playerAnimator.SetFloat("MoveY", moveY);
-        }
-        Flip(moveX, currentMovementState);
-    }
+        animator.SetInteger("MovementState", currentMovementState);
 
-    void FixedUpdate()
-    {
-        if (_playerRigidbody2D != null)
+        // Lógica de Flip
+        if (spriteRenderer != null && currentMovementState == 1)
         {
-            _playerRigidbody2D.linearVelocity = _playerDirection * _playerSpeed; // Use .velocity para Rigidbody2D
-        }
-    }
-
-    void Flip(float moveX, int currentMovementState)
-    {
-        // Só flipa se estiver no estado de corrida (ou qualquer estado horizontal)
-        if (currentMovementState == 1) // Correndo
-        {
-            if (moveX > 0.01f && !_isFacingRight)
+            if (moveX > 0 && !isFacingRight)
             {
-                _isFacingRight = true;
-                if (_spriteRenderer != null) _spriteRenderer.flipX = false;
+                isFacingRight = true;
+                spriteRenderer.flipX = false;
             }
-            else if (moveX < -0.01f && _isFacingRight)
+            else if (moveX < 0 && isFacingRight)
             {
-                _isFacingRight = false;
-                if (_spriteRenderer != null) _spriteRenderer.flipX = true;
+                isFacingRight = false;
+                spriteRenderer.flipX = true;
             }
         }
-    }
-
-    // Métodos de tratamento para as ações de botão (chamados pelo Input System)
-    private void OnInteractPerformed(InputAction.CallbackContext context)
-    {
-        Debug.Log("Ação de Interagir (E) executada!");
-        // *** FUTURA LÓGICA DE INTERAÇÃO AQUI ***
-        // Ex: Chamar um DialogueManager.Instance.TryInteractWithNPC();
-    }
-
-    private void OnAdvanceDialoguePerformed(InputAction.CallbackContext context)
-    {
-        Debug.Log("Ação de Avançar Diálogo/Menu (Enter/Espaço) executada!");
-        // *** FUTURA LÓGICA DE AVANÇO DE DIÁLOGO AQUI ***
-        // Ex: DialogueManager.Instance.AdvanceDialogue();
-    }
-
-    private void OnOpenMenuPerformed(InputAction.CallbackContext context)
-    {
-        Debug.Log("Ação de Abrir Menu (Esc) executada!");
-        // *** FUTURA LÓGICA DE ABRIR MENU AQUI ***
-        // Ex: UIManager.Instance.TogglePauseMenu();
-    }
-
-    private void OnOpenMapPerformed(InputAction.CallbackContext context)
-    {
-        Debug.Log("Ação de Abrir Mapa (F) executada!");
-        // *** FUTURA LÓGICA DE ABRIR MAPA AQUI ***
-        // Ex: UIManager.Instance.ToggleMap();
     }
 }
