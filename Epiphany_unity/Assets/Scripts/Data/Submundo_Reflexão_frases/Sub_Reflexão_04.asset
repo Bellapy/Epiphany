@@ -10,9 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f15967b04bb688946bc56ec52b3fff10, type: 3}
-  m_Name: Caverna_Reflexao_01
+  m_Name: "Sub_Reflex\xE3o_04"
   m_EditorClassIdentifier: 
   reflectionLines:
-  - Mesmo onde a luz do sol jamais penetrou...".
-  - teste
-  - 2
+  - "At\xE9 a rocha mais dura \xE9 moldada pela gota d'\xE1gua mais paciente."

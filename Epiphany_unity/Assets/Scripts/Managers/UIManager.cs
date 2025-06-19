@@ -1,3 +1,4 @@
+// UIManager.cs
 using UnityEngine;
 using TMPro;
 using System.Collections;
@@ -9,13 +10,14 @@ public class UIManager : MonoBehaviour
     [Header("Referências da UI de Reflexão")]
     [SerializeField] private CanvasGroup reflectionPanelCanvasGroup;
     [SerializeField] private TextMeshProUGUI reflectionText;
-    
-    [Header("Configurações de Timing")]
-    [SerializeField] private float timePerCharacter = 0.05f;
-    [SerializeField] private float fadeDuration = 0.5f;
-    [SerializeField] private float timeOnScreen = 4.0f; // Tempo que cada frase fica visível
 
-    private Coroutine currentReflectionCoroutine;
+    [Header("Configurações de Timing")]
+    [SerializeField] private float timePerCharacter = 0.02f;
+    [SerializeField] private float fadeDuration = 0.5f;
+    // Não precisamos mais do "timeOnScreen", pois o texto ficará visível até o próximo comando.
+
+    private Coroutine currentTypingCoroutine;
+    private bool isPanelVisible = false; // <<< NOVA VARIÁVEL: Nosso "lembrete" do estado do painel
 
     void Awake()
     {
@@ -28,6 +30,7 @@ public class UIManager : MonoBehaviour
         if (reflectionPanelCanvasGroup != null)
         {
             reflectionPanelCanvasGroup.alpha = 0f;
+            isPanelVisible = false;
         }
         else
         {
@@ -35,36 +38,74 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    // --- MÉTODO PRINCIPAL MODIFICADO ---
     public void ShowReflection(ReflectionData data)
     {
-        if (currentReflectionCoroutine != null) StopCoroutine(currentReflectionCoroutine);
-        currentReflectionCoroutine = StartCoroutine(ShowReflectionCoroutine(data));
+        // Se já estivermos digitando algo, paramos a digitação anterior.
+        if (currentTypingCoroutine != null)
+        {
+            StopCoroutine(currentTypingCoroutine);
+        }
+        
+        // Inicia a nova corrotina para mostrar o texto.
+        currentTypingCoroutine = StartCoroutine(ShowReflectionCoroutine(data));
     }
 
-    // <<< A LÓGICA PRINCIPAL FOI ALTERADA AQUI >>>
     private IEnumerator ShowReflectionCoroutine(ReflectionData data)
     {
-        // PASSO 1: Fade-in do painel de fundo (uma vez só)
-        yield return StartCoroutine(FadeCanvasGroup(1f));
-
-        // PASSO 2: Loop para digitar cada frase
-        foreach (string line in data.reflectionLines)
+        // PASSO 1: VERIFICAR O ESTADO DO PAINEL
+        // Se o painel não estiver visível, fazemos o Fade In primeiro.
+        if (!isPanelVisible)
         {
-            // Digita a frase atual
-            yield return StartCoroutine(TypeSentence(line));
-            
-            // Espera um tempo com a frase já na tela
-            yield return new WaitForSeconds(timeOnScreen);
+            yield return StartCoroutine(FadeCanvasGroup(1f));
+            isPanelVisible = true;
         }
 
-        // PASSO 3: Fade-out do painel de fundo (uma vez só, no final)
-        yield return StartCoroutine(FadeCanvasGroup(0f));
+        // PASSO 2: LOOP PARA DIGITAR CADA FRASE (com uma pequena pausa entre elas)
+        // Usamos um loop for para iterar pela lista de frases.
+        for (int i = 0; i < data.reflectionLines.Count; i++)
+        {
+            string line = data.reflectionLines[i];
+            
+            // Digita a frase atual.
+            yield return StartCoroutine(TypeSentence(line));
+            
+            // Adiciona uma pequena pausa antes da próxima frase, se não for a última.
+            if (i < data.reflectionLines.Count - 1)
+            {
+                yield return new WaitForSeconds(1.5f); // Pausa de 1.5s entre as frases da mesma placa
+            }
+        }
+        // NÃO fazemos mais o Fade Out aqui!
     }
 
-    // A coroutine de digitação agora só se preocupa com o texto
+    // --- NOVO MÉTODO PARA ESCONDER O PAINEL ---
+    /// <summary>
+    /// Força o painel de reflexão a desaparecer com um fade out.
+    /// </summary>
+    public void HideReflection()
+    {
+        // Só executa se o painel estiver visível.
+        if (isPanelVisible)
+        {
+            if (currentTypingCoroutine != null)
+            {
+                StopCoroutine(currentTypingCoroutine);
+            }
+            StartCoroutine(HidePanelCoroutine());
+        }
+    }
+
+    private IEnumerator HidePanelCoroutine()
+    {
+        yield return StartCoroutine(FadeCanvasGroup(0f));
+        isPanelVisible = false;
+    }
+
+    // A coroutine de digitação permanece a mesma.
     private IEnumerator TypeSentence(string sentence)
     {
-        reflectionText.text = ""; // Limpa o texto para a nova frase
+        reflectionText.text = "";
         foreach (char letter in sentence.ToCharArray())
         {
             reflectionText.text += letter;
@@ -72,21 +113,18 @@ public class UIManager : MonoBehaviour
         }
     }
     
-    // A coroutine de fade agora só controla o Canvas Group
+    // A coroutine de fade permanece a mesma.
     private IEnumerator FadeCanvasGroup(float targetAlpha)
     {
         if (reflectionPanelCanvasGroup == null) yield break;
-
         float startAlpha = reflectionPanelCanvasGroup.alpha;
         float timer = 0f;
-
         while (timer < fadeDuration)
         {
             timer += Time.deltaTime;
             reflectionPanelCanvasGroup.alpha = Mathf.Lerp(startAlpha, targetAlpha, timer / fadeDuration);
             yield return null;
         }
-
         reflectionPanelCanvasGroup.alpha = targetAlpha;
     }
 }

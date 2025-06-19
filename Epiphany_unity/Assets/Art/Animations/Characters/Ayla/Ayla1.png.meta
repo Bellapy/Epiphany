@@ -1,76 +1,73 @@
 fileFormatVersion: 2
-guid: f7e51c0b348e08044bd7203de3464918
+guid: 4a540b6a6b1503b409ebe483e2585897
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -8039453624466745542
-    second: personagem_principal_0
+      213: -1517358426688244947
+    second: Ayla1_0
   - first:
-      213: 6127068377990412938
-    second: personagem_principal_1
+      213: 5921076858659521878
+    second: Ayla1_1
   - first:
-      213: -9121490362607018622
-    second: personagem_principal_2
+      213: 8771495758076041388
+    second: Ayla1_2
   - first:
-      213: -3685263538589338938
-    second: personagem_principal_3
+      213: 9021801272415680914
+    second: Ayla1_3
   - first:
-      213: 4926920795607471476
-    second: personagem_principal_4
+      213: 3099763183967114806
+    second: Ayla1_4
   - first:
-      213: 345919587074080549
-    second: personagem_principal_5
+      213: -5660880737132682201
+    second: Ayla1_5
   - first:
-      213: -3812050058187419350
-    second: personagem_principal_6
+      213: -4771895070658282563
+    second: Ayla1_6
   - first:
-      213: -269087849029626365
-    second: personagem_principal_7
+      213: -2648838103206285174
+    second: Ayla1_7
   - first:
-      213: -1030155910442890053
-    second: personagem_principal_8
+      213: -478820801442612142
+    second: Ayla1_8
   - first:
-      213: 6625511960337677514
-    second: personagem_principal_9
+      213: -6154747097564547714
+    second: Ayla1_9
   - first:
-      213: -3751366977921299794
-    second: personagem_principal_10
+      213: 2299725872704134082
+    second: Ayla1_10
   - first:
-      213: -5533687838487919474
-    second: personagem_principal_11
+      213: 5937961036792878537
+    second: Ayla1_11
   - first:
-      213: 1332403283367713647
-    second: personagem_principal_12
+      213: -6499544608816556349
+    second: Ayla1_12
   - first:
-      213: -8654801231963143504
-    second: personagem_principal_13
+      213: -8486416074179953084
+    second: Ayla1_13
   - first:
-      213: 8688015219939441173
-    second: personagem_principal_14
+      213: -502427525478019898
+    second: Ayla1_14
   - first:
-      213: -30740678975827129
-    second: personagem_principal_15
+      213: 7853734676065079210
+    second: Ayla1_15
   - first:
-      213: -1295121815152983046
-    second: personagem_principal_16
+      213: 1933932962785648300
+    second: Ayla1_16
   - first:
-      213: 2552835570184123773
-    second: personagem_principal_17
+      213: 7459544192757660050
+    second: Ayla1_17
   - first:
-      213: 6530416140748858597
-    second: personagem_principal_18
+      213: 5658824007224048992
+    second: Ayla1_18
   - first:
-      213: 3688800174281915095
-    second: personagem_principal_19
+      213: 3080909759513154891
+    second: Ayla1_19
   - first:
-      213: 7081285839054464513
-    second: personagem_principal_20
+      213: -5438477337276354058
+    second: Ayla1_20
   - first:
-      213: -20278481162239576
-    second: personagem_principal_21
-  - first:
-      213: -1565488597969903290
-    second: personagem_principal_22
+      213: 1159475918571161693
+    second: Ayla1_21
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -117,7 +114,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 20
+  spritePixelsToUnits: 18
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -166,13 +163,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: personagem_principal_0
+      name: Ayla1_0
       rect:
         serializedVersion: 2
-        x: 0
+        x: 22
         y: 256
-        width: 64
-        height: 64
+        width: 34
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -181,20 +178,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: a37de6df58f1e6090800000000000000
-      internalID: -8039453624466745542
+      spriteID: d233d4cdc8241fae0800000000000000
+      internalID: -1517358426688244947
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: personagem_principal_1
+      name: Ayla1_1
       rect:
         serializedVersion: 2
-        x: 64
+        x: 86
         y: 256
-        width: 64
-        height: 64
+        width: 34
+        height: 47
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -203,20 +200,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: a8ab5a82a38b70550800000000000000
-      internalID: 6127068377990412938
+      spriteID: 655cf202804eb2250800000000000000
+      internalID: 5921076858659521878
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: personagem_principal_2
+      name: Ayla1_2
       rect:
         serializedVersion: 2
-        x: 128
+        x: 150
         y: 256
-        width: 64
-        height: 64
+        width: 34
+        height: 47
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -225,20 +222,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 28dd8aac7d4f96180800000000000000
-      internalID: -9121490362607018622
+      spriteID: ca8d7f82bec9ab970800000000000000
+      internalID: 8771495758076041388
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: personagem_principal_3
+      name: Ayla1_3
       rect:
         serializedVersion: 2
-        x: 192
+        x: 214
         y: 256
-        width: 64
-        height: 64
+        width: 34
+        height: 47
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -247,20 +244,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 6c2fea646505bdcc0800000000000000
-      internalID: -3685263538589338938
+      spriteID: 299f08c2570e33d70800000000000000
+      internalID: 9021801272415680914
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: personagem_principal_4
+      name: Ayla1_4
       rect:
         serializedVersion: 2
-        x: 256
+        x: 278
         y: 256
-        width: 64
-        height: 64
+        width: 34
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -269,20 +266,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 4751ba21c50ff5440800000000000000
-      internalID: 4926920795607471476
+      spriteID: 636913c4132940b20800000000000000
+      internalID: 3099763183967114806
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: personagem_principal_5
+      name: Ayla1_5
       rect:
         serializedVersion: 2
-        x: 0
+        x: 22
         y: 192
-        width: 64
-        height: 64
+        width: 34
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -291,20 +288,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 52f766c1804fcc400800000000000000
-      internalID: 345919587074080549
+      spriteID: 724ea5356f28071b0800000000000000
+      internalID: -5660880737132682201
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: personagem_principal_6
+      name: Ayla1_6
       rect:
         serializedVersion: 2
-        x: 64
+        x: 86
         y: 192
-        width: 64
-        height: 64
+        width: 34
+        height: 47
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -313,20 +310,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: a215bbf4ba0e81bc0800000000000000
-      internalID: -3812050058187419350
+      spriteID: dbbb9ff37b2d6cdb0800000000000000
+      internalID: -4771895070658282563
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: personagem_principal_7
+      name: Ayla1_7
       rect:
         serializedVersion: 2
-        x: 128
+        x: 152
         y: 192
-        width: 64
-        height: 64
+        width: 32
+        height: 47
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -335,20 +332,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 3061739e602044cf0800000000000000
-      internalID: -269087849029626365
+      spriteID: a80bede77cf6d3bd0800000000000000
+      internalID: -2648838103206285174
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: personagem_principal_8
+      name: Ayla1_8
       rect:
         serializedVersion: 2
-        x: 192
+        x: 216
         y: 192
-        width: 64
-        height: 64
+        width: 32
+        height: 46
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -357,42 +354,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: bbc48ce48a624b1f0800000000000000
-      internalID: -1030155910442890053
+      spriteID: 25cf1fa9403ea59f0800000000000000
+      internalID: -478820801442612142
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: personagem_principal_9
+      name: Ayla1_9
       rect:
         serializedVersion: 2
-        x: 256
-        y: 192
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: acc7703460c82fb50800000000000000
-      internalID: 6625511960337677514
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: personagem_principal_10
-      rect:
-        serializedVersion: 2
-        x: 0
+        x: 278
         y: 128
-        width: 64
-        height: 64
+        width: 34
+        height: 67
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -401,20 +376,42 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: eaaced2fb9770fbc0800000000000000
-      internalID: -3751366977921299794
+      spriteID: e757c4fbf12f59aa0800000000000000
+      internalID: -6154747097564547714
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: personagem_principal_11
+      name: Ayla1_10
       rect:
         serializedVersion: 2
-        x: 64
+        x: 280
+        y: 207
+        width: 13
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2cb1e4b2f744aef10800000000000000
+      internalID: 2299725872704134082
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ayla1_11
+      rect:
+        serializedVersion: 2
+        x: 22
         y: 128
-        width: 64
-        height: 64
+        width: 34
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -423,20 +420,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: e844709ca346433b0800000000000000
-      internalID: -5533687838487919474
+      spriteID: 9c556203a10e76250800000000000000
+      internalID: 5937961036792878537
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: personagem_principal_12
+      name: Ayla1_12
       rect:
         serializedVersion: 2
-        x: 128
+        x: 86
         y: 128
-        width: 64
-        height: 64
+        width: 34
+        height: 47
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -445,20 +442,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: f6b52b21ab5ad7210800000000000000
-      internalID: 1332403283367713647
+      spriteID: 3c61fa54d9afcc5a0800000000000000
+      internalID: -6499544608816556349
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: personagem_principal_13
+      name: Ayla1_13
       rect:
         serializedVersion: 2
-        x: 192
+        x: 150
         y: 128
-        width: 64
-        height: 64
+        width: 34
+        height: 47
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -467,20 +464,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 0b249377228f3e780800000000000000
-      internalID: -8654801231963143504
+      spriteID: 44eb6522b813a3a80800000000000000
+      internalID: -8486416074179953084
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: personagem_principal_14
+      name: Ayla1_14
       rect:
         serializedVersion: 2
-        x: 256
+        x: 214
         y: 128
-        width: 64
-        height: 64
+        width: 34
+        height: 47
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -489,20 +486,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 51a7dabbfc7029870800000000000000
-      internalID: 8688015219939441173
+      spriteID: 6cc018ad3d40709f0800000000000000
+      internalID: -502427525478019898
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: personagem_principal_15
+      name: Ayla1_15
       rect:
         serializedVersion: 2
-        x: 0
+        x: 22
         y: 64
-        width: 64
-        height: 64
+        width: 34
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -511,20 +508,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 743dd7de389c29ff0800000000000000
-      internalID: -30740678975827129
+      spriteID: aafc607b3121efc60800000000000000
+      internalID: 7853734676065079210
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: personagem_principal_16
+      name: Ayla1_16
       rect:
         serializedVersion: 2
-        x: 64
+        x: 86
         y: 64
-        width: 64
-        height: 64
+        width: 34
+        height: 47
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -533,20 +530,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: af382fa229dc60ee0800000000000000
-      internalID: -1295121815152983046
+      spriteID: caed14288c5b6da10800000000000000
+      internalID: 1933932962785648300
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: personagem_principal_17
+      name: Ayla1_17
       rect:
         serializedVersion: 2
-        x: 128
+        x: 152
         y: 64
-        width: 64
-        height: 64
+        width: 32
+        height: 47
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -555,20 +552,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: d757ec2fc6e7d6320800000000000000
-      internalID: 2552835570184123773
+      spriteID: 299f5a3cbef958760800000000000000
+      internalID: 7459544192757660050
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: personagem_principal_18
+      name: Ayla1_18
       rect:
         serializedVersion: 2
-        x: 192
+        x: 216
         y: 64
-        width: 64
-        height: 64
+        width: 32
+        height: 46
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -577,20 +574,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 5e420d061e2b0aa50800000000000000
-      internalID: 6530416140748858597
+      spriteID: 06dba0de37e288e40800000000000000
+      internalID: 5658824007224048992
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: personagem_principal_19
+      name: Ayla1_19
       rect:
         serializedVersion: 2
-        x: 256
+        x: 280
         y: 64
-        width: 64
-        height: 64
+        width: 32
+        height: 47
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -599,20 +596,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 7daf873e630413330800000000000000
-      internalID: 3688800174281915095
+      spriteID: b45d0d85a1791ca20800000000000000
+      internalID: 3080909759513154891
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: personagem_principal_20
+      name: Ayla1_20
       rect:
         serializedVersion: 2
-        x: 0
+        x: 24
         y: 0
-        width: 64
-        height: 64
+        width: 32
+        height: 46
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -621,20 +618,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 10668ddc3f7c54260800000000000000
-      internalID: 7081285839054464513
+      spriteID: 6f171a01da5a684b0800000000000000
+      internalID: -5438477337276354058
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: personagem_principal_21
+      name: Ayla1_21
       rect:
         serializedVersion: 2
-        x: 64
+        x: 88
         y: 0
-        width: 64
-        height: 64
+        width: 32
+        height: 47
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -643,30 +640,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 8a18dbd24d4f7bff0800000000000000
-      internalID: -20278481162239576
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: personagem_principal_22
-      rect:
-        serializedVersion: 2
-        x: 128
-        y: 0
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 641641a1a64464ae0800000000000000
-      internalID: -1565488597969903290
+      spriteID: d58cd0c6439471010800000000000000
+      internalID: 1159475918571161693
       vertices: []
       indices: 
       edges: []
@@ -675,7 +650,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 90cad0e6b72b7634a9542c2fa0f951bd
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -685,29 +660,28 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      personagem_principal_0: -8039453624466745542
-      personagem_principal_1: 6127068377990412938
-      personagem_principal_10: -3751366977921299794
-      personagem_principal_11: -5533687838487919474
-      personagem_principal_12: 1332403283367713647
-      personagem_principal_13: -8654801231963143504
-      personagem_principal_14: 8688015219939441173
-      personagem_principal_15: -30740678975827129
-      personagem_principal_16: -1295121815152983046
-      personagem_principal_17: 2552835570184123773
-      personagem_principal_18: 6530416140748858597
-      personagem_principal_19: 3688800174281915095
-      personagem_principal_2: -9121490362607018622
-      personagem_principal_20: 7081285839054464513
-      personagem_principal_21: -20278481162239576
-      personagem_principal_22: -1565488597969903290
-      personagem_principal_3: -3685263538589338938
-      personagem_principal_4: 4926920795607471476
-      personagem_principal_5: 345919587074080549
-      personagem_principal_6: -3812050058187419350
-      personagem_principal_7: -269087849029626365
-      personagem_principal_8: -1030155910442890053
-      personagem_principal_9: 6625511960337677514
+      Ayla1_0: -1517358426688244947
+      Ayla1_1: 5921076858659521878
+      Ayla1_10: 2299725872704134082
+      Ayla1_11: 5937961036792878537
+      Ayla1_12: -6499544608816556349
+      Ayla1_13: -8486416074179953084
+      Ayla1_14: -502427525478019898
+      Ayla1_15: 7853734676065079210
+      Ayla1_16: 1933932962785648300
+      Ayla1_17: 7459544192757660050
+      Ayla1_18: 5658824007224048992
+      Ayla1_19: 3080909759513154891
+      Ayla1_2: 8771495758076041388
+      Ayla1_20: -5438477337276354058
+      Ayla1_21: 1159475918571161693
+      Ayla1_3: 9021801272415680914
+      Ayla1_4: 3099763183967114806
+      Ayla1_5: -5660880737132682201
+      Ayla1_6: -4771895070658282563
+      Ayla1_7: -2648838103206285174
+      Ayla1_8: -478820801442612142
+      Ayla1_9: -6154747097564547714
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

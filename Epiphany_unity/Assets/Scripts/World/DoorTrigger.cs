@@ -47,16 +47,5 @@ public class DoorTrigger : MonoBehaviour // Ou TrocaDeCena, se preferir esse nom
         }
     }
 
-    // Exemplo de como seria com um FadeManager (opcional)
-    // IEnumerator HandleFadeAndLoad()
-    // {
-    //     // Supondo que você tenha um FadeManager singleton
-    //     if (FadeManager.Instance != null)
-    //     {
-    //         yield return StartCoroutine(FadeManager.Instance.FadeOut(0.5f)); // Duração do fade
-    //     }
-    //
-    //     // Carrega a nova cena APÓS o fade
-    //     SceneManager.LoadScene(sceneToLoad);
-    // }
+    
 }
