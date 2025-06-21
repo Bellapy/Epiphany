@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: a5a80ecf941c6204f93f621230ddc4bb
+guid: f5c8f7511544c9949a6768d9bd179ee0
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -4687696419943679750
-    second: fundopreto_0
+      213: -2077825459984123605
+    second: floroxa_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -37,7 +37,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -75,7 +75,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: fundopreto_0
+      name: floroxa_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 0
-        width: 1280
-        height: 720
+        y: 15
+        width: 224
+        height: 130
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: af8f26a41f4f1feb0800000000000000
-      internalID: -4687696419943679750
+      spriteID: b293260c0c41a23e0800000000000000
+      internalID: -2077825459984123605
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      fundopreto_0: -4687696419943679750
+      floroxa_0: -2077825459984123605
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

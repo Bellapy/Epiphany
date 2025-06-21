@@ -15,7 +15,7 @@ public class ReflectionSign : MonoBehaviour, IInteractable // <-- Veja, ele impl
         if (reflectionData != null && UIManager.Instance != null)
         {
             Debug.Log($"Placa '{gameObject.name}' interagida. Mostrando reflexão.");
-            UIManager.Instance.ShowReflection(reflectionData);
+           UIManager.Instance.ShowEnvironmentalReflection(reflectionData);
         }
         else
         {

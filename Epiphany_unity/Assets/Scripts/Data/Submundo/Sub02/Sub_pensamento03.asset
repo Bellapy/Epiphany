@@ -10,7 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f15967b04bb688946bc56ec52b3fff10, type: 3}
-  m_Name: "Sub_Reflex\xE3o_02"
+  m_Name: Sub_pensamento03
   m_EditorClassIdentifier: 
   reflectionLines:
-  - Tudo parece... adormecido. Esperando por algo.
+  - "H\xE1 uma beleza solit\xE1ria aqui. Como uma can\xE7\xE3o que ningu\xE9m mais
+    se lembra de como cantar."
