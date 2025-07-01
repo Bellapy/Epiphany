@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 public class UIManager : MonoBehaviour
 {
@@ -13,47 +14,80 @@ public class UIManager : MonoBehaviour
     [Header("Configurações Globais de Timing")]
     [Tooltip("Tempo em segundos entre cada letra. Menor = mais rápido.")]
     [SerializeField] private float timePerCharacter = 0.02f;
-
     [Tooltip("Pausa em segundos entre as frases, se houver mais de uma na mesma interação.")]
     [SerializeField] private float delayBetweenLines = 1.5f;
-
     [Tooltip("Tempo que o painel fica na tela APÓS o texto terminar, antes de sumir.")]
     [SerializeField] private float timeOnScreenAfterTyping = 3.0f;
+    [Tooltip("Duração do fade in/out dos painéis em segundos.")]
+    [SerializeField] private float fadeDuration = 0.3f;
 
-
-    // --- Variáveis Internas (Controladas pelo Código) ---
-    private GameObject currentBorderPanel;
+    // --- Referências Internas (Conectadas a cada cena) ---
+    private GameObject currentBackgroundPanel;
+    private CanvasGroup currentPanelCanvasGroup;
     private TextMeshProUGUI currentReflectionText;
     private Image currentPortraitImage;
     private GameObject currentPortraitContainer;
     private Sprite currentPlayerPortrait;
-    
+    private CanvasGroup interactionPromptCanvasGroup;
+
+    // --- Variáveis de Estado Internas ---
     private Coroutine activeDialogueCoroutine;
-    private bool isPanelVisible = false;
+    private Coroutine promptFadeCoroutine;
 
     void Awake()
     {
-        if (Instance != null && Instance != this) Destroy(gameObject);
-        else { Instance = this; DontDestroyOnLoad(gameObject); }
+        if (Instance != null && Instance != this) { Destroy(gameObject); return; }
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
+    }
+
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    // Limpa tudo ao carregar uma nova cena para evitar erros de referência
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        StopAllCoroutines();
+        activeDialogueCoroutine = null;
+        promptFadeCoroutine = null;
+        // Limpa as referências para garantir que o próximo Connector funcione corretamente
+        currentBackgroundPanel = null;
+        currentPanelCanvasGroup = null;
+        interactionPromptCanvasGroup = null;
     }
 
     public void ConnectUI(UIDialogueConnector connector)
     {
-        Debug.Log("UIManager conectado com a UI da cena atual.");
-        currentBorderPanel = connector.borderPanel;
+        currentBackgroundPanel = connector.backgroundPanel;
+        if (currentBackgroundPanel != null)
+        {
+            currentPanelCanvasGroup = currentBackgroundPanel.GetComponent<CanvasGroup>();
+        }
         currentReflectionText = connector.reflectionText;
         currentPortraitImage = connector.portraitImage;
         currentPortraitContainer = connector.portraitContainer;
         currentPlayerPortrait = connector.playerPortrait;
+        interactionPromptCanvasGroup = connector.interactionPromptCanvasGroup;
 
-        if (currentBorderPanel != null)
+        if (currentBackgroundPanel != null)
         {
-            currentBorderPanel.SetActive(false); // Garante que a UI comece desligada
-            isPanelVisible = false;
+            currentBackgroundPanel.SetActive(false);
+            if(currentPanelCanvasGroup != null) currentPanelCanvasGroup.alpha = 0;
+        }
+        if (interactionPromptCanvasGroup != null)
+        {
+            interactionPromptCanvasGroup.alpha = 0;
         }
     }
 
-    // --- Métodos Públicos para Iniciar Diálogos ---
+    // --- MÉTODOS PÚBLICOS PARA CONTROLE EXTERNO ---
 
     public void ShowEnvironmentalReflection(ReflectionData data)
     {
@@ -63,47 +97,56 @@ public class UIManager : MonoBehaviour
 
     public void ShowPersonalReflection(ReflectionData data)
     {
-        if (currentPortraitImage != null && currentPlayerPortrait != null)
+        if (currentPortraitImage != null && currentPlayerPortrait != null && currentPortraitContainer != null)
         {
             currentPortraitImage.sprite = currentPlayerPortrait;
-            if (currentPortraitContainer != null) currentPortraitContainer.SetActive(true);
+            currentPortraitContainer.SetActive(true);
         }
         StartShowingText(data.reflectionLines);
     }
 
-    // Método para forçar o painel a se esconder (chamado pelo HideReflectionTrigger)
     public void HideReflection()
     {
-        if (isPanelVisible)
+        if (currentBackgroundPanel != null && currentBackgroundPanel.activeSelf)
         {
             if (activeDialogueCoroutine != null) StopCoroutine(activeDialogueCoroutine);
-            if (currentBorderPanel != null) currentBorderPanel.SetActive(false);
-            isPanelVisible = false;
+            activeDialogueCoroutine = StartCoroutine(FadeOutDialogueRoutine());
         }
     }
 
-    // --- Lógica Interna ---
+    public void ShowInteractionPrompt()
+    {
+        if (promptFadeCoroutine != null) StopCoroutine(promptFadeCoroutine);
+        promptFadeCoroutine = StartCoroutine(FadePrompt(1f));
+    }
 
+    public void HideInteractionPrompt()
+    {
+        if (promptFadeCoroutine != null) StopCoroutine(promptFadeCoroutine);
+        promptFadeCoroutine = StartCoroutine(FadePrompt(0f));
+    }
+    
+    // --- LÓGICA INTERNA E CORROTINAS ---
+    
     private void StartShowingText(List<string> lines)
     {
-        if (currentBorderPanel == null)
+        if (currentBackgroundPanel == null)
         {
-            Debug.LogWarning("UIManager tentou mostrar texto, mas nenhuma UI está conectada.");
+            Debug.LogWarning("UIManager tentou mostrar texto, mas o Background Panel não está conectado.");
             return;
         }
         
-        // Se uma corrotina já estiver ativa, para ela antes de começar uma nova.
+        if (currentReflectionText != null) currentReflectionText.text = "";
+        
         if (activeDialogueCoroutine != null) StopCoroutine(activeDialogueCoroutine);
         activeDialogueCoroutine = StartCoroutine(DialogueRoutine(lines));
     }
 
     private IEnumerator DialogueRoutine(List<string> lines)
     {
-        // 1. Mostra o painel
-        currentBorderPanel.SetActive(true);
-        isPanelVisible = true;
+        currentBackgroundPanel.SetActive(true);
+        yield return StartCoroutine(FadeRoutine(currentPanelCanvasGroup, 1f));
 
-        // 2. Digita todas as frases
         for (int i = 0; i < lines.Count; i++)
         {
             yield return StartCoroutine(TypeSentence(lines[i]));
@@ -113,13 +156,45 @@ public class UIManager : MonoBehaviour
             }
         }
         
-        // 3. Espera um tempo na tela
         yield return new WaitForSeconds(timeOnScreenAfterTyping);
         
-        // 4. Esconde o painel
-        currentBorderPanel.SetActive(false);
-        isPanelVisible = false;
+        yield return StartCoroutine(FadeOutDialogueRoutine());
+    }
+
+    private IEnumerator FadeOutDialogueRoutine()
+    {
+        yield return StartCoroutine(FadeRoutine(currentPanelCanvasGroup, 0f));
+        if (currentBackgroundPanel != null)
+        {
+            currentBackgroundPanel.SetActive(false);
+        }
         activeDialogueCoroutine = null;
+    }
+
+    private IEnumerator FadePrompt(float targetAlpha)
+    {
+        yield return StartCoroutine(FadeRoutine(interactionPromptCanvasGroup, targetAlpha));
+    }
+
+    private IEnumerator FadeRoutine(CanvasGroup group, float targetAlpha)
+    {
+        if (group == null)
+        {
+            // Este aviso agora é esperado em cenas com UI simples, então podemos remover ou comentar
+            // Debug.LogWarning("Tentando fazer fade, mas não há CanvasGroup no painel conectado.");
+            yield break;
+        }
+
+        float startAlpha = group.alpha;
+        float timer = 0f;
+
+        while (timer < fadeDuration)
+        {
+            timer += Time.deltaTime;
+            group.alpha = Mathf.Lerp(startAlpha, targetAlpha, timer / fadeDuration);
+            yield return null;
+        }
+        group.alpha = targetAlpha;
     }
 
     private IEnumerator TypeSentence(string sentence)
@@ -129,7 +204,6 @@ public class UIManager : MonoBehaviour
         foreach (char letter in sentence.ToCharArray())
         {
             currentReflectionText.text += letter;
-            // Futuramente: Tocar som de blip aqui
             yield return new WaitForSeconds(timePerCharacter); 
         }
     }

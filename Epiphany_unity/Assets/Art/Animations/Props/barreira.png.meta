@@ -1,10 +1,19 @@
 fileFormatVersion: 2
-guid: 9216839263f5afd40a42e118e45f9a92
+guid: 9a861c09b3b9fcd448a7e9f989042f12
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -1493234058564937952
-    second: placa_0
+      213: -7292581976814344407
+    second: barreira_0
+  - first:
+      213: 1142107002790243299
+    second: barreira_1
+  - first:
+      213: 7706789240056507850
+    second: barreira_2
+  - first:
+      213: 2478412664972232340
+    second: barreira_3
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,13 +109,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: placa_0
+      name: barreira_0
       rect:
         serializedVersion: 2
-        x: 31
-        y: 15
-        width: 850
-        height: 866
+        x: 23
+        y: 0
+        width: 19
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +124,74 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 027d8b40987f64be0800000000000000
-      internalID: -1493234058564937952
+      spriteID: 927a090745b8bca90800000000000000
+      internalID: -7292581976814344407
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: barreira_1
+      rect:
+        serializedVersion: 2
+        x: 87
+        y: 0
+        width: 19
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3eb6cc4944499df00800000000000000
+      internalID: 1142107002790243299
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: barreira_2
+      rect:
+        serializedVersion: 2
+        x: 151
+        y: 0
+        width: 19
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: acdee544bf304fa60800000000000000
+      internalID: 7706789240056507850
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: barreira_3
+      rect:
+        serializedVersion: 2
+        x: 215
+        y: 0
+        width: 19
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 496cf760037156220800000000000000
+      internalID: 2478412664972232340
       vertices: []
       indices: 
       edges: []
@@ -135,7 +210,10 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      placa_0: -1493234058564937952
+      barreira_0: -7292581976814344407
+      barreira_1: 1142107002790243299
+      barreira_2: 7706789240056507850
+      barreira_3: 2478412664972232340
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

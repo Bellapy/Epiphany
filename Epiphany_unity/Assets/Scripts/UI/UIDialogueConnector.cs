@@ -5,9 +5,16 @@ using UnityEngine.UI;
 
 public class UIDialogueConnector : MonoBehaviour
 {
+    [Header("Referências de Prompts (Opcional)")]
+public CanvasGroup interactionPromptCanvasGroup;
     [Header("Referências da UI de Diálogo Nesta Cena")]
-    public GameObject borderPanel;         // <<< A VARIÁVEL QUE FALTAVA
+    [Tooltip("O painel principal que será ativado/desativado.")]
+    public GameObject backgroundPanel;
+
+    [Tooltip("O objeto de texto que exibirá as frases.")]
     public TextMeshProUGUI reflectionText;
+
+    [Header("Referências do Retrato (Deixe vazio se não usar)")]
     public Image portraitImage;
     public GameObject portraitContainer;
     public Sprite playerPortrait;
@@ -20,7 +27,7 @@ public class UIDialogueConnector : MonoBehaviour
         }
         else
         {
-            Debug.LogError("UIDialogueConnector não conseguiu encontrar uma instância do UIManager!");
+            Debug.LogError("UIDialogueConnector: Instância do UIManager não encontrada! O jogo foi iniciado pela cena correta?");
         }
     }
 }

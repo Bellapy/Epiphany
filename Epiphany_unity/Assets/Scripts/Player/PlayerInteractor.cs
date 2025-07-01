@@ -1,53 +1,53 @@
-// PlayerInteractor.cs
+// Em PlayerInteractor.cs
 using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections.Generic;
 
 public class PlayerInteractor : MonoBehaviour
 {
-    // Uma lista para guardar todos os interativos que estão ao alcance.
     private List<IInteractable> interactablesInRange = new List<IInteractable>();
-
-    // Este método será chamado pelo componente Player Input quando a ação "Interact" for pressionada.
+    
+    // Chamado pelo componente Player Input quando a tecla "E" é pressionada
     public void OnInteract(InputValue value)
     {
-        // Se a tecla foi pressionada (não solta) e temos algo para interagir...
         if (value.isPressed && interactablesInRange.Count > 0)
         {
-            // Pega o interativo mais próximo (o último que entrou na lista) e chama seu método Interact().
+            // Interage com o último objeto que entrou no alcance
             interactablesInRange[interactablesInRange.Count - 1].Interact();
         }
     }
 
-    // Chamado quando algo entra no nosso trigger de interação.
+    // Chamado quando o círculo de alcance do jogador entra em um trigger
     private void OnTriggerEnter2D(Collider2D other)
     {
-        // Tenta pegar o componente que implementa a interface IInteractable.
         IInteractable interactable = other.GetComponent<IInteractable>();
         if (interactable != null)
         {
-            // Se encontrou, adiciona na lista.
+            // Adiciona o objeto à lista de interativos
             interactablesInRange.Add(interactable);
-            Debug.Log($"Entrou no alcance de: {other.name}");
+            
+            // Se esta é a primeira interação no alcance, manda o UIManager mostrar o prompt
+            if (UIManager.Instance != null)
+            {
+                UIManager.Instance.ShowInteractionPrompt();
+            }
         }
     }
 
-    // Chamado quando algo sai do nosso trigger de interação.
+    // Chamado quando o círculo de alcance do jogador sai de um trigger
     private void OnTriggerExit2D(Collider2D other)
     {
         IInteractable interactable = other.GetComponent<IInteractable>();
         if (interactable != null)
         {
-            // Se saiu, remove da lista.
+            // Remove o objeto da lista
             interactablesInRange.Remove(interactable);
-            Debug.Log($"Saiu do alcance de: {other.name}");
+            
+            // Se a lista de interativos ficou vazia, manda o UIManager esconder o prompt
+            if (interactablesInRange.Count == 0 && UIManager.Instance != null)
+            {
+                UIManager.Instance.HideInteractionPrompt();
+            }
         }
     }
-}
-
-// Uma "interface" é como um contrato. Qualquer script que usar IInteractable
-// É OBRIGADO a ter um método chamado Interact().
-public interface IInteractable
-{
-    void Interact();
 }
