@@ -304,6 +304,140 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""PuzzleUI"",
+            ""id"": ""d60baeea-ad14-47ed-a247-51318f8db35f"",
+            ""actions"": [
+                {
+                    ""name"": ""New action"",
+                    ""type"": ""Button"",
+                    ""id"": ""e0546573-b9ca-4a81-a3b7-2fb1692c9301"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""MoveSelection"",
+                    ""type"": ""Button"",
+                    ""id"": ""2e8dd2d5-713d-411c-a7fe-190e280cd4b4"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Activate"",
+                    ""type"": ""Button"",
+                    ""id"": ""269b5018-ff99-42b7-914c-12ed0bb47745"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""8eb77e87-2e13-439e-ac69-86ad027ed0fa"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""New action"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f2300a40-43ec-4dfc-ad3c-d4501d5bf05a"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MoveSelection"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""Left/Right"",
+                    ""id"": ""9dfa2bdf-5609-460b-9a74-4de2d5ee23cd"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MoveSelection"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""8bf9b04d-c6ec-4f6c-9f3c-cae85f7e2ad0"",
+                    ""path"": ""<Keyboard>/leftArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MoveSelection"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""550ab4c8-2815-4041-ba4c-da87952971b7"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MoveSelection"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""c3778737-97a2-42af-baa2-9c1f575d723b"",
+                    ""path"": ""<Keyboard>/rightArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MoveSelection"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""e1ec8639-59d8-45a8-a429-9d1c1b09f8a3"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MoveSelection"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3af892cc-b6ff-4a6d-891f-9e8b77e57c07"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Activate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""22292df5-32dd-453b-9bea-01766fa501c1"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Activate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -315,11 +449,17 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_Player_AdvanceDialogue = m_Player.FindAction("AdvanceDialogue", throwIfNotFound: true);
         m_Player_OpenMenu = m_Player.FindAction("OpenMenu", throwIfNotFound: true);
         m_Player_OpenMap = m_Player.FindAction("OpenMap", throwIfNotFound: true);
+        // PuzzleUI
+        m_PuzzleUI = asset.FindActionMap("PuzzleUI", throwIfNotFound: true);
+        m_PuzzleUI_Newaction = m_PuzzleUI.FindAction("New action", throwIfNotFound: true);
+        m_PuzzleUI_MoveSelection = m_PuzzleUI.FindAction("MoveSelection", throwIfNotFound: true);
+        m_PuzzleUI_Activate = m_PuzzleUI.FindAction("Activate", throwIfNotFound: true);
     }
 
     ~@PlayerInputActions()
     {
         UnityEngine.Debug.Assert(!m_Player.enabled, "This will cause a leak and performance issues, PlayerInputActions.Player.Disable() has not been called.");
+        UnityEngine.Debug.Assert(!m_PuzzleUI.enabled, "This will cause a leak and performance issues, PlayerInputActions.PuzzleUI.Disable() has not been called.");
     }
 
     /// <summary>
@@ -531,6 +671,124 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     /// Provides a new <see cref="PlayerActions" /> instance referencing this action map.
     /// </summary>
     public PlayerActions @Player => new PlayerActions(this);
+
+    // PuzzleUI
+    private readonly InputActionMap m_PuzzleUI;
+    private List<IPuzzleUIActions> m_PuzzleUIActionsCallbackInterfaces = new List<IPuzzleUIActions>();
+    private readonly InputAction m_PuzzleUI_Newaction;
+    private readonly InputAction m_PuzzleUI_MoveSelection;
+    private readonly InputAction m_PuzzleUI_Activate;
+    /// <summary>
+    /// Provides access to input actions defined in input action map "PuzzleUI".
+    /// </summary>
+    public struct PuzzleUIActions
+    {
+        private @PlayerInputActions m_Wrapper;
+
+        /// <summary>
+        /// Construct a new instance of the input action map wrapper class.
+        /// </summary>
+        public PuzzleUIActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
+        /// <summary>
+        /// Provides access to the underlying input action "PuzzleUI/Newaction".
+        /// </summary>
+        public InputAction @Newaction => m_Wrapper.m_PuzzleUI_Newaction;
+        /// <summary>
+        /// Provides access to the underlying input action "PuzzleUI/MoveSelection".
+        /// </summary>
+        public InputAction @MoveSelection => m_Wrapper.m_PuzzleUI_MoveSelection;
+        /// <summary>
+        /// Provides access to the underlying input action "PuzzleUI/Activate".
+        /// </summary>
+        public InputAction @Activate => m_Wrapper.m_PuzzleUI_Activate;
+        /// <summary>
+        /// Provides access to the underlying input action map instance.
+        /// </summary>
+        public InputActionMap Get() { return m_Wrapper.m_PuzzleUI; }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Enable()" />
+        public void Enable() { Get().Enable(); }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Disable()" />
+        public void Disable() { Get().Disable(); }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.enabled" />
+        public bool enabled => Get().enabled;
+        /// <summary>
+        /// Implicitly converts an <see ref="PuzzleUIActions" /> to an <see ref="InputActionMap" /> instance.
+        /// </summary>
+        public static implicit operator InputActionMap(PuzzleUIActions set) { return set.Get(); }
+        /// <summary>
+        /// Adds <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
+        /// </summary>
+        /// <param name="instance">Callback instance.</param>
+        /// <remarks>
+        /// If <paramref name="instance" /> is <c>null</c> or <paramref name="instance"/> have already been added this method does nothing.
+        /// </remarks>
+        /// <seealso cref="PuzzleUIActions" />
+        public void AddCallbacks(IPuzzleUIActions instance)
+        {
+            if (instance == null || m_Wrapper.m_PuzzleUIActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_PuzzleUIActionsCallbackInterfaces.Add(instance);
+            @Newaction.started += instance.OnNewaction;
+            @Newaction.performed += instance.OnNewaction;
+            @Newaction.canceled += instance.OnNewaction;
+            @MoveSelection.started += instance.OnMoveSelection;
+            @MoveSelection.performed += instance.OnMoveSelection;
+            @MoveSelection.canceled += instance.OnMoveSelection;
+            @Activate.started += instance.OnActivate;
+            @Activate.performed += instance.OnActivate;
+            @Activate.canceled += instance.OnActivate;
+        }
+
+        /// <summary>
+        /// Removes <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
+        /// </summary>
+        /// <remarks>
+        /// Calling this method when <paramref name="instance" /> have not previously been registered has no side-effects.
+        /// </remarks>
+        /// <seealso cref="PuzzleUIActions" />
+        private void UnregisterCallbacks(IPuzzleUIActions instance)
+        {
+            @Newaction.started -= instance.OnNewaction;
+            @Newaction.performed -= instance.OnNewaction;
+            @Newaction.canceled -= instance.OnNewaction;
+            @MoveSelection.started -= instance.OnMoveSelection;
+            @MoveSelection.performed -= instance.OnMoveSelection;
+            @MoveSelection.canceled -= instance.OnMoveSelection;
+            @Activate.started -= instance.OnActivate;
+            @Activate.performed -= instance.OnActivate;
+            @Activate.canceled -= instance.OnActivate;
+        }
+
+        /// <summary>
+        /// Unregisters <param cref="instance" /> and unregisters all input action callbacks via <see cref="PuzzleUIActions.UnregisterCallbacks(IPuzzleUIActions)" />.
+        /// </summary>
+        /// <seealso cref="PuzzleUIActions.UnregisterCallbacks(IPuzzleUIActions)" />
+        public void RemoveCallbacks(IPuzzleUIActions instance)
+        {
+            if (m_Wrapper.m_PuzzleUIActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        /// <summary>
+        /// Replaces all existing callback instances and previously registered input action callbacks associated with them with callbacks provided via <param cref="instance" />.
+        /// </summary>
+        /// <remarks>
+        /// If <paramref name="instance" /> is <c>null</c>, calling this method will only unregister all existing callbacks but not register any new callbacks.
+        /// </remarks>
+        /// <seealso cref="PuzzleUIActions.AddCallbacks(IPuzzleUIActions)" />
+        /// <seealso cref="PuzzleUIActions.RemoveCallbacks(IPuzzleUIActions)" />
+        /// <seealso cref="PuzzleUIActions.UnregisterCallbacks(IPuzzleUIActions)" />
+        public void SetCallbacks(IPuzzleUIActions instance)
+        {
+            foreach (var item in m_Wrapper.m_PuzzleUIActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_PuzzleUIActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    /// <summary>
+    /// Provides a new <see cref="PuzzleUIActions" /> instance referencing this action map.
+    /// </summary>
+    public PuzzleUIActions @PuzzleUI => new PuzzleUIActions(this);
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "Player" which allows adding and removing callbacks.
     /// </summary>
@@ -573,5 +831,34 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnOpenMap(InputAction.CallbackContext context);
+    }
+    /// <summary>
+    /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "PuzzleUI" which allows adding and removing callbacks.
+    /// </summary>
+    /// <seealso cref="PuzzleUIActions.AddCallbacks(IPuzzleUIActions)" />
+    /// <seealso cref="PuzzleUIActions.RemoveCallbacks(IPuzzleUIActions)" />
+    public interface IPuzzleUIActions
+    {
+        /// <summary>
+        /// Method invoked when associated input action "New action" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnNewaction(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "MoveSelection" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnMoveSelection(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Activate" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnActivate(InputAction.CallbackContext context);
     }
 }
