@@ -10,6 +10,7 @@ public class Testemovimentação : MonoBehaviour
         rbTeste = GetComponent<Rigidbody2D>();
     }
 
+//testando
     void FixedUpdate()
     {
         float inputX = Input.GetAxisRaw("Horizontal");

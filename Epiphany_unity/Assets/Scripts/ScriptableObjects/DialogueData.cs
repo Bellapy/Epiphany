@@ -1,27 +1,18 @@
 using UnityEngine;
-using System.Collections.Generic; // Necessário para usar List
+using System.Collections.Generic;
 
-// [CreateAssetMenu] permite que você crie assets deste tipo no menu 'Create' da Unity.
-// fileName: Nome padrão do arquivo quando você cria um novo.
-// menuName: O caminho no menu 'Create'. Ex: "Epiphany/Dialogue Data"
 [CreateAssetMenu(fileName = "NewDialogue", menuName = "Epiphany/Dialogue Data")]
-public class DialogueData : ScriptableObject // IMPORTANTE: Herda de ScriptableObject, NÃO de MonoBehaviour
+public class DialogueData : ScriptableObject 
 {
-    // Campos para o bloco de fala
-    public string speakerName; // Nome do personagem falando (opcional)
-    public Sprite speakerPortrait; // Imagem do retrato do personagem
+    public string speakerName;
+    public Sprite speakerPortrait;
 
-    // [TextArea] ajuda a ter um campo de texto maior no Inspector para as falas
-    [TextArea(3, 10)] // 3 linhas mínimas, 10 máximas no Inspector
-    public List<string> dialogueLines; // Lista de todas as falas nesta parte do diálogo
+    [TextArea(3, 10)]
+    public List<string> dialogueLines;
 
-    // Campos para as "falsas escolhas"
-    public bool hasChoice; // true se este diálogo apresentar uma "falsa escolha"
-    public List<string> choiceOptions; // Opções de texto para a falsa escolha
-    // Futuramente, você pode adicionar uma referência para o próximo DialogueData
-    // que cada escolha leva, mas por enquanto, vamos manter simples.
-
-    // Campos para as Reflexões Ambientais automáticas
-    public bool isEnvironmentalReflection; // true se for uma reflexão automática
-    public float displayDuration = 5.0f; // Duração que a reflexão fica na tela
+    public bool hasChoice;
+    public List<string> choiceOptions;
+    
+    public bool isEnvironmentalReflection;
+    public float displayDuration = 5.0f;
 }
