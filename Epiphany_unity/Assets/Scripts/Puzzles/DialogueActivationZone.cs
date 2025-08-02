@@ -1,29 +1,27 @@
+
 using UnityEngine;
 
 public class DialogueActivationZone : MonoBehaviour
 {
-    [Header("Dados")]
-    [Tooltip("Arraste aqui o ASSET de diálogo que deve começar.")]
     [SerializeField] private DialogueData dialogueToStart;
-    
-    [Header("Gatilho de Evento")]
-    [Tooltip("Arraste aqui o Manager do puzzle que será ativado após o diálogo.")]
-    [SerializeField] private CrystalPuzzleManager puzzleManager;
-
-    [Tooltip("Marque se este gatilho deve funcionar apenas uma vez.")]
     [SerializeField] private bool triggerOnce = true;
+    private bool hasBeenTriggered = false;
     
+    // <<< Removi a referência ao PuzzleManager daqui, ela não é mais necessária >>>
+
+    private void Awake()
+    {
+        GetComponent<Collider2D>().isTrigger = true;
+    }
+
     private void OnTriggerEnter2D(Collider2D other)
     {
+        if (triggerOnce && hasBeenTriggered) return;
         if (other.CompareTag("Player"))
         {
-            Debug.Log("Player entrou na zona. Entregando diálogo e ação final para o DialogueManager.");
-            DialogueManager.Instance.StartDialogue(dialogueToStart, puzzleManager.ActivatePuzzle);
-
-            if (triggerOnce)
-            {
-                gameObject.SetActive(false);
-            }
+            // CHAMADA CORRETA E SIMPLES
+            DialogueManager.Instance.StartDialogue(dialogueToStart);
+            hasBeenTriggered = true;
         }
     }
 }

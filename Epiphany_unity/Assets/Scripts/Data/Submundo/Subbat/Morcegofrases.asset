@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f15967b04bb688946bc56ec52b3fff10, type: 3}
+  m_Name: Morcegofrases
+  m_EditorClassIdentifier: 
+  reflectionLines:
+  - Eles enxergam com o som... Que tipo de mundo eles veem?
+  - "Navegam pela escurid\xE3o total com uma confian\xE7a que eu gostaria de ter."
+  - "Para eles, a noite n\xE3o \xE9 o fim do dia, mas o come\xE7o. Uma outra forma
+    de viver."
+  - "Asas de couro, dan\xE7ando no eco. Os guardi\xF5es silenciosos deste lugar."

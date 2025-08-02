@@ -1,33 +1,37 @@
-// Em _Scripts/UI/UIDialogueConnector.cs
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
 public class UIDialogueConnector : MonoBehaviour
 {
-    [Header("Referências de Prompts (Opcional)")]
-public CanvasGroup interactionPromptCanvasGroup;
-    [Header("Referências da UI de Diálogo Nesta Cena")]
-    [Tooltip("O painel principal que será ativado/desativado.")]
-    public GameObject backgroundPanel;
+    [Header("Componentes de Diálogo e Reflexão")]
+    public GameObject dialogueBox;
+    public TextMeshProUGUI speakerNameText;
+    public TextMeshProUGUI dialogueText;
+    public Image speakerPortrait;
+    public List<Button> choiceButtons;
+    
+    [Header("Componentes de Prompt de Interação")]
+    public CanvasGroup interactionPromptCanvasGroup;
 
-    [Tooltip("O objeto de texto que exibirá as frases.")]
-    public TextMeshProUGUI reflectionText;
-
-    [Header("Referências do Retrato (Deixe vazio se não usar)")]
-    public Image portraitImage;
-    public GameObject portraitContainer;
-    public Sprite playerPortrait;
-
-    void Start()
+/*************  ✨ Windsurf Command ⭐  *************/
+    /// <summary>
+    /// Awake is a special Unity method that is called when the script is loaded.
+    /// We use it to connect the UI elements to the respective managers
+    /// before any other code is executed.
+    /// </summary>
+/*******  8494f327-98c7-46d1-88e4-9887b5dff720  *******/    // A MUDANÇA É AQUI: Trocamos Awake por Start
+    void Start() // Garante que a conexão aconteça depois que todos os managers (em Awake) já se inicializaram.
     {
         if (UIManager.Instance != null)
         {
             UIManager.Instance.ConnectUI(this);
         }
-        else
+
+        if (DialogueManager.Instance != null)
         {
-            Debug.LogError("UIDialogueConnector: Instância do UIManager não encontrada! O jogo foi iniciado pela cena correta?");
+            DialogueManager.Instance.ConnectUI(this);
         }
     }
 }

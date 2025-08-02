@@ -1,4 +1,3 @@
-// Em _Scripts/World/PersonalReflectionTrigger.cs
 using UnityEngine;
 
 [RequireComponent(typeof(Collider2D))]
@@ -9,25 +8,22 @@ public class PersonalReflectionTrigger : MonoBehaviour, IInteractable
 
     private void Awake()
     {
-        // Garante que o collider seja um gatilho para não bloquear o jogador.
         GetComponent<Collider2D>().isTrigger = true;
     }
 
-    // Este método é chamado pelo PlayerInteractor quando o jogador aperta "E"
     public void Interact()
     {
-         Debug.Log("Tecla 'E' pressionada!");
-        if (reflectionData != null && UIManager.Instance != null)
+        // A verificação agora é pelo DialogueManager, não pelo UIManager
+        if (reflectionData != null && DialogueManager.Instance != null)
         {
-            Debug.Log($"Gatilho pessoal '{gameObject.name}' interagido. Mostrando reflexão da personagem.");
+            Debug.Log($"Gatilho pessoal '{gameObject.name}' interagido. Mostrando reflexão.");
             
-            // <<< AQUI ESTÁ A CHAMADA CORRETA >>>
-            // Ele chama o método que mostra o diálogo COM o retrato.
-            UIManager.Instance.ShowPersonalReflection(reflectionData);
+            // <<< A CHAMADA FOI CORRIGIDA PARA FALAR DIRETO COM O DIALOGUEMANAGER >>>
+            DialogueManager.Instance.StartReflection(reflectionData);
         }
         else
         {
-            Debug.LogWarning($"Gatilho '{gameObject.name}' não tem ReflectionData ou UIManager não foi encontrado.");
+            Debug.LogWarning($"Gatilho '{gameObject.name}' não tem ReflectionData ou DialogueManager não foi encontrado.");
         }
     }
 }

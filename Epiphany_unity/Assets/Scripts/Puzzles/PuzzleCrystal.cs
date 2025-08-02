@@ -2,26 +2,43 @@ using UnityEngine;
 
 public class PuzzleCrystal : MonoBehaviour
 {
+    [Header("Feedback")]
+    [Tooltip("O som que este cristal toca quando ativado.")]
     [SerializeField] private AudioClip crystalNote;
+    
+    [Tooltip("O Animator deste cristal.")]
     private Animator animator;
 
     private void Awake()
     {
+        // Pega o componente Animator automaticamente.
         animator = GetComponent<Animator>();
+        if (animator == null)
+        {
+            Debug.LogWarning($"O cristal '{gameObject.name}' não tem um componente Animator!");
+        }
     }
 
+    /// <summary>
+    /// Ativa o cristal, tocando seu som e sua animação de ativação.
+    /// </summary>
     public void ActivateCrystal()
     {
         if (crystalNote != null && AudioManager.Instance != null)
         {
             AudioManager.Instance.PlaySFX(crystalNote);
         }
+
         if (animator != null)
         {
-            animator.SetBool("IsActivated", true);
+            // Usamos um Trigger para a animação de "brilho", pois é um evento único.
+            animator.SetTrigger("Activate");
         }
     }
 
+    /// <summary>
+    /// Ativa o feedback visual de que este cristal está selecionado.
+    /// </summary>
     public void OnSelected()
     {
         if (animator != null)
@@ -30,20 +47,14 @@ public class PuzzleCrystal : MonoBehaviour
         }
     }
 
-/*************  ✨ Windsurf Command ⭐  *************/
-/// <summary>
-/// Deselects the crystal, resetting its visual states in the animator.
-/// <para>Disables both the "IsSelected" and "IsActivated" states when the crystal is deselected.</para>
-/// </summary>
-
-/*******  017f8698-1d17-4bc4-99c4-87b16afcc3c6  *******/
+    /// <summary>
+    /// Desativa o feedback visual de seleção.
+    /// </summary>
     public void OnDeselected()
     {
         if (animator != null)
         {
-            // Quando a seleção sai, desliga tanto o pulso quanto o estado ativado
             animator.SetBool("IsSelected", false);
-            animator.SetBool("IsActivated", false);
         }
     }
 }

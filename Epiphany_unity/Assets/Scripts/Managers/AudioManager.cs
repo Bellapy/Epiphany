@@ -1,14 +1,17 @@
-// Em _Scripts/Managers/AudioManager.cs
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic; // Necessário para List
 
 public class AudioManager : MonoBehaviour
 {
     public static AudioManager Instance { get; private set; }
 
     [Header("Fontes de Áudio")]
-    [SerializeField] private AudioSource musicSource; // Toca as músicas de fundo
-    [SerializeField] private AudioSource sfxSource;   // Toca os efeitos sonoros
+    [SerializeField] private AudioSource musicSource;
+    [SerializeField] private AudioSource sfxSource;
+
+    // Lista para rastrear todos os SFX temporários que criamos.
+    private List<GameObject> activeSfxObjects = new List<GameObject>();
 
     void Awake()
     {
@@ -23,46 +26,80 @@ public class AudioManager : MonoBehaviour
 
     // --- MÉTODOS PÚBLICOS PARA CONTROLAR O ÁUDIO ---
 
-    /// <summary>
-    /// Toca uma música de fundo. Para a música atual antes de tocar a nova.
-    /// </summary>
     public void PlayMusic(AudioClip musicClip)
     {
-        if (musicClip == null) return;
-        
-        // Para evitar tocar a mesma música de novo se ela já estiver tocando
+        if (musicClip == null || musicSource == null) return;
         if (musicSource.clip == musicClip && musicSource.isPlaying) return;
 
         musicSource.clip = musicClip;
         musicSource.Play();
     }
 
-    /// <summary>
-    /// Toca uma música de fundo com um fade in suave.
-    /// </summary>
     public void PlayMusicWithFade(AudioClip musicClip, float fadeDuration = 1.0f)
     {
+        if (musicSource == null) return;
         StartCoroutine(FadeInMusic(musicClip, fadeDuration));
     }
 
-    /// <summary>
-    /// Para a música atual com um fade out suave.
-    /// </summary>
     public void StopMusicWithFade(float fadeDuration = 1.0f)
     {
+        if (musicSource == null) return;
         StartCoroutine(FadeOutMusic(fadeDuration));
     }
 
-    /// <summary>
-    /// Toca um efeito sonoro uma única vez.
-    /// </summary>
+    // Função de SFX antiga, agora redirecionada para a nova.
     public void PlaySFX(AudioClip sfxClip)
     {
-        if (sfxClip == null) return;
-        sfxSource.PlayOneShot(sfxClip);
+        PlaySFXAtPoint(sfxClip, Vector3.zero);
     }
 
-    // --- CORROTINAS PARA OS FADES ---
+    // Função de teste que cria um AudioSource temporário.
+    public void PlaySFXAtPoint(AudioClip sfxClip, Vector3 position)
+    {
+        if (sfxClip == null) return;
+
+        GameObject tempAudioObject = new GameObject("TempSFX_" + sfxClip.name);
+        activeSfxObjects.Add(tempAudioObject); // Adiciona à lista de rastreamento
+        tempAudioObject.transform.position = position;
+        AudioSource audioSource = tempAudioObject.AddComponent<AudioSource>();
+        
+        audioSource.clip = sfxClip;
+        audioSource.spatialBlend = 0.0f;
+        audioSource.Play();
+
+        // Passamos a lista para a corrotina para que ela possa se remover
+        StartCoroutine(DestroyAfterPlaying(tempAudioObject, sfxClip.length));
+    }
+
+    /// <summary>
+    /// Para e destrói todos os efeitos sonoros temporários que estão tocando.
+    /// </summary>
+    public void StopAllSFX()
+    {
+        Debug.Log("[AudioManager] Parando todos os SFX...");
+        // Itera sobre uma cópia da lista para poder modificar a original
+        foreach (GameObject sfxObject in new List<GameObject>(activeSfxObjects))
+        {
+            if (sfxObject != null)
+            {
+                Destroy(sfxObject);
+            }
+        }
+        activeSfxObjects.Clear(); // Limpa a lista
+    }
+
+    // --- CORROTINAS INTERNAS ---
+
+    private IEnumerator DestroyAfterPlaying(GameObject objectToDestroy, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        // Remove da lista antes de destruir
+        activeSfxObjects.Remove(objectToDestroy);
+        if (objectToDestroy != null)
+        {
+            Destroy(objectToDestroy);
+        }
+    }
 
     private IEnumerator FadeInMusic(AudioClip musicClip, float duration)
     {
@@ -93,6 +130,6 @@ public class AudioManager : MonoBehaviour
         }
 
         musicSource.Stop();
-        musicSource.volume = startVolume; // Reseta o volume para o próximo fade in
+        musicSource.volume = startVolume;
     }
 }

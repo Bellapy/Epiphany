@@ -1,0 +1,135 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9228e584220b007488a3081b0ee915e9, type: 3}
+  m_Name: Ayla_Encontro_Dialogue
+  m_EditorClassIdentifier: 
+  speakerName: Ayla
+  speakerPortrait: {fileID: -7319006059537635548, guid: 76804bf5f896d654ca7271eada5c222e, type: 3}
+  dialogueLines:
+  - sentence: "Nossa! Voc\xEA me assustou! Quem \xE9 voc\xEA? Como conseguiu passar
+      pelo Bob?"
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - sentence: "\u2026 Poxa... aquilo era pra ser dif\xEDcil..."
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - sentence: "Isso \xE9 estranho... Humanos n\xE3o deveriam conseguir chegar a Zelfin
+      de forma alguma..."
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - sentence: "O \xFAnico jeito seria pela abertura da caverna... mas ningu\xE9m
+      sabe o que existe al\xE9m dela... Voc\xEA lembra de algo?"
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - sentence: ... ... ...
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - sentence: "Ah... n\xE3o?"
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - sentence: "Mas voc\xEA precisa voltar pra... pra onde quer que tenha vindo! N\xE3o
+      pode simplesmente ficar vagando por a\xED!"
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - sentence: "Olha... a maioria dos esp\xEDritos aqui s\xE3o bons... mas nunca podemos
+      conhecer tudo. Ent\xE3o \xE9 melhor voc\xEA n\xE3o correr riscos \xE0 toa..."
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - sentence: "Ok, ok... Deve estar se sentindo perdida, n\xE3o \xE9? Desculpe por
+      come\xE7ar com o p\xE9 esquerdo."
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - sentence: "Deixe-me me apresentar direito. Eu sou Ayla, a guardi\xE3 de Zelfin.
+      Vivo aqui h\xE1 bastante tempo... Meu esp\xEDrito \xE9 o da prote\xE7\xE3o."
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - sentence: "Cada um de n\xF3s, em Zelfin, representa um esp\xEDrito diferente.
+      E isso se revela atrav\xE9s da pedra que carregamos..."
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - sentence: "Inclusive... voc\xEA tamb\xE9m tem uma... por algum motivo."
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - sentence: "Nosso mundo existe atrav\xE9s do equil\xEDbrio. "
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - sentence: "Zelfin \xE9 fr\xE1gil... Qualquer agita\xE7\xE3o pode nos destruir
+      \u2014 e n\xE3o s\xF3 a n\xF3s... mas tudo. O fim do universo... em sua ess\xEAncia
+      subjetiva."
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - sentence: "Por isso... sua presen\xE7a aqui \xE9 um risco. Se algo der errado
+      em sua jornada... voc\xEA acabar\xE1 voltando a mim. Sempre."
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - sentence: "Em qualquer circunst\xE2ncia.\r\n"
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - sentence: "Mas... enquanto isso n\xE3o acontece... eu vou fazer o poss\xEDvel
+      para ajudar. Esse \xE9 meu papel. "
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - sentence: "Eu sei, esse discurso todo melodram\xE1tico \xE9 pra voc\xEA me levar
+      a s\xE9rio... Mas aqui, ao meu lado, est\xE1 segura."
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - sentence: "Al\xE9m do mais... Zelfin \xE9 um lugar que voc\xEA vai adorar conhecer."
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - sentence: "J\xE1 tenho uma ideia pra ajudar voc\xEA a voltar... Mas vou precisar
+      da sua ajuda."
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  hasChoice: 0
+  choicePrompt: 
+  choiceOptions: []
+  nextDialogueOnEnd: {fileID: 0}

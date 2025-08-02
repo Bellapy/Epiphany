@@ -6,27 +6,23 @@ using System.Collections.Generic;
 public class CrystalPuzzleManager : MonoBehaviour
 {
     [Header("Referências")]
-    [Tooltip("Arraste todos os GameObjects de cristal aqui, na ordem de seleção.")]
     [SerializeField] private List<PuzzleCrystal> crystals;
-    
-    // <<< NOVO CAMPO PARA CONECTAR NO INSPECTOR >>>
-    [Tooltip("Arraste o GameObject da Player que contém o PlayerController.")]
     [SerializeField] private PlayerController playerController;
+    [SerializeField] private GameObject barrier;
 
     [Header("Configuração do Puzzle")]
-    [Tooltip("A sequência correta a ser tocada. Use os números de 0 a (n-1), baseados na ordem da lista 'crystals'.")]
     [SerializeField] private List<int> correctSequence;
-    [Tooltip("Tempo de espera em segundos entre cada nota da melodia.")]
     [SerializeField] private float timeBetweenNotes = 0.7f;
     
-    [Header("Controle do Puzzle")]
-    [Tooltip("Arraste aqui o GameObject da barreira que será desativado.")]
-    [SerializeField] private GameObject barrier;
-    
+    [Header("Configuração de Áudio Pós-Puzzle")]
+    [Tooltip("A música que deve voltar a tocar quando o puzzle for resolvido.")]
+    [SerializeField] private AudioClip sceneBackgroundMusic;
+
     private List<int> playerSequence = new List<int>();
     private int _selectedIndex = 0;
     private bool isPuzzleActive = false;
     private PlayerInputActions playerInputActions;
+    private Coroutine melodyCoroutine;
 
     private void Awake()
     {
@@ -35,16 +31,15 @@ public class CrystalPuzzleManager : MonoBehaviour
         playerInputActions.PuzzleUI.Activate.performed += OnActivateCrystal;
     }
 
-    private void OnEnable()
-    {
-        // ATIVA O CONTROLE DOS CRISTAIS
-        playerInputActions.PuzzleUI.Enable();
-    }
-
     private void OnDisable()
     {
-        // DESATIVA O CONTROLE DOS CRISTAIS (BOA PRÁTICA)
         playerInputActions.PuzzleUI.Disable();
+        StopAllCoroutines();
+    }
+
+    private void OnDestroy()
+    {
+        StopAllCoroutines();
     }
 
     private void OnMoveSelection(InputAction.CallbackContext context)
@@ -76,9 +71,8 @@ public class CrystalPuzzleManager : MonoBehaviour
     {
         for (int i = 0; i < playerSequence.Count; i++)
         {
-            if (playerSequence[i] != correctSequence[i])
+            if (playerSequence.Count > correctSequence.Count || playerSequence[i] != correctSequence[i])
             {
-                Debug.Log("Sequência errada! Tentando de novo.");
                 playerSequence.Clear();
                 return;
             }
@@ -86,44 +80,85 @@ public class CrystalPuzzleManager : MonoBehaviour
         
         if (playerSequence.Count == correctSequence.Count)
         {
-            Debug.Log("SEQUÊNCIA CORRETA! Puzzle resolvido!");
             SolvePuzzle();
         }
     }
 
+    public void PlaySolutionSequence()
+    {
+        StopAllCoroutines();
+        melodyCoroutine = StartCoroutine(PlaySequenceRoutine());
+    }
+
+    private IEnumerator PlaySequenceRoutine()
+    {
+        foreach (int crystalIndex in correctSequence)
+        {
+            if (crystalIndex >= 0 && crystalIndex < crystals.Count)
+            {
+                crystals[crystalIndex].ActivateCrystal();
+                yield return new WaitForSeconds(timeBetweenNotes);
+            }
+        }
+        melodyCoroutine = null;
+    }
+
     private void SolvePuzzle()
     {
-        // <<< AQUI DEVOLVEMOS O CONTROLE PARA A AYLA >>>
-        if (playerController != null)
+        // 1. Para imediatamente qualquer melodia que esteja tocando.
+        if (AudioManager.Instance != null)
         {
-            playerController.EnableMovement();
+            AudioManager.Instance.StopAllSFX();
         }
-
-        isPuzzleActive = false;
         
+        // 2. Para a corrotina de loop de melodia, por segurança.
+        StopAllCoroutines();
+
+        // 3. Habilita o movimento do jogador e desativa o input do puzzle.
+        if (playerController != null) playerController.EnableMovement();
+        isPuzzleActive = false;
+        playerInputActions.PuzzleUI.Disable();
+        
+        // 4. Faz a barreira desaparecer.
         if (barrier != null)
         {
-            barrier.SetActive(false);
+            Animator barrierAnimator = barrier.GetComponent<Animator>();
+            if (barrierAnimator != null) { barrierAnimator.SetTrigger("Disappear"); }
+            else { barrier.SetActive(false); }
         }
 
-        Debug.Log("A barreira sumiu! Caminho livre.");
-        
-        // Opcional: Desativar este manager para não poder ser usado de novo.
-        // gameObject.SetActive(false);
+        // 5. Reinicia a música de fundo da cena.
+        if (AudioManager.Instance != null && sceneBackgroundMusic != null)
+        {
+            AudioManager.Instance.PlayMusicWithFade(sceneBackgroundMusic, 2.0f);
+        }
     }
     
     public void ActivatePuzzle()
     {
-        // <<< AQUI CONGELAMOS A AYLA >>>
-        if (playerController != null)
-        {
-            playerController.DisableMovement();
-        }
-
+        if (playerController != null) playerController.DisableMovement();
         isPuzzleActive = true;
+        playerInputActions.PuzzleUI.Enable();
         playerSequence.Clear();
         _selectedIndex = 0;
         foreach (var crystal in crystals) { crystal.OnDeselected(); }
         crystals[_selectedIndex].OnSelected();
+    }
+    public void StopMelodyPlayback()
+{
+    Debug.Log("[CrystalPuzzleManager] Parando todas as corrotinas e SFX de melodia.");
+    StopAllCoroutines();
+    if (AudioManager.Instance != null)
+    {
+        // Esta função vai parar todos os sons temporários que criamos para as notas
+        AudioManager.Instance.StopAllSFX(); 
+    }
+    melodyCoroutine = null;
+}
+
+    public float GetSequenceDuration()
+    {
+        if (correctSequence == null) return 0f;
+        return correctSequence.Count * timeBetweenNotes;
     }
 }

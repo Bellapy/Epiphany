@@ -14,7 +14,7 @@ public class HideReflectionTrigger : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             Debug.Log("Jogador entrou na área de esconder reflexão. Chamando HideReflection().");
-            UIManager.Instance.HideReflection();
+            //UIManager.Instance.HideReflection();
         }
     }
 }
