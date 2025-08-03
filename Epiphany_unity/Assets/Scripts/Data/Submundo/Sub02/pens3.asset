@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: pens3
   m_EditorClassIdentifier: 
   speakerName: 
-  speakerPortrait: {fileID: -7319006059537635548, guid: 76804bf5f896d654ca7271eada5c222e, type: 3}
+  speakerPortrait: {fileID: 8801304165609232871, guid: e12f6afae790f4741ba28161ff501209, type: 3}
   dialogueLines:
   - sentence: "H\xE1 uma beleza solit\xE1ria aqui. Como uma can\xE7\xE3o que ningu\xE9m
       mais se lembra de como cantar.\n"

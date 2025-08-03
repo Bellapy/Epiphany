@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System.Collections; // Necessário para a Corrotina
 
 public class PlayerController : MonoBehaviour
 {
@@ -16,9 +17,10 @@ public class PlayerController : MonoBehaviour
     private Vector2 currentMovementInput;
     private bool isFacingRight = true;
     private int lastVerticalDirection = -1;
-    // Removido o 'public' de 'canMove'. A melhor prática é controlar o estado
-    // através de funções públicas, como Enable/DisableMovement.
     private bool canMove = true; 
+    
+    // <<< NOVA FLAG DE CONTROLE >>>
+    private bool isInCutscene = false;
 
     void Awake()
     {
@@ -35,8 +37,8 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
-        // A lógica agora é mais simples: se puder mover, mova.
-        if (canMove)
+        // A lógica de movimento agora também verifica se não estamos em uma cutscene.
+        if (canMove && !isInCutscene)
         {
             rb.linearVelocity = currentMovementInput * moveSpeed;
         }
@@ -44,69 +46,53 @@ public class PlayerController : MonoBehaviour
     
     void Update()
     {
+        // <<< PEQUENO AJUSTE AQUI >>>
+        // Se estivermos em uma cutscene, a lógica de animação do Update é ignorada.
+        if (isInCutscene) return;
+
         UpdateAnimationsAndFlip();
     }
 
-    // Esta função é chamada pelo componente PlayerInput
     public void OnMove(InputValue value)
     {
-        // A lógica de 'canMove' é aplicada aqui, no recebimento do input.
         if (canMove)
         {
             currentMovementInput = value.Get<Vector2>();
         }
     }
     
-    // --- Funções Públicas para Controle Externo ---
-    
-    /// <summary>
-    /// Permite que o jogador se mova e ativa o mapa de controle "Player".
-    /// Chamado quando o puzzle termina.
-    /// </summary>
     public void EnableMovement()
     {
         Debug.Log("Habilitando movimento do jogador.");
         canMove = true;
         if (playerInput != null)
         {
-            // Garante que estamos no mapa de controle correto para andar.
             playerInput.SwitchCurrentActionMap("Player");
         }
     }
 
-    /// <summary>
-    /// Impede o jogador de se mover e muda para o mapa de controle "PuzzleUI".
-    /// Chamado quando o puzzle começa.
-    /// </summary>
     public void DisableMovement()
     {
         Debug.Log("Desabilitando movimento do jogador.");
         canMove = false;
-        
-        // Zera o movimento imediatamente para que a Ayla pare de deslizar.
         currentMovementInput = Vector2.zero;
         if (rb != null)
         {
             rb.linearVelocity = Vector2.zero;
         }
-
         if (playerInput != null)
         {
-            // Muda para o mapa de controle dos cristais.
-            // O PlayerInput irá ignorar as ações de "Move" e ouvir apenas as do puzzle.
-            playerInput.SwitchCurrentActionMap("PuzzleUI");
+            playerInput.SwitchCurrentActionMap("PuzzleUI"); // Ou um mapa "UI" genérico
         }
     }
 
-    // --- Lógica de Animação e Visual ---
+    // --- LÓGICA DE ANIMAÇÃO E VISUAL ---
     private void UpdateAnimationsAndFlip()
     {
         if (animator == null) return;
-        
-        // Se o movimento estiver desabilitado, garante que a animação fique parada.
         if (!canMove)
         {
-            animator.SetInteger("MovementState", 0); // ou o estado de parado apropriado
+            animator.SetInteger("MovementState", 0);
             return;
         }
 
@@ -119,5 +105,62 @@ public class PlayerController : MonoBehaviour
         else { if (lastVerticalDirection == 1) { currentMovementState = 4; } else { currentMovementState = 0; } }
         animator.SetInteger("MovementState", currentMovementState);
         if (spriteRenderer != null && currentMovementState == 1) { if (moveX > 0 && !isFacingRight) { isFacingRight = true; spriteRenderer.flipX = false; } else if (moveX < 0 && isFacingRight) { isFacingRight = false; spriteRenderer.flipX = true; } }
+    }
+    
+    // <<< NOVO MÉTODO E CORROTINA PARA A ESCADA >>>
+
+    /// <summary>
+    /// Método público chamado pelo StairTrigger para iniciar a sequência.
+    /// </summary>
+    public void StartClimbingSequence(Transform startPoint, Transform endPoint, string sceneName, string spawnName)
+    {
+        StartCoroutine(ClimbStairsCoroutine(startPoint, endPoint, sceneName, spawnName));
+    }
+
+    private IEnumerator ClimbStairsCoroutine(Transform startPoint, Transform endPoint, string sceneName, string spawnName)
+    {
+        // 1. Tomar controle total do jogador
+        isInCutscene = true;
+        DisableMovement();
+        rb.isKinematic = true; // Desliga a física temporariamente
+        rb.linearVelocity = Vector2.zero;
+
+        // 2. Mover suavemente para o ponto de partida da escada
+        while (Vector3.Distance(transform.position, startPoint.position) > 0.05f)
+        {
+            transform.position = Vector3.MoveTowards(transform.position, startPoint.position, moveSpeed * Time.deltaTime);
+            yield return null;
+        }
+        transform.position = startPoint.position;
+
+        // 3. Tocar a animação de subir escada (usando a de andar para cima, estado 2)
+        animator.SetInteger("MovementState", 2);
+
+        // 4. Mover para cima
+        float climbDuration = 2.0f; // Duração da subida em segundos
+        float timer = 0f;
+        Vector3 initialPos = transform.position;
+
+        while (timer < climbDuration)
+        {
+            transform.position = Vector3.Lerp(initialPos, endPoint.position, timer / climbDuration);
+            timer += Time.deltaTime;
+            yield return null;
+        }
+
+        // 5. Iniciar o fade out e trocar de cena
+        if (FadeController.Instance != null)
+        {
+            FadeController.Instance.StartFadeOut(() => {
+                // Este código só roda quando a tela está totalmente preta
+                GameManager.Instance.SetNextSpawnPoint(spawnName);
+                GameManager.Instance.LoadScene(sceneName);
+            });
+        }
+        else // Plano B: Se não houver FadeController, troca de cena direto
+        {
+            GameManager.Instance.SetNextSpawnPoint(spawnName);
+            GameManager.Instance.LoadScene(sceneName);
+        }
     }
 }

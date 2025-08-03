@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: pens2
   m_EditorClassIdentifier: 
   speakerName: 
-  speakerPortrait: {fileID: -7319006059537635548, guid: 76804bf5f896d654ca7271eada5c222e, type: 3}
+  speakerPortrait: {fileID: 100989015274466783, guid: 7d4a7f54c0c981b46847a5ccd0b6dfef, type: 3}
   dialogueLines:
   - sentence: 'Tudo parece... adormecido. Esperando por algo.
 
