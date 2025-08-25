@@ -1,6 +1,5 @@
 using UnityEngine;
 
-// Este script precisa ser 'IInteractable' para que o PlayerInteractor o detecte.
 public class StairTrigger : MonoBehaviour, IInteractable
 {
     [Header("Configurações da Sequência")]
@@ -18,12 +17,11 @@ public class StairTrigger : MonoBehaviour, IInteractable
 
     public void Interact()
     {
-        // Impede múltiplas interações
         if (isInteracting) return;
         isInteracting = true;
 
-        // Encontra o PlayerController na cena e dá a ordem para iniciar a subida.
-        PlayerController player = FindObjectOfType<PlayerController>();
+        // <<< CORREÇÃO APLICADA AQUI >>>
+        PlayerController player = FindFirstObjectByType<PlayerController>();
         if (player != null)
         {
             player.StartClimbingSequence(startClimbPoint, endClimbPoint, nextSceneName, spawnPointInNextScene);

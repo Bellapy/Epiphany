@@ -295,6 +295,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1705927858}
     - target: {fileID: 3470361006948864246, guid: 111b3fb0c5ac4814c91f89cc7e64f5f7, type: 3}
+      propertyPath: Lens.OrthographicSize
+      value: 1.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3470361006948864246, guid: 111b3fb0c5ac4814c91f89cc7e64f5f7, type: 3}
       propertyPath: Target.TrackingTarget
       value: 
       objectReference: {fileID: 86008886}
@@ -410,7 +414,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 1.02
+  orthographic size: 1.2
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -435,7 +439,7 @@ Transform:
   m_GameObject: {fileID: 137258644}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.5562983, y: -0.33905026, z: -9.956663}
+  m_LocalPosition: {x: 1.2362984, y: -0.33904025, z: -9.956663}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
