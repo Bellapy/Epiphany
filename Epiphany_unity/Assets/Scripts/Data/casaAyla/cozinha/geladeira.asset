@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f15967b04bb688946bc56ec52b3fff10, type: 3}
+  m_Name: geladeira
+  m_EditorClassIdentifier: 
+  reflectionLines:
+  - "Ayla parece ter um fasc\xEDnio por cogumelos... "
+  - "al\xE9m de tortas de ma\xE7a e p\xEAssego, Aqui est\xE1 cheio de \u201Ccogumelos-ostra-azul\u201D!
+    lindos cogumelos  de um azul brilhante"
+  - "e al\xE9m de saborosos, s\xE3o estudados por sua incr\xEDvel capacidade de decompor
+    poluentes no ambiente... "
+  - "como pequenos guardi\xF5es naturais. "
+  - "Na natureza, outros organismos tamb\xE9m fazem isso, como certos fungos, algas
+    e bact\xE9rias..."
+  - cada um ajudando um pouquinho a limpar o mundo.
