@@ -27,28 +27,29 @@ public class SequentialTypewriter : MonoBehaviour
     // A única diferença é que agora 'targetText' se refere a um componente TextMeshPro.
 
     void Start()
+{
+    if (targetText == null)
     {
-        if (targetText == null)
-        {
-            Debug.LogError("O componente TextMeshProUGUI alvo não foi atribuído no GameObject: " + gameObject.name);
-            enabled = false;
-            return;
-        }
-
-        if (paragraphs == null || paragraphs.Count == 0)
-        {
-            Debug.LogWarning("A lista de parágrafos está vazia no GameObject: " + gameObject.name);
-            enabled = false;
-            return;
-        }
-        
-        if (transitionManager == null)
-        {
-            Debug.LogError("O CutsceneTransitionManager não foi atribuído no SequentialTypewriter: " + gameObject.name);
-        }
-
-        StartCoroutine(PlaySequentialText());
+        Debug.LogError("O componente TextMeshProUGUI alvo não foi atribuído no GameObject: " + gameObject.name);
+        enabled = false;
+        return;
     }
+
+    if (paragraphs == null || paragraphs.Count == 0)
+    {
+        Debug.LogWarning("A lista de parágrafos está vazia no GameObject: " + gameObject.name);
+        enabled = false;
+        return;
+    }
+    
+    // <<< MUDANÇA AQUI: Agora é apenas um aviso, não um erro. >>>
+    if (transitionManager == null)
+    {
+        Debug.LogWarning("Nenhum CutsceneTransitionManager foi atribuído. O texto será exibido sem transição no final.", this.gameObject);
+    }
+
+    StartCoroutine(PlaySequentialText());
+}
 
     IEnumerator PlaySequentialText()
     {
@@ -65,15 +66,16 @@ public class SequentialTypewriter : MonoBehaviour
         }
 
         Debug.Log("Todos os parágrafos foram exibidos.");
-        
-        if (transitionManager != null)
-        {
-            transitionManager.StartPostTextSequence();
-        }
-        else
-        {
-            Debug.LogWarning("Transição pós-texto não iniciada: transitionManager não configurado.");
-        }
+    
+    // <<< MUDANÇA AQUI: Só tenta iniciar a transição se o manager existir. >>>
+    if (transitionManager != null)
+    {
+        transitionManager.StartPostTextSequence();
+    }
+    else
+    {
+        Debug.Log("Fim da sequência de texto. Nenhuma transição para iniciar.");
+    }
     }
 
     IEnumerator TypeText(string paragraph)

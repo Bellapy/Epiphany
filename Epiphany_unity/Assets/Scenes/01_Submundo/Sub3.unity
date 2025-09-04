@@ -378,7 +378,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90352435c8336e54cbce1c4cdb00d945, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneToLoad: Sub5
+  sceneToLoad: Sub6
   spawnPointNameInNextScene: EntryFromSub4
 --- !u!4 &594460429
 Transform:

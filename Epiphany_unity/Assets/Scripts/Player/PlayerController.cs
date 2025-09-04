@@ -65,13 +65,29 @@ public class PlayerController : MonoBehaviour
     }
 
     public void DisableMovement()
+{
+    Debug.Log("Desabilitando movimento do jogador.");
+    canMove = false;
+    currentMovementInput = Vector2.zero;
+    
+    if (rb != null)
     {
-        Debug.Log("Desabilitando movimento do jogador.");
-        canMove = false;
-        currentMovementInput = Vector2.zero;
-        if (rb != null) { rb.linearVelocity = Vector2.zero; }
-        if (playerInput != null) { playerInput.SwitchCurrentActionMap("PuzzleUI"); }
+        rb.linearVelocity = Vector2.zero;
     }
+
+   
+    if (animator != null)
+    {
+        // Se a última direção foi para cima, usa o idle de costas (estado 4), senão, o de frente (estado 0).
+        int idleState = (lastVerticalDirection == 1) ? 4 : 0;
+        animator.SetInteger("MovementState", idleState);
+    }
+    
+    if (playerInput != null)
+    {
+        playerInput.SwitchCurrentActionMap("PuzzleUI");
+    }
+}
 
     private void UpdateAnimationsAndFlip()
     {

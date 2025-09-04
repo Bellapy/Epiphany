@@ -43,7 +43,13 @@ EditorBuildSettings:
     guid: 3f7ab252a3c76754da535e5fddc346bc
   - enabled: 1
     path: Assets/Scenes/02_CasaAyla/cozinha.unity
-    guid: e958ae5705d45824baeb34c81ca6498e
+    guid: ed62fad0ae75e2645a46259368d0dba3
+  - enabled: 0
+    path: Assets/Scenes/03_BosqueLuminescente/arvores.unity
+    guid: 67dca28f42c907146bf008193e06302e
+  - enabled: 1
+    path: Assets/Scenes/03_BosqueLuminescente/EndingScene.unity
+    guid: 13622a291e7007a48b52703e2f4c841e
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0

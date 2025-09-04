@@ -3,7 +3,6 @@ using UnityEngine.UI;
 using TMPro;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.Cinemachine; // Adicionado para o controle da câmera
 
 public class CozinhaSceneController : MonoBehaviour
 {
@@ -16,18 +15,13 @@ public class CozinhaSceneController : MonoBehaviour
     [SerializeField] private List<Button> choiceButtons;
     [SerializeField] private Sprite playerPortrait;
 
-    [Header("Referências de Atores")]
+    [Header("Referências de Atores e Roteiro")]
     [SerializeField] private Animator aylaAnimator;
     [SerializeField] private Transform aylaTransform;
     [SerializeField] private SpriteRenderer aylaSpriteRenderer;
     [SerializeField] private Transform pontoDestinoPorta;
     [SerializeField] private float velocidadeCaminhada = 1.0f;
-
-    [Header("Câmera e Zoom")]
-    [SerializeField] private CinemachineCamera virtualCamera;
-    [SerializeField] private float zoomInSize = 1.2f;
-    [SerializeField] private float zoomSpeed = 1.0f;
-    private float zoomOutSize;
+    [SerializeField] private Transform aylaPontoDePartida;
 
     [Header("Conteúdo da Conversa")]
     [SerializeField] private DialogueData dialogoIntroducaoAyla;
@@ -37,6 +31,7 @@ public class CozinhaSceneController : MonoBehaviour
 
     private List<string> perguntasDisponiveis;
     private bool finalDialogueStarted = false;
+    private bool isConversationActive = false; // A trava de segurança
 
     private void OnEnable() { DialogueManager.OnDialogueEnd += HandleDialogueEnd; }
     private void OnDisable() { DialogueManager.OnDialogueEnd -= HandleDialogueEnd; }
@@ -45,15 +40,14 @@ public class CozinhaSceneController : MonoBehaviour
     {
         if (aylaAnimator != null) aylaAnimator.SetBool("isSitting", true);
         if (dialoguePanel != null) dialoguePanel.SetActive(false);
-        if (virtualCamera != null) zoomOutSize = virtualCamera.Lens.OrthographicSize;
     }
     
     public void IniciarConversa()
     {
+        isConversationActive = true; // Liga o "interruptor" da conversa
+        
         perguntasDisponiveis = new List<string>(todasAsPerguntas);
         finalDialogueStarted = false;
-        
-        StartCoroutine(DoZoom(zoomInSize)); // << PONTO 2: DÁ ZOOM
         
         dialoguePanel.SetActive(true);
         choiceButtonsContainer.SetActive(false);
@@ -63,9 +57,12 @@ public class CozinhaSceneController : MonoBehaviour
     
     private void HandleDialogueEnd()
     {
+        if (!isConversationActive) return; // Ignora eventos que não são da conversa principal
+
         if (finalDialogueStarted)
         {
-            StartCoroutine(SequenciaFinalAyla()); // << PONTO 3: AYLA ANDA
+            isConversationActive = false; // Desliga o "interruptor"
+            StartCoroutine(SequenciaFinalAyla());
             return;
         }
 
@@ -87,14 +84,12 @@ public class CozinhaSceneController : MonoBehaviour
         choiceButtonsContainer.SetActive(true);
         speakerNameText.text = "Você";
         speakerPortrait.sprite = playerPortrait;
-
         Button botao1 = choiceButtons[0];
         botao1.gameObject.SetActive(true);
         botao1.GetComponentInChildren<TextMeshProUGUI>().text = perguntasDisponiveis[0];
         botao1.onClick.RemoveAllListeners();
         string pergunta1 = perguntasDisponiveis[0];
         botao1.onClick.AddListener(() => EscolherPergunta(pergunta1));
-
         Button botao2 = choiceButtons[1];
         if (perguntasDisponiveis.Count > 1) {
             botao2.gameObject.SetActive(true);
@@ -105,9 +100,7 @@ public class CozinhaSceneController : MonoBehaviour
         } else {
             botao2.gameObject.SetActive(false);
         }
-
-        // << PONTO 1: NAVEGAÇÃO POR SETAS >>
-        UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(null); // Limpa a seleção anterior
+        UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(null);
         UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(choiceButtons[0].gameObject);
     }
 
@@ -120,17 +113,30 @@ public class CozinhaSceneController : MonoBehaviour
         DialogueManager.Instance.StartDialogue(dialogosDeResposta[indiceOriginal]);
     }
 
+    // <<< SEQUÊNCIA FINAL COM A LÓGICA DE FADE E TRANSIÇÃO RESTAURADA >>>
     private IEnumerator SequenciaFinalAyla()
     {
-        // Afasta o zoom de volta ao normal
-        StartCoroutine(DoZoom(zoomOutSize));
-        yield return new WaitForSeconds(zoomSpeed);
-        
         // Ayla se levanta
         if (aylaAnimator != null) aylaAnimator.SetBool("isSitting", false);
-        yield return new WaitForSeconds(1.5f);
+        
+        // Inicia o Fade Out IMEDIATAMENTE.
+        if (FadeController.Instance != null)
+        {
+            FadeController.Instance.StartFadeOut(null);
+        }
 
-        // Ayla anda até a porta
+        // Espera um pouco para a animação de levantar acontecer enquanto a tela escurece
+        float tempoParaLevantar = 1.5f;
+        float timer = 0f;
+        Vector3 posInicialSentada = aylaTransform.position;
+        while (timer < tempoParaLevantar)
+        {
+            aylaTransform.position = Vector3.Lerp(posInicialSentada, aylaPontoDePartida.position, timer / tempoParaLevantar);
+            timer += Time.deltaTime;
+            yield return null;
+        }
+
+        // Ayla anda até a porta (isso acontecerá enquanto a tela já está escura ou escurecendo)
         Vector2 direcao = (pontoDestinoPorta.position - aylaTransform.position).normalized;
         aylaAnimator.SetInteger("MovementState", 5);
         aylaSpriteRenderer.flipX = direcao.x < 0;
@@ -139,28 +145,9 @@ public class CozinhaSceneController : MonoBehaviour
             aylaTransform.position = Vector3.MoveTowards(aylaTransform.position, pontoDestinoPorta.position, velocidadeCaminhada * Time.deltaTime);
             yield return null;
         }
-        aylaTransform.position = pontoDestinoPorta.position;
-        aylaAnimator.SetInteger("MovementState", 4);
-        
-        // Aqui, a Ayla espera pela Player. Podemos adicionar mais lógica no futuro.
-        Debug.Log("Ayla chegou na porta e está esperando.");
+
+        // Com a tela já preta, agora damos a ordem para trocar de cena.
+        Debug.Log("Transição final com fade. Carregando a EndingScene.");
+        GameManager.Instance.LoadScene("EndingScene");
     }
-
-    private IEnumerator DoZoom(float targetSize)
-{
-    if (virtualCamera == null) yield break;
-
-    float startSize = virtualCamera.Lens.OrthographicSize;
-    float timer = 0f;
-
-    while(timer < zoomSpeed)
-    {
-        timer += Time.deltaTime;
-        float newSize = Mathf.Lerp(startSize, targetSize, timer / zoomSpeed);
-        virtualCamera.Lens.OrthographicSize = newSize;
-        yield return null;
-    }
-
-    virtualCamera.Lens.OrthographicSize = targetSize;
-}
 }

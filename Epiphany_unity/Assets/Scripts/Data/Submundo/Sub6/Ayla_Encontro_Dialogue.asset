@@ -15,13 +15,13 @@ MonoBehaviour:
   speakerName: Ayla
   speakerPortrait: {fileID: -7319006059537635548, guid: 76804bf5f896d654ca7271eada5c222e, type: 3}
   dialogueLines:
-  - sentence: "Nossa! Voc\xEA me assustou! Quem \xE9 voc\xEA? Como conseguiu passar
-      pelo Bob?"
+  - sentence: "Nossa! Voc\xEA me assustou! Quem \xE9 voc\xEA? Como conseguiu chegar
+      aqui?"
     triggerEventAfterLine: 0
     onLineCompleteEvent:
       m_PersistentCalls:
         m_Calls: []
-  - sentence: "\u2026 Poxa... aquilo era pra ser dif\xEDcil..."
+  - sentence: "\u2026 Poxa... devia ter colocado algu\xE9m aqui em baixo..."
     triggerEventAfterLine: 0
     onLineCompleteEvent:
       m_PersistentCalls:

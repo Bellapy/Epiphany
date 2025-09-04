@@ -102,48 +102,50 @@ public class GameManager : MonoBehaviour
     }
 
     // --- Lógica Interna: Posicionar o Jogador na Cena ---
-    private void PositionPlayerInScene()
+   private void PositionPlayerInScene()
+{
+    // Encontra a instância do script PlayerController na cena atual.
+    PlayerController player = FindFirstObjectByType<PlayerController>();
+
+    // <<< A CORREÇÃO ESTÁ AQUI >>>
+    // Se não encontrarmos um jogador, isso é normal para cenas de menu ou finais.
+    // Apenas registramos uma mensagem informativa e saímos da função.
+    if (player == null)
     {
-        // Encontra a instância do script PlayerController na cena atual.
-        // FindFirstObjectByType é eficiente o suficiente para a maioria dos casos.
-        PlayerController player = FindFirstObjectByType<PlayerController>();
+        Debug.Log("[GameManager] Nenhum jogador (PlayerController) encontrado na cena. Isso é normal para cenas de menu/finais. Nenhuma ação de posicionamento será tomada.");
+        return; // Sai da função para evitar erros.
+    }
 
-        if (player == null)
+    // O resto da sua lógica original só será executado se um jogador for encontrado.
+    // Decide como posicionar o jogador com base nas informações de spawn definidas.
+    if (useSpecificPositionForSpawn)
+    {
+        player.transform.position = NextPlayerPosition;
+        Debug.Log($"[GameManager] Jogador posicionado em (coordenada exata): {NextPlayerPosition}.");
+    }
+    else if (!string.IsNullOrEmpty(NextPlayerSpawnPointName))
+    {
+        // Tenta encontrar um GameObject com o nome do ponto de spawn na cena.
+        GameObject spawnPointObject = GameObject.Find(NextPlayerSpawnPointName);
+        if (spawnPointObject != null)
         {
-            Debug.LogError("[GameManager] Erro: Jogador (PlayerController) não encontrado na cena após o carregamento! Verifique se o jogador está na cena.");
-            // Considerar instanciar o jogador a partir de um Prefab aqui se ele não estiver na cena.
-            return;
-        }
-
-        // Decide como posicionar o jogador com base nas informações de spawn definidas.
-        if (useSpecificPositionForSpawn)
-        {
-            player.transform.position = NextPlayerPosition;
-            Debug.Log($"[GameManager] Jogador posicionado em (coordenada exata): {NextPlayerPosition}.");
-        }
-        else if (!string.IsNullOrEmpty(NextPlayerSpawnPointName))
-        {
-            // Tenta encontrar um GameObject com o nome do ponto de spawn na cena.
-            GameObject spawnPointObject = GameObject.Find(NextPlayerSpawnPointName);
-            if (spawnPointObject != null)
-            {
-                player.transform.position = spawnPointObject.transform.position;
-                Debug.Log($"[GameManager] Jogador posicionado no objeto de spawn: '{spawnPointObject.name}' ({spawnPointObject.transform.position}).");
-            }
-            else
-            {
-                Debug.LogWarning($"[GameManager] Aviso: Ponto de spawn '{NextPlayerSpawnPointName}' não encontrado na cena '{SceneManager.GetActiveScene().name}'. O jogador permanecerá na posição padrão da cena.");
-            }
+            player.transform.position = spawnPointObject.transform.position;
+            Debug.Log($"[GameManager] Jogador posicionado no objeto de spawn: '{spawnPointObject.name}' ({spawnPointObject.transform.position}).");
         }
         else
         {
-            Debug.Log("[GameManager] Nenhum ponto de spawn específico (nome ou posição) foi definido. Jogador permanecerá na posição inicial da cena.");
+            Debug.LogWarning($"[GameManager] Aviso: Ponto de spawn '{NextPlayerSpawnPointName}' não encontrado na cena '{SceneManager.GetActiveScene().name}'. O jogador permanecerá na posição padrão da cena.");
         }
-
-        // Limpa as informações de spawn para a próxima transição de cena.
-        NextPlayerSpawnPointName = null;
-        useSpecificPositionForSpawn = false;
     }
+    else
+    {
+        Debug.Log("[GameManager] Nenhum ponto de spawn específico (nome ou posição) foi definido. Jogador permanecerá na posição inicial da cena.");
+    }
+
+    // Limpa as informações de spawn para a próxima transição de cena.
+    NextPlayerSpawnPointName = null;
+    useSpecificPositionForSpawn = false;
+}
 
     // --- Outras Funções do Jogo (Exemplos) ---
     // Você pode adicionar métodos para pausar o jogo, gerenciar o estado da UI, etc.
