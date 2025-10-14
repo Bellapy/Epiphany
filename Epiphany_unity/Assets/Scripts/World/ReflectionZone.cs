@@ -29,11 +29,7 @@ public class ReflectionZone : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             if (DialogueManager.Instance != null && reflectionData != null)
-            {
-                // <<< A CHAMADA FOI CORRIGIDA PARA FALAR DIRETO COM O DIALOGUEMANAGER >>>
-                // A lógica de 'requestAccepted' foi removida para simplificar,
-                // pois agora o próprio DialogueManager lida com a sobreposição.
-                
+            {  
                 DialogueManager.Instance.StartReflection(reflectionData);
 
                 if (visualFeedback != null)

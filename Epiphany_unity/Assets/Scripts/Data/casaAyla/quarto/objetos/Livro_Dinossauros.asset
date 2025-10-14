@@ -1,0 +1,44 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9228e584220b007488a3081b0ee915e9, type: 3}
+  m_Name: Livro_Dinossauros
+  m_EditorClassIdentifier: 
+  speakerName: Dinossauros
+  speakerPortrait: {fileID: 0}
+  dialogueLines:
+  - sentence: "H\xE1 milh\xF5es de anos, quando a Terra era um lugar selvagem e vibrante,
+      os dinossauros dominavam florestas densas e plan\xEDcies infinitas."
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - sentence: "O Tiranossauro rex caminhava com passos pesados, sentindo o ch\xE3o
+      tremer sob seu peso, enquanto o Velociraptor, "
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - sentence: " \xE1gil e curioso, explorava cada canto em busca de aventuras e perigos. "
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - sentence: "Cada criatura tinha sua hist\xF3ria, e cada dia era uma corrida pela
+      sobreviv\xEAncia e descobertas."
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  hasChoice: 0
+  choicePrompt: 
+  choiceOptions: []
+  nextDialogueOnEnd: {fileID: 0}

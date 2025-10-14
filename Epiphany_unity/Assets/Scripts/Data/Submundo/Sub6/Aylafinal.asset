@@ -15,7 +15,7 @@ MonoBehaviour:
   speakerName: Ayla
   speakerPortrait: {fileID: 0}
   dialogueLines:
-  - sentence: Me siga!
+  - sentence: Me siga! pode confiar em mim.
     triggerEventAfterLine: 0
     onLineCompleteEvent:
       m_PersistentCalls:

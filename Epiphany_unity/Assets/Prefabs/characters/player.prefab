@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 7072869360620452583}
   - component: {fileID: 262036360870923334}
   - component: {fileID: 8240554939038775087}
+  - component: {fileID: 1293876904686577712}
   m_Layer: 0
   m_Name: player
   m_TagString: Player
@@ -201,6 +202,34 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: f6f0c28c-0843-45c9-9868-af6de61e9eba
     m_ActionName: 'Gameplay/OpenMap[/Keyboard/f]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 11500000, guid: 2b2d97ee248ef8d47ac0017c955bcfdb, type: 3}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 962db083-762f-44d7-9e94-87ca4eecb7ac
+    m_ActionName: 'Player/OpenInventory[/Keyboard/i]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: e0546573-b9ca-4a81-a3b7-2fb1692c9301
+    m_ActionName: PuzzleUI/New action
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 2e8dd2d5-713d-411c-a7fe-190e280cd4b4
+    m_ActionName: 'PuzzleUI/MoveSelection[/Keyboard/leftArrow,/Keyboard/a,/Keyboard/rightArrow,/Keyboard/d]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 269b5018-ff99-42b7-914c-12ed0bb47745
+    m_ActionName: 'PuzzleUI/Activate[/Keyboard/e,/Keyboard/space]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -291,3 +320,15 @@ CapsuleCollider2D:
   m_Offset: {x: 0.0037476919, y: 0.01405406}
   m_Size: {x: 0.2813693, y: 0.47812605}
   m_Direction: 0
+--- !u!114 &1293876904686577712
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6539307686629735133}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5c45f9e6f155f742a5f294eb535c9ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

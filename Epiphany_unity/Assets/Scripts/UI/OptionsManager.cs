@@ -1,87 +1,141 @@
 using UnityEngine;
-using UnityEngine.UI; // Para o Slider
-using UnityEngine.Audio; // Para o AudioMixer
+using UnityEngine.UI;
+using UnityEngine.Audio;
+using UnityEngine.SceneManagement;
 
 public class OptionsManager : MonoBehaviour
 {
-    [Header("Referências UI")]
-    [Tooltip("O GameObject do painel de opções completo.")]
-    public GameObject optionsPanel;
+    public static OptionsManager Instance { get; private set; }
 
-    [Tooltip("O Slider de volume no painel de opções.")]
-    public Slider volumeSlider;
+    [Header("Referências")]
+    [Tooltip("Arraste o PREFAB do seu painel de opções para cá.")]
+    [SerializeField] private GameObject optionsPanelPrefab;
+
+    [Header("Canvas Persistente")]
+    [Tooltip("Arraste o Canvas que deve sobreviver entre as cenas aqui.")]
+    [SerializeField] private Canvas persistentCanvas;
+    
+    private GameObject optionsPanelInstance;
+    private Slider volumeSlider;
 
     [Header("Configurações de Áudio")]
-    [Tooltip("O Audio Mixer principal que controla o volume geral.")]
-    public AudioMixer masterMixer;
+    [SerializeField] private AudioMixer masterMixer;
+    [SerializeField] private string masterVolumeParameterName = "MasterVolume";
 
-    [Tooltip("O nome do parâmetro de volume exposto no Audio Mixer (ex: MasterVolume).")]
-    public string masterVolumeParameterName = "MasterVolume"; // Certifique-se que este nome é o mesmo que você expôs no mixer!
-
-    private const string VOLUME_PREF_KEY = "MasterVolume"; // Chave para salvar/carregar o volume
+    private const string VOLUME_PREF_KEY = "MasterVolume";
+    private bool isOptionsOpen = false;
 
     void Awake()
     {
-        // Garante que o painel de opções comece inativo ao carregar a cena
-        if (optionsPanel != null)
+        // --- LOG DE DEPURAÇÃO 1 ---
+        Debug.Log($"[OptionsManager] Awake() chamado no GameObject '{gameObject.name}'.");
+
+        if (Instance != null && Instance != this)
         {
-            optionsPanel.SetActive(false);
+            // --- LOG DE DEPURAÇÃO 2 ---
+            Debug.LogWarning($"[OptionsManager] Instância duplicada detectada! Destruindo '{gameObject.name}'. O Singleton original está em '{Instance.gameObject.name}'.");
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
+        
+        // --- LOG DE DEPURAÇÃO 3 ---
+        Debug.Log($"[OptionsManager] '{gameObject.name}' foi definido como o Singleton. Tornando persistente.");
+
+        if (persistentCanvas != null)
+        {
+            DontDestroyOnLoad(persistentCanvas.gameObject);
+        }
+        else
+        {
+            Debug.LogError("[OptionsManager] ERRO CRÍTICO: O Persistent Canvas não foi atribuído no Inspector!");
+            return;
         }
 
-        // Carrega o volume salvo e define o slider
-        if (volumeSlider != null)
+        if (optionsPanelPrefab != null)
         {
-            float savedVolume = PlayerPrefs.GetFloat(VOLUME_PREF_KEY, 0f); // 0f é o valor padrão se não houver volume salvo
+            optionsPanelInstance = Instantiate(optionsPanelPrefab);
+            optionsPanelInstance.transform.SetParent(persistentCanvas.transform, false);
+            optionsPanelInstance.SetActive(false);
+
+            volumeSlider = optionsPanelInstance.GetComponentInChildren<Slider>();
+            Button backButton = null;
+            Button[] buttons = optionsPanelInstance.GetComponentsInChildren<Button>();
+            foreach (Button button in buttons)
+            {
+                if (button.gameObject.name == "botaoVoltar")
+                {
+                    backButton = button;
+                    break;
+                }
+            }
+
+            if (volumeSlider != null)
+            {
+                volumeSlider.onValueChanged.AddListener(SetMasterVolume);
+            }
+            if (backButton != null)
+            {
+                backButton.onClick.AddListener(CloseOptions);
+            }
+        }
+
+        if (volumeSlider != null && masterMixer != null)
+        {
+            float savedVolume = PlayerPrefs.GetFloat(VOLUME_PREF_KEY, 0f);
             volumeSlider.value = savedVolume;
-            SetMasterVolume(savedVolume); // Aplica o volume salvo ao mixer
+            SetMasterVolume(savedVolume);
+        }
+    }
+    
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            // --- LOG DE DEPURAÇÃO 4 ---
+            Debug.Log($"[OptionsManager] Tecla 'F' pressionada! Chamando ToggleOptions().");
+            ToggleOptions();
         }
     }
 
-    // Método para abrir o painel de opções
+    public void ToggleOptions()
+    {
+        isOptionsOpen = !isOptionsOpen;
+        if (isOptionsOpen) { OpenOptions(); }
+        else { CloseOptions(); }
+    }
+
     public void OpenOptions()
     {
-        if (optionsPanel != null)
+        isOptionsOpen = true;
+        if (optionsPanelInstance != null)
         {
-            optionsPanel.SetActive(true);
-            // Opcional: Pausar o jogo quando o menu de opções abrir
-            // Time.timeScale = 0f;
+            optionsPanelInstance.SetActive(true);
         }
-        else
+        if (SceneManager.GetActiveScene().name != "Menu")
         {
-            Debug.LogWarning("OptionsPanel não atribuído no OptionsManager.");
+            Time.timeScale = 0f;
         }
     }
 
-    // Método para fechar o painel de opções
     public void CloseOptions()
     {
-        if (optionsPanel != null)
+        isOptionsOpen = false;
+        if (optionsPanelInstance != null)
         {
-            optionsPanel.SetActive(false);
-            // Opcional: Retomar o jogo quando o menu de opções fechar
-            // Time.timeScale = 1f;
+            optionsPanelInstance.SetActive(false);
         }
-        else
-        {
-            Debug.LogWarning("OptionsPanel não atribuído no OptionsManager.");
-        }
+        Time.timeScale = 1f;
     }
 
-    // Método chamado pelo Slider para mudar o volume
     public void SetMasterVolume(float volume)
     {
         if (masterMixer != null)
         {
-            // Para AudioMixers, o volume é definido em decibéis.
-            // Mathf.Log10(volume) * 20 transforma um valor linear (0-1) em dB.
-            // Mas como nosso slider vai de -80 a 0, basta usar o valor direto.
             masterMixer.SetFloat(masterVolumeParameterName, volume);
-            PlayerPrefs.SetFloat(VOLUME_PREF_KEY, volume); // Salva o volume
-            PlayerPrefs.Save(); // Salva as PlayerPrefs imediatamente
-        }
-        else
-        {
-            Debug.LogWarning("AudioMixer não atribuído no OptionsManager.");
+            PlayerPrefs.SetFloat(VOLUME_PREF_KEY, volume);
+            PlayerPrefs.Save();
         }
     }
 }

@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9228e584220b007488a3081b0ee915e9, type: 3}
+  m_Name: ArvoreDeLivros_Choices
+  m_EditorClassIdentifier: 
+  speakerName: 
+  speakerPortrait: {fileID: 0}
+  dialogueLines:
+  - sentence: "Esta \xE9 uma \xC1rvore de Livros. Sim, ela realmente d\xE1 livros
+      como se fossem frutinhas!"
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - sentence: "Voc\xEA pode alcan\xE7ar alguns para ler:"
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  hasChoice: 1
+  choicePrompt: 
+  choiceOptions:
+  - optionText: Dinossauros
+    nextDialogue: {fileID: 11400000, guid: 48f0cce45719d2f43ba2aa1a277e0c2b, type: 2}
+  - optionText: "Expans\xE3o do Universo"
+    nextDialogue: {fileID: 11400000, guid: 52ce3a9cfcbf39b4698cc74d2297f8c0, type: 2}
+  - optionText: "Receita de Torta de ma\xE7a"
+    nextDialogue: {fileID: 11400000, guid: 499d6e2c079839341b16de392cf06419, type: 2}
+  - optionText: Sair
+    nextDialogue: {fileID: 0}
+  nextDialogueOnEnd: {fileID: 0}

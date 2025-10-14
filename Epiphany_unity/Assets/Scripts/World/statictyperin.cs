@@ -16,7 +16,7 @@ public class StaticTypewriter : MonoBehaviour
     [Tooltip("A lista de parágrafos a serem escritos. Geralmente, apenas um.")]
     [SerializeField] private List<string> paragraphs;
 
-    // O método Start é chamado quando o objeto é ativado.
+   
     void Start()
     {
         if (targetText == null)
@@ -25,29 +25,29 @@ public class StaticTypewriter : MonoBehaviour
             return;
         }
 
-        // Inicia a corrotina para escrever o texto.
+    
         StartCoroutine(TypeTextSequence());
     }
 
     private IEnumerator TypeTextSequence()
     {
-        // Garante que o texto comece vazio.
+        
         targetText.text = "";
 
-        // Passa por cada parágrafo na lista.
+        
         foreach (string paragraph in paragraphs)
         {
-            // Digita o parágrafo letra por letra.
+           
             foreach (char letter in paragraph.ToCharArray())
             {
                 targetText.text += letter;
                 yield return new WaitForSeconds(typeSpeed);
             }
-            // Adiciona uma quebra de linha entre os parágrafos, se houver mais de um.
+            
             targetText.text += "\n";
         }
 
         Debug.Log("StaticTypewriter terminou de escrever.");
-        // A corrotina termina aqui. O texto permanece na tela.
+
     }
 }

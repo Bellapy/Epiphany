@@ -1,21 +1,21 @@
 using UnityEngine;
-// using UnityEngine.UI; // Esta linha não é mais necessária para o TextMeshPro.
-using TMPro; // <<< PASSO 1: Adicione esta linha para usar o TextMeshPro
+
+using TMPro; 
 using System.Collections;
 using System.Collections.Generic;
 
 public class SequentialTypewriter : MonoBehaviour
 {
-    //                                         vvvvvvvvvvvvvvv
-    public TextMeshProUGUI targetText; // <<< PASSO 2: Mude o tipo de 'Text' para 'TextMeshProUGUI'
-    //                                         ^^^^^^^^^^^^^^^
+                                     
+    public TextMeshProUGUI targetText; 
+                                        
     public float typeSpeed = 0.05f;
     public float delayBetweenParagraphs = 1.5f;
 
     [TextArea(3, 10)]
     public List<string> paragraphs;
 
-    // A referência ao seu TransitionManager continua a mesma.
+ 
     public CutsceneTransitionManager transitionManager;
 
     private string currentText = "";
@@ -23,8 +23,7 @@ public class SequentialTypewriter : MonoBehaviour
     private int paragraphIndex = 0;
     private bool isTyping = false;
 
-    // TODA A LÓGICA ABAIXO PERMANECE EXATAMENTE A MESMA.
-    // A única diferença é que agora 'targetText' se refere a um componente TextMeshPro.
+   
 
     void Start()
 {
@@ -41,8 +40,7 @@ public class SequentialTypewriter : MonoBehaviour
         enabled = false;
         return;
     }
-    
-    // <<< MUDANÇA AQUI: Agora é apenas um aviso, não um erro. >>>
+
     if (transitionManager == null)
     {
         Debug.LogWarning("Nenhum CutsceneTransitionManager foi atribuído. O texto será exibido sem transição no final.", this.gameObject);
@@ -66,8 +64,7 @@ public class SequentialTypewriter : MonoBehaviour
         }
 
         Debug.Log("Todos os parágrafos foram exibidos.");
-    
-    // <<< MUDANÇA AQUI: Só tenta iniciar a transição se o manager existir. >>>
+
     if (transitionManager != null)
     {
         transitionManager.StartPostTextSequence();

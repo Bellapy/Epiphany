@@ -15,14 +15,7 @@ public class GameManager : MonoBehaviour
     // Flag para decidir se usaremos o nome do ponto de spawn ou a posição exata.
     private bool useSpecificPositionForSpawn = false;
 
-    // --- Outras Variáveis Globais do Jogo (Exemplos) ---
-    // Você pode adicionar variáveis como pontuação, estado do jogo (pausado/rodando), etc.
-    // public int playerScore;
-    // public bool isGamePaused;
-
-    // --- Ciclo de Vida: Awake() ---
-    // Chamado quando o script é carregado, antes de qualquer método Start().
-    // Ideal para inicializar o Singleton.
+  
     void Awake()
     {
         // Verifica se já existe uma instância do GameManager
@@ -50,10 +43,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    // --- Ciclo de Vida: OnDestroy() ---
-    // Chamado quando o GameObject é destruído.
-    // É importante remover a inscrição de eventos para evitar erros (memory leaks)
-    // se o GameManager for destruído (ex: ao sair do jogo ou se for um duplicado).
+
     void OnDestroy()
     {
         // Só remove a inscrição se esta instância for a que estava ativa como Singleton.
@@ -64,27 +54,21 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    // --- Métodos de Controle de Cena e Spawn ---
 
-    // Método para carregar uma nova cena.
-    // Outros scripts (ex: MenuPrincipalManager, DoorTrigger) podem chamar isso.
     public void LoadScene(string sceneName)
     {
         Debug.Log($"[GameManager] Solicitando carregamento da cena: {sceneName}");
         SceneManager.LoadScene(sceneName);
     }
 
-    // Método para definir o ponto de spawn do jogador na próxima cena usando o NOME de um GameObject.
-    // Ex: Chamado por um DoorTrigger ao mudar de cena.
-    public void SetNextSpawnPoint(string spawnPointName)
+     public void SetNextSpawnPoint(string spawnPointName)
     {
         NextPlayerSpawnPointName = spawnPointName;
         useSpecificPositionForSpawn = false; // Indica que usaremos o nome do objeto de spawn.
         Debug.Log($"[GameManager] Próximo ponto de spawn definido por nome: '{NextPlayerSpawnPointName}'.");
     }
 
-    // Método alternativo para definir o spawn do jogador por uma POSIÇÃO EXATA.
-    // Pode ser útil para teletransportes ou spawns dinâmicos.
+
     public void SetNextSpawnPosition(Vector3 position)
     {
         NextPlayerPosition = position;
@@ -107,17 +91,13 @@ public class GameManager : MonoBehaviour
     // Encontra a instância do script PlayerController na cena atual.
     PlayerController player = FindFirstObjectByType<PlayerController>();
 
-    // <<< A CORREÇÃO ESTÁ AQUI >>>
-    // Se não encontrarmos um jogador, isso é normal para cenas de menu ou finais.
-    // Apenas registramos uma mensagem informativa e saímos da função.
     if (player == null)
     {
         Debug.Log("[GameManager] Nenhum jogador (PlayerController) encontrado na cena. Isso é normal para cenas de menu/finais. Nenhuma ação de posicionamento será tomada.");
         return; // Sai da função para evitar erros.
     }
 
-    // O resto da sua lógica original só será executado se um jogador for encontrado.
-    // Decide como posicionar o jogador com base nas informações de spawn definidas.
+    
     if (useSpecificPositionForSpawn)
     {
         player.transform.position = NextPlayerPosition;

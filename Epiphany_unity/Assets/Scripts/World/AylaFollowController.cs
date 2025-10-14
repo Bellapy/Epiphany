@@ -12,8 +12,8 @@ public class AylaFollowController : MonoBehaviour
     [SerializeField] private Animator aylaAnimator;
     [SerializeField] private SpriteRenderer aylaSpriteRenderer;
 
-    // As variáveis de velocidade e memória da animação são gerenciadas internamente agora.
-    private float velocidadeMovimento = 5.5f; // Um pouco mais rápida que a player
+
+    private float velocidadeMovimento = 5.5f;
     private int aylaLastHorizontalDirection = 1;
 
     void Awake()
@@ -33,7 +33,6 @@ public class AylaFollowController : MonoBehaviour
         float distanciaX = playerTransform.position.x - transform.position.x;
         Vector2 direcaoMovimento = Vector2.zero;
 
-        // Ayla SÓ se move se a distância horizontal for MAIOR que a distância alvo.
         if (Mathf.Abs(distanciaX) > distanciaAlvo)
         {
             float direcaoX = Mathf.Sign(distanciaX);
@@ -53,13 +52,12 @@ public class AylaFollowController : MonoBehaviour
 
         if (estaMovendo)
         {
-            estadoMovimento = 5; // Andando de Lado
+            estadoMovimento = 5; 
             aylaLastHorizontalDirection = (direcaoMovimento.x > 0) ? 1 : -1;
         }
         else
         {
-            estadoMovimento = 4; // Parada de Lado
-        }
+            estadoMovimento = 4;
         
         aylaAnimator.SetInteger("MovementState", estadoMovimento);
         
@@ -67,5 +65,6 @@ public class AylaFollowController : MonoBehaviour
         {
              aylaSpriteRenderer.flipX = aylaLastHorizontalDirection == -1;
         }
+    }
     }
 }

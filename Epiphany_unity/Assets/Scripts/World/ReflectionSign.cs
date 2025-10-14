@@ -13,8 +13,6 @@ public class ReflectionSign : MonoBehaviour, IInteractable
         {
             Debug.Log($"Placa '{gameObject.name}' interagida. Chamando StartReflection.");
             
-            // <<< A CHAMADA CORRETA E ORIGINAL >>>
-            // Chama o método de reflexão padrão, que espera pelo input do jogador.
             DialogueManager.Instance.StartReflection(reflectionData);
         }
         else

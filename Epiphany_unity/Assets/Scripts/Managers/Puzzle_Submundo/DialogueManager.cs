@@ -194,12 +194,26 @@ public class DialogueManager : MonoBehaviour
     }
 
     public void SelectChoice(int choiceIndex)
+{
+    LastChoiceIndex = choiceIndex;
+    // Esconde os botões imediatamente
+    foreach (Button button in choiceButtons) { if(button != null) button.gameObject.SetActive(false); }
+
+    // Pega a opção que foi escolhida
+    ChoiceOption chosenOption = currentDialogueData.choiceOptions[choiceIndex];
+
+    // Se a opção escolhida tem um próximo diálogo, comece-o.
+    if (chosenOption.nextDialogue != null)
     {
-        LastChoiceIndex = choiceIndex;
-        foreach (Button button in choiceButtons) { if(button != null) button.gameObject.SetActive(false); }
-        if (dialogueBox != null) dialogueBox.SetActive(false);
-        OnDialogueEnd?.Invoke(); 
+        StartDialogue(chosenOption.nextDialogue);
     }
+    // Senão (como no nosso botão "Sair"), apenas feche a caixa de diálogo.
+    else
+    {
+        CloseDialogueBox();
+        OnDialogueEnd?.Invoke(); // Dispara o evento de fim de diálogo para que outros sistemas (se houver) possam reagir.
+    }
+}
 
     public bool IsDialogueBoxActive()
     {

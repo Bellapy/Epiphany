@@ -15,7 +15,8 @@ MonoBehaviour:
   speakerName: Ayla
   speakerPortrait: {fileID: -7319006059537635548, guid: 76804bf5f896d654ca7271eada5c222e, type: 3}
   dialogueLines:
-  - sentence: "Bom... sim, o t\xFAnel leva ao meu quarto."
+  - sentence: "Bom\u2026 sim. \xC9 meio estranho, mas a entrada da caverna realmente
+      d\xE1 para o meu quarto"
     triggerEventAfterLine: 0
     onLineCompleteEvent:
       m_PersistentCalls:
@@ -32,8 +33,8 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-  - sentence: "\xC9 que ja fazem tantos anos...e eu ainda n\xE3o descobri pra onde
-      vai exatamente aquele tunel e nem como ele funciona..."
+  - sentence: "Acontece que, assim como voc\xEA acabou de sair de l\xE1, aquela caverna
+      guarda muitos mist\xE9rios"
     triggerEventAfterLine: 0
     onLineCompleteEvent:
       m_PersistentCalls:
@@ -50,8 +51,8 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-  - sentence: "Ent\xE3o achei melhor construir minha casa sobre a entrada, n\xE3o
-      conte pra ningu\xE9m que ela fica de baixo da cama viu!"
+  - sentence: "alguns t\xE3o imprevis\xEDveis que talvez podem ser perigosos para
+      Zelfin, nunca se sabe."
     triggerEventAfterLine: 0
     onLineCompleteEvent:
       m_PersistentCalls:
@@ -68,9 +69,8 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-  - sentence: "Deve ser muita informa\xE7\xE3o na sua cabe\xE7a, ent\xE3o vu=ou te
-      deixar respirar um pouco, meu quarto n\xE3o tem muita voisa, mas pode mecher
-      no que quiser!"
+  - sentence: "Por isso, mantenho a entrada protegida\u2026 pela minha pr\xF3pria
+      casa."
     triggerEventAfterLine: 0
     onLineCompleteEvent:
       m_PersistentCalls:
@@ -87,8 +87,97 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-  - sentence: "Vou estar na cozinha preparando algo pra gente, quando quiser, siga
-      o corredor na segunda porta. At\xE9 logo!"
+  - sentence: "Mas enfim! J\xE1 que estamos aqui\u2026 voc\xEA prefere bolo de chocolate
+      ou baunilha?"
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 0}
+          m_TargetAssemblyTypeName: 
+          m_MethodName: 
+          m_Mode: 0
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: 
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - sentence: "Mas enfim! J\xE1 qHm\u2026 na verdade, n\xE3o tenho chocolate\u2026
+      mas quem n\xE3o gosta de baunilha n\xE9? "
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 0}
+          m_TargetAssemblyTypeName: 
+          m_MethodName: 
+          m_Mode: 0
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: 
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - sentence: "Quero que se sinta acolhida, ent\xE3o vou preparar algo na cozinha
+      para voc\xEA."
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 0}
+          m_TargetAssemblyTypeName: 
+          m_MethodName: 
+          m_Mode: 0
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: 
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - sentence: "Fique \xE0 vontade para \u2018explorar\u2019 meu quarto. N\xE3o h\xE1
+      muitas coisas, mas imagino que voc\xEA esteja curiosa!"
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 0}
+          m_TargetAssemblyTypeName: 
+          m_MethodName: 
+          m_Mode: 0
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: 
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - sentence: "Quando terminar, me encontre na cozinha! \xC9 s\xF3 seguir pelo corredor
+      e entrar na segunda porta."
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 0}
+          m_TargetAssemblyTypeName: 
+          m_MethodName: 
+          m_Mode: 0
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: 
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - sentence: "At\xE9 logo, pequena!"
     triggerEventAfterLine: 0
     onLineCompleteEvent:
       m_PersistentCalls:

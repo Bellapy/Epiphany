@@ -29,14 +29,11 @@ public class ParallaxEffect : MonoBehaviour
 
     void LateUpdate()
     {
-        // Calcula o quanto o alvo se moveu da sua posição inicial, apenas no eixo X.
         float deltaX = targetToFollow.position.x - targetStartPosition.x;
 
-        // Calcula a nova posição para esta camada de parallax.
-        // O movimento é na direção OPOSTA ao do alvo.
         float newPositionX = selfStartPosition.x - (deltaX * parallaxMultiplierX);
 
-        // Aplica a nova posição, mantendo o Y e Z originais, travando o movimento vertical.
+
         transform.position = new Vector3(newPositionX, selfStartPosition.y, selfStartPosition.z);
     }
 }

@@ -28,8 +28,47 @@ public class CutsceneTransitionManager : MonoBehaviour
     public float finalFadeToBlackDuration = 1.0f;
     public string sceneNameToLoad = ""; // Deixe vazio se não for carregar cena
 
+    [Header("Componentes da Cena de Introdução")]
+    public GameObject painelInstrucoes;
+    public GameObject playerGameObject; // <<< MUDANÇA AQUI: Referência ao GameObject do Player
+    public GameObject textoGameObject;  // <<< MUDANÇA AQUI: Referência ao GameObject do Texto
+    public float tempoDeExibicaoInstrucoes = 5.0f;
+
     private Coroutine activeTransitionCoroutine;
 
+    
+   void Start()
+{
+    // Garante que a cutscene principal NÃO comece de jeito nenhum
+    if (playerGameObject != null) playerGameObject.SetActive(false);
+    if (textoGameObject != null) textoGameObject.SetActive(false);
+    
+    // Mostra o painel de instruções e inicia a contagem regressiva
+    if (painelInstrucoes != null)
+    {
+        painelInstrucoes.SetActive(true);
+        StartCoroutine(StartCutsceneAfterDelay());
+    }
+    // Se não houver painel de instruções, a cutscene começa imediatamente
+    else
+    {
+        if (playerGameObject != null) playerGameObject.SetActive(true);
+        if (textoGameObject != null) textoGameObject.SetActive(true);
+    }
+}
+
+private IEnumerator StartCutsceneAfterDelay()
+{
+    // 1. Espera
+    yield return new WaitForSeconds(tempoDeExibicaoInstrucoes);
+
+    // 2. Esconde as instruções
+    painelInstrucoes.SetActive(false);
+
+    // 3. Inicia a cutscene principal ATIVANDO os GameObjects
+    if (playerGameObject != null) playerGameObject.SetActive(true);
+    if (textoGameObject != null) textoGameObject.SetActive(true);
+}
     // Método público que o SequentialTypewriter vai chamar
     public void StartPostTextSequence()
     {
