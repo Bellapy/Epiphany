@@ -38,8 +38,20 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: fundo
+    uniqueID: 1122568315
+    locked: 0
+  - name: Parallax_Distante
+    uniqueID: 3946838211
+    locked: 0
+  - name: Parallax_Medio
+    uniqueID: 3772844691
+    locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Parallax_Frente
+    uniqueID: 1537393173
     locked: 0
   m_RenderingLayers:
   - Default

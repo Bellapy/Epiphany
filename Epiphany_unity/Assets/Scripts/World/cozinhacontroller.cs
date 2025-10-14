@@ -1,153 +1,102 @@
 using UnityEngine;
-using UnityEngine.UI;
-using TMPro;
 using System.Collections;
-using System.Collections.Generic;
 
 public class CozinhaSceneController : MonoBehaviour
 {
-    [Header("Referências da UI")]
-    [SerializeField] private GameObject dialoguePanel;
-    [SerializeField] private TextMeshProUGUI speakerNameText;
-    [SerializeField] private Image speakerPortrait;
-    [SerializeField] private TextMeshProUGUI dialogueText;
-    [SerializeField] private GameObject choiceButtonsContainer;
-    [SerializeField] private List<Button> choiceButtons;
-    [SerializeField] private Sprite playerPortrait;
-
     [Header("Referências de Atores e Roteiro")]
     [SerializeField] private Animator aylaAnimator;
     [SerializeField] private Transform aylaTransform;
-    [SerializeField] private SpriteRenderer aylaSpriteRenderer;
-    [SerializeField] private Transform pontoDestinoPorta;
-    [SerializeField] private float velocidadeCaminhada = 1.0f;
     [SerializeField] private Transform aylaPontoDePartida;
+    [SerializeField] private NPCTourGuide aylaTourGuide;
+    [SerializeField] private SitController poltronaController;
+
+    // <<< NOVA REFERÊNCIA >>>
+    [Tooltip("Arraste a porta de saída que leva ao corredor aqui.")]
+    [SerializeField] private SceneTransitionTrigger portaDeSaida;
 
     [Header("Conteúdo da Conversa")]
-    [SerializeField] private DialogueData dialogoIntroducaoAyla;
-    [SerializeField] private List<string> todasAsPerguntas;
-    [SerializeField] private List<DialogueData> dialogosDeResposta;
-    [SerializeField] private DialogueData dialogoFinalAyla;
+    [Tooltip("O diálogo principal que começa quando o jogador se senta.")]
+    [SerializeField] private DialogueData dialogoConversaPrincipal;
 
-    private List<string> perguntasDisponiveis;
-    private bool finalDialogueStarted = false;
-    private bool isConversationActive = false; // A trava de segurança
+    private bool isConversationActive = false;
 
-    private void OnEnable() { DialogueManager.OnDialogueEnd += HandleDialogueEnd; }
-    private void OnDisable() { DialogueManager.OnDialogueEnd -= HandleDialogueEnd; }
+    private void OnEnable() 
+    {
+        DialogueManager.OnDialogueEnd += HandleDialogueEnd; 
+    }
+
+    private void OnDisable() 
+    {
+        DialogueManager.OnDialogueEnd -= HandleDialogueEnd; 
+    }
 
     void Start()
     {
         if (aylaAnimator != null) aylaAnimator.SetBool("isSitting", true);
-        if (dialoguePanel != null) dialoguePanel.SetActive(false);
     }
     
-    public void IniciarConversa()
+    public void IniciarConversaPrincipal()
     {
-        isConversationActive = true; // Liga o "interruptor" da conversa
-        
-        perguntasDisponiveis = new List<string>(todasAsPerguntas);
-        finalDialogueStarted = false;
-        
-        dialoguePanel.SetActive(true);
-        choiceButtonsContainer.SetActive(false);
-        dialogueText.gameObject.SetActive(true);
-        DialogueManager.Instance.StartDialogue(dialogoIntroducaoAyla);
+        if (isConversationActive) return;
+
+        isConversationActive = true;
+        DialogueManager.Instance.StartDialogue(dialogoConversaPrincipal);
     }
     
     private void HandleDialogueEnd()
     {
-        if (!isConversationActive) return; // Ignora eventos que não são da conversa principal
+        if (!isConversationActive) return;
 
-        if (finalDialogueStarted)
+        isConversationActive = false;
+        StartCoroutine(SequenciaFinalAyla());
+    }
+    
+    private IEnumerator SequenciaFinalAyla()
+    {
+        // <<< A NOVA LÓGICA ESTÁ AQUI >>>
+        // 1. Destranca a porta imediatamente.
+        if (portaDeSaida != null)
         {
-            isConversationActive = false; // Desliga o "interruptor"
-            StartCoroutine(SequenciaFinalAyla());
-            return;
-        }
-
-        if (perguntasDisponiveis.Count > 0)
-        {
-            ApresentarEscolhas();
+            portaDeSaida.Unlock();
         }
         else
         {
-            finalDialogueStarted = true;
-            DialogueManager.Instance.StartDialogue(dialogoFinalAyla);
+            Debug.LogWarning("Referência à porta de saída não definida. Não foi possível destrancá-la.");
         }
-    }
-    
-    private void ApresentarEscolhas()
-    {
-        dialoguePanel.SetActive(true);
-        dialogueText.gameObject.SetActive(false);
-        choiceButtonsContainer.SetActive(true);
-        speakerNameText.text = "Você";
-        speakerPortrait.sprite = playerPortrait;
-        Button botao1 = choiceButtons[0];
-        botao1.gameObject.SetActive(true);
-        botao1.GetComponentInChildren<TextMeshProUGUI>().text = perguntasDisponiveis[0];
-        botao1.onClick.RemoveAllListeners();
-        string pergunta1 = perguntasDisponiveis[0];
-        botao1.onClick.AddListener(() => EscolherPergunta(pergunta1));
-        Button botao2 = choiceButtons[1];
-        if (perguntasDisponiveis.Count > 1) {
-            botao2.gameObject.SetActive(true);
-            botao2.GetComponentInChildren<TextMeshProUGUI>().text = perguntasDisponiveis[1];
-            botao2.onClick.RemoveAllListeners();
-            string pergunta2 = perguntasDisponiveis[1];
-            botao2.onClick.AddListener(() => EscolherPergunta(pergunta2));
-        } else {
-            botao2.gameObject.SetActive(false);
+
+        // 2. Comanda o jogador a se levantar.
+        if (poltronaController != null)
+        {
+            poltronaController.Levantar();
         }
-        UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(null);
-        UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(choiceButtons[0].gameObject);
-    }
+        else
+        {
+            Debug.LogError("Referência ao SitController (poltrona) não definida!");
+            yield break;
+        }
 
-    private void EscolherPergunta(string perguntaEscolhida)
-    {
-        choiceButtonsContainer.SetActive(false);
-        dialogueText.gameObject.SetActive(true);
-        int indiceOriginal = todasAsPerguntas.IndexOf(perguntaEscolhida);
-        perguntasDisponiveis.Remove(perguntaEscolhida);
-        DialogueManager.Instance.StartDialogue(dialogosDeResposta[indiceOriginal]);
-    }
-
-    // <<< SEQUÊNCIA FINAL COM A LÓGICA DE FADE E TRANSIÇÃO RESTAURADA >>>
-    private IEnumerator SequenciaFinalAyla()
-    {
-        // Ayla se levanta
+        // 3. Ayla executa a animação de levantar.
         if (aylaAnimator != null) aylaAnimator.SetBool("isSitting", false);
         
-        // Inicia o Fade Out IMEDIATAMENTE.
-        if (FadeController.Instance != null)
-        {
-            FadeController.Instance.StartFadeOut(null);
-        }
+        yield return new WaitForSeconds(0.5f);
 
-        // Espera um pouco para a animação de levantar acontecer enquanto a tela escurece
-        float tempoParaLevantar = 1.5f;
-        float timer = 0f;
-        Vector3 posInicialSentada = aylaTransform.position;
-        while (timer < tempoParaLevantar)
+        // 4. Teleporta Ayla para a posição inicial de caminhada.
+        if (aylaPontoDePartida != null)
         {
-            aylaTransform.position = Vector3.Lerp(posInicialSentada, aylaPontoDePartida.position, timer / tempoParaLevantar);
-            timer += Time.deltaTime;
-            yield return null;
+            aylaTransform.position = aylaPontoDePartida.position;
         }
-
-        // Ayla anda até a porta (isso acontecerá enquanto a tela já está escura ou escurecendo)
-        Vector2 direcao = (pontoDestinoPorta.position - aylaTransform.position).normalized;
-        aylaAnimator.SetInteger("MovementState", 5);
-        aylaSpriteRenderer.flipX = direcao.x < 0;
-        while (Vector3.Distance(aylaTransform.position, pontoDestinoPorta.position) > 0.1f)
+        
+        // 5. Libera o controle do jogador.
+        PlayerController player = FindFirstObjectByType<PlayerController>();
+        if (player != null)
         {
-            aylaTransform.position = Vector3.MoveTowards(aylaTransform.position, pontoDestinoPorta.position, velocidadeCaminhada * Time.deltaTime);
-            yield return null;
+            player.EnableMovement();
         }
-
-        // Com a tela já preta, agora damos a ordem para trocar de cena.
-        Debug.Log("Transição final com fade. Carregando a EndingScene.");
-        GameManager.Instance.LoadScene("EndingScene");
+        
+        // 6. Inicia o tour da Ayla.
+        if (aylaTourGuide != null)
+        {
+            aylaTourGuide.StartTour();
+        }
     }
 }

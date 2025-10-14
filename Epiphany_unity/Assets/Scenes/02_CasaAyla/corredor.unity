@@ -446,6 +446,101 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 272318816}
   m_CullTransparentMesh: 1
+--- !u!1 &437889446
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 437889447}
+  - component: {fileID: 437889449}
+  - component: {fileID: 437889448}
+  m_Layer: 0
+  m_Name: Waypoint_02
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &437889447
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 437889446}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.83, y: -0.14, z: 0.023351405}
+  m_LocalScale: {x: 0.14, y: 0.78, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &437889448
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 437889446}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c115ca6becc07b043914cec601bab2cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneToLoad: Floresta
+  spawnPointNameInNextScene: SpawnFromCorredor
+  objectsToActivate: []
+  isLocked: 0
+--- !u!61 &437889449
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 437889446}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0
 --- !u!1 &442198432
 GameObject:
   m_ObjectHideFlags: 0
@@ -583,6 +678,37 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &469770403
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 469770404}
+  m_Layer: 0
+  m_Name: Waypoint_01
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &469770404
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 469770403}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.31, y: -0.09, z: 0.023351405}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &509451224
 GameObject:
   m_ObjectHideFlags: 0
@@ -1023,8 +1149,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 770957159}
+  - component: {fileID: 770957160}
   m_Layer: 0
-  m_Name: entrar2
+  m_Name: SpawnFromCozinha
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1039,12 +1166,58 @@ Transform:
   m_GameObject: {fileID: 770957158}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.273, y: -1.16, z: 0.07915617}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0.273, y: -0.943, z: 0.07915617}
+  m_LocalScale: {x: 0.43, y: 0.41, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!61 &770957160
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 770957158}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0
 --- !u!1001 &855152817
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2066,6 +2239,135 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1545074138}
   m_CullTransparentMesh: 1
+--- !u!1001 &1553404987
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 5306061371125586238, guid: a329039a1796cd740b53a0937b38a0ca, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.29
+      objectReference: {fileID: 0}
+    - target: {fileID: 5306061371125586238, guid: a329039a1796cd740b53a0937b38a0ca, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.66
+      objectReference: {fileID: 0}
+    - target: {fileID: 5306061371125586238, guid: a329039a1796cd740b53a0937b38a0ca, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.039630067
+      objectReference: {fileID: 0}
+    - target: {fileID: 5306061371125586238, guid: a329039a1796cd740b53a0937b38a0ca, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5306061371125586238, guid: a329039a1796cd740b53a0937b38a0ca, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5306061371125586238, guid: a329039a1796cd740b53a0937b38a0ca, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5306061371125586238, guid: a329039a1796cd740b53a0937b38a0ca, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5306061371125586238, guid: a329039a1796cd740b53a0937b38a0ca, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5306061371125586238, guid: a329039a1796cd740b53a0937b38a0ca, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5306061371125586238, guid: a329039a1796cd740b53a0937b38a0ca, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5319796201512593844, guid: a329039a1796cd740b53a0937b38a0ca, type: 3}
+      propertyPath: m_Name
+      value: Ayla_VindaDaCozinha
+      objectReference: {fileID: 0}
+    - target: {fileID: 5319796201512593844, guid: a329039a1796cd740b53a0937b38a0ca, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6288178754279177876, guid: a329039a1796cd740b53a0937b38a0ca, type: 3}
+      propertyPath: moveSpeed
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6288178754279177876, guid: a329039a1796cd740b53a0937b38a0ca, type: 3}
+      propertyPath: playerTransform
+      value: 
+      objectReference: {fileID: 1918023031}
+    - target: {fileID: 6288178754279177876, guid: a329039a1796cd740b53a0937b38a0ca, type: 3}
+      propertyPath: waypoints.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6288178754279177876, guid: a329039a1796cd740b53a0937b38a0ca, type: 3}
+      propertyPath: 'waypoints.Array.data[0]'
+      value: 
+      objectReference: {fileID: 469770404}
+    - target: {fileID: 6288178754279177876, guid: a329039a1796cd740b53a0937b38a0ca, type: 3}
+      propertyPath: 'waypoints.Array.data[1]'
+      value: 
+      objectReference: {fileID: 437889447}
+    - target: {fileID: 6288178754279177876, guid: a329039a1796cd740b53a0937b38a0ca, type: 3}
+      propertyPath: OnTourCompleted.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6288178754279177876, guid: a329039a1796cd740b53a0937b38a0ca, type: 3}
+      propertyPath: OnTourCompleted.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6288178754279177876, guid: a329039a1796cd740b53a0937b38a0ca, type: 3}
+      propertyPath: OnTourCompleted.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1553404988}
+    - target: {fileID: 6288178754279177876, guid: a329039a1796cd740b53a0937b38a0ca, type: 3}
+      propertyPath: OnTourCompleted.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6288178754279177876, guid: a329039a1796cd740b53a0937b38a0ca, type: 3}
+      propertyPath: OnTourCompleted.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SetActive
+      objectReference: {fileID: 0}
+    - target: {fileID: 6288178754279177876, guid: a329039a1796cd740b53a0937b38a0ca, type: 3}
+      propertyPath: OnTourCompleted.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: UnityEngine.GameObject, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 6288178754279177876, guid: a329039a1796cd740b53a0937b38a0ca, type: 3}
+      propertyPath: OnTourCompleted.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5319796201512593844, guid: a329039a1796cd740b53a0937b38a0ca, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1553404989}
+  m_SourcePrefab: {fileID: 100100000, guid: a329039a1796cd740b53a0937b38a0ca, type: 3}
+--- !u!1 &1553404988 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5319796201512593844, guid: a329039a1796cd740b53a0937b38a0ca, type: 3}
+  m_PrefabInstance: {fileID: 1553404987}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1553404989
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1553404988}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7fe5f4ec88c6cbf42b1fdde5b2e7da43, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1599868710
 GameObject:
   m_ObjectHideFlags: 0
@@ -2247,8 +2549,13 @@ MonoBehaviour:
   puzzleManager: {fileID: 442198433}
   nextSceneName: cozinha
   spawnPointInNextScene: 
-  mensagemErro: "Parece trancada... A combina\xE7\xE3o de luzes est\xE1 incorreta."
-  mensagemDica: "O lampi\xE3o 3 parece importante..."
+  mensagensDeFeedback:
+  - "Parece trancada\u2026 acerte a ordem de luzes ligadas"
+  - "Ainda est\xE1 trancada\u2026"
+  - "H\xE1 4 lampi\xF5es, mas somente 3 deles devem estar acesos."
+  - "Ainda est\xE1 trancada\u2026"
+  - "Ainda est\xE1 trancada\u2026"
+  - "O primeiro e o segundo lampi\xE3o precisam, com certeza, estar ligados."
 --- !u!1 &1718648518
 GameObject:
   m_ObjectHideFlags: 0
@@ -3381,3 +3688,6 @@ SceneRoots:
   - {fileID: 1695348767}
   - {fileID: 770957159}
   - {fileID: 580211923}
+  - {fileID: 1553404987}
+  - {fileID: 469770404}
+  - {fileID: 437889447}

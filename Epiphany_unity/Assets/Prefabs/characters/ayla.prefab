@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8868187964529676930}
   - component: {fileID: 895312698909875708}
   - component: {fileID: 2277914587901263308}
+  - component: {fileID: 6288178754279177876}
   m_Layer: 0
   m_Name: ayla
   m_TagString: Untagged
@@ -79,12 +80,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 2
-  m_Sprite: {fileID: -1517358426688244947, guid: 4a540b6a6b1503b409ebe483e2585897, type: 3}
+  m_Sprite: {fileID: 1268309621283332892, guid: e60b14152c5b89647a1d7bd54af93256, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.53125, y: 0.75}
+  m_Size: {x: 0.33, y: 0.35}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -174,5 +175,22 @@ CapsuleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: -0.11, y: 0.1}
-  m_Size: {x: 0.28, y: 0.6}
+  m_Size: {x: 0.24, y: 0.34}
   m_Direction: 0
+--- !u!114 &6288178754279177876
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5319796201512593844}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b798942c21687843abf846718504dd7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  waypoints: []
+  playerTransform: {fileID: 0}
+  moveSpeed: 2
+  maxDistanceToPlayer: 5
+  resumeDistanceToPlayer: 3

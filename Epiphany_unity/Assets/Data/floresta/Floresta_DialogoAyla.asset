@@ -10,42 +10,42 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9228e584220b007488a3081b0ee915e9, type: 3}
-  m_Name: 2
+  m_Name: Floresta_DialogoAyla
   m_EditorClassIdentifier: 
   speakerName: Ayla
-  speakerPortrait: {fileID: -7319006059537635548, guid: 76804bf5f896d654ca7271eada5c222e, type: 3}
+  speakerPortrait: {fileID: 0}
   dialogueLines:
-  - sentence: "Sei que \xE0s vezes tudo parece t\xE3o desafiador\u2026\r\n mas voc\xEA
-      pode confiar em mim.\r\n"
+  - sentence: "Olhe ao seu redor... nunca me canso de admirar. Perto daqui h\xE1
+      uma sequoia-gigante, capaz de chegar a 90 metros de altura "
     triggerEventAfterLine: 0
     onLineCompleteEvent:
       m_PersistentCalls:
         m_Calls: []
-  - sentence: "Serei o seu porto seguro, a sua\u2026 verdadeira amiga.\r\n Vou te
-      mostrar coisas muito divertidas por aqui!\r\n"
+  - sentence: "\xE9 como uma montanha viva, que respira e continua crescendo por
+      milhares de anos."
     triggerEventAfterLine: 0
     onLineCompleteEvent:
       m_PersistentCalls:
         m_Calls: []
-  - sentence: "E depois\u2026 bom, n\xF3s arranjamos um jeito de voc\xEA voltar para
-      casa.\r\n Por enquanto, caso queira, minha casa est\xE1 de portas abertas para
-      voc\xEA."
+  - sentence: "Quando fico diante de uma \xE1rvore assim, n\xE3o consigo evitar de
+      pensar: ser\xE1 que n\xF3s somos pequenos demais, ou elas grandes demais?"
     triggerEventAfterLine: 0
     onLineCompleteEvent:
       m_PersistentCalls:
         m_Calls: []
-  - sentence: "Est\xE1 come\xE7ando a escurecer l\xE1 fora\u2026\r\n e eu queria
-      te mostrar algo muito legal."
+  - sentence: "Mas a minha favorita \xE9 uma que nem parece real: o Pando. "
     triggerEventAfterLine: 0
     onLineCompleteEvent:
       m_PersistentCalls:
         m_Calls: []
-  - sentence: "Vamos l\xE1?\r\n Prometo que vale a pena sair um pouco."
+  - sentence: "Parece uma floresta inteira, mas na verdade todas as \xE1rvores s\xE3o
+      geneticamente iguais"
     triggerEventAfterLine: 0
     onLineCompleteEvent:
       m_PersistentCalls:
         m_Calls: []
-  - sentence: "Vem! \xE9 s\xF3 me seguir! n\xE3o \xE9 longe daqui"
+  - sentence: "ou seja, uma \xFAnica \xE1rvore. Suas ra\xEDzes se espalham pelo solo
+      h\xE1 mais de 80 mil anos. Imagine s\xF3\u2026"
     triggerEventAfterLine: 0
     onLineCompleteEvent:
       m_PersistentCalls:

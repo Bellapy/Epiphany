@@ -10,12 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9228e584220b007488a3081b0ee915e9, type: 3}
-  m_Name: resposta2
+  m_Name: Cozinha_BoasVindas
   m_EditorClassIdentifier: 
   speakerName: Ayla
-  speakerPortrait: {fileID: -7319006059537635548, guid: 76804bf5f896d654ca7271eada5c222e, type: 3}
+  speakerPortrait: {fileID: 0}
   dialogueLines:
-  - sentence: "N\xE3o mais.\r\n Agora voc\xEA est\xE1 aqui, e isso faz toda a diferen\xE7a."
+  - sentence: "Ah \u2014 ol\xE1! Desculpe, pequena, eu esqueci de desativar o mecanismo
+      das luzes na porta. Espero que voc\xEA n\xE3o tenha ficado presa por muito
+      tempo. "
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - sentence: "Escuta: pode dar uma olhadinha no bolo pra mim? Fica \xE0 vontade
+      para sentar quando quiser \u2014 o ch\xE1 est\xE1 pronto e quentinho."
     triggerEventAfterLine: 0
     onLineCompleteEvent:
       m_PersistentCalls:

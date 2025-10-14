@@ -12,32 +12,30 @@ public class PuzzleLuzesManager : MonoBehaviour
     [Tooltip("Arraste todos os scripts LampiaoController para esta lista.")]
     [SerializeField] private List<LampiaoController> lampioes;
 
-    /// <summary>
-    /// Verifica se o estado atual dos lampiões corresponde à solução.
-    /// </summary>
     public bool VerificarSolucao()
     {
-        List<int> lampioesAcesosAtualmente = new List<int>();
-        foreach (LampiaoController lampiao in lampioes)
+      
+        List<int> idsAcesos = lampioes
+            .Where(l => l != null && l.EstaAceso())
+            .Select(l => l.GetID())
+            .ToList();
+
+  
+        if (idsAcesos.Count != idsCorretos.Count)
         {
-            if (lampiao != null && lampiao.EstaAceso())
-            {
-                lampioesAcesosAtualmente.Add(lampiao.GetID());
-            }
+            return false;
         }
 
-        bool estadoCorreto = idsCorretos.Count == lampioesAcesosAtualmente.Count && 
-                             idsCorretos.All(lampioesAcesosAtualmente.Contains);
+     
+        HashSet<int> setIdsAcesos = new HashSet<int>(idsAcesos);
+        HashSet<int> setIdsCorretos = new HashSet<int>(idsCorretos);
 
-        return estadoCorreto;
+   
+        return setIdsAcesos.SetEquals(setIdsCorretos);
     }
 
-    /// <summary>
-    /// Manda todos os lampiões da lista se apagarem.
-    /// </summary>
     public void ResetarTodosLampioes()
     {
-        Debug.Log("Resetando o estado de todos os lampiões...");
         foreach (LampiaoController lampiao in lampioes)
         {
             if (lampiao != null)

@@ -1,0 +1,80 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9228e584220b007488a3081b0ee915e9, type: 3}
+  m_Name: Cozinha_ConversaPrincipal
+  m_EditorClassIdentifier: 
+  speakerName: Ayla
+  speakerPortrait: {fileID: 0}
+  dialogueLines:
+  - sentence: "Que bom que o bolo est\xE1 quase pronto! Agora podemos conversar com
+      calma. Prazer, como j\xE1 disse, sou Ayla, a guardi\xE3 de Zelfin. Este \xE9
+      um universo habitado por esp\xEDritos que representam a pr\xF3pria natureza
+      de"
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - sentence: uma outra maneira de vida, uma que sente. A vida aqui costuma ser tranquila,
+      quase sempre dedicada a simplesmente viver em harmonia.
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - sentence: "Estou aqui h\xE1 muito tempo, e, por ser a guardi\xE3, acredito que
+      ningu\xE9m por estas terras deixe de me conhecer."
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - sentence: "Lembra que eu disse ter sentido uma pequena ondula\xE7\xE3o com a
+      sua chegada? Eu sou muito sens\xEDvel a tudo que acontece em Zelfin\u2026 at\xE9
+      mesmo a presen\xE7a de uma \xFAnica alma j\xE1 mexe com a harmonia daqui. "
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - sentence: "Mas voc\xEA\u2026 voc\xEA \xE9 a \xFAnica que surgiu desde que vivo
+      aqui. Isso \xE9, de fato, estranho. N\xE3o sei a raz\xE3o, nem o objetivo,
+      mas aprendi que algumas coisas simplesmente acontecem. "
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - sentence: "E, quando acontecem, nos d\xE3o a chance de aprender algo que jamais
+      imaginar\xEDamos. "
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - sentence: Nem eu compreendo por completo os planos de Zelfin, mas pode ter certeza
+      que estarei do seu lado.
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - sentence: "Ei! Acabei de lembrar de algo. Como esse \xE9 o seu primeiro dia aqui,
+      quero garantir que tenha boas primeiras impress\xF5es. J\xE1 est\xE1 tarde,
+      ent\xE3o n\xE3o vamos sair para longe\u2026 "
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - sentence: "mas h\xE1 algo muito especial que quero te mostrar! Venha comigo,
+      prometo que ser\xE1 rapidinho!"
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  hasChoice: 0
+  choicePrompt: 
+  choiceOptions: []
+  nextDialogueOnEnd: {fileID: 0}

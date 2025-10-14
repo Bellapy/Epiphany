@@ -12,8 +12,8 @@ public class PortaPuzzle : MonoBehaviour
     [SerializeField] private string spawnPointInNextScene;
     
     [Header("Feedback para o Jogador")]
-    [SerializeField] private string mensagemErro = "Parece trancada... A combinação de luzes está incorreta.";
-    [SerializeField] private string mensagemDica = "O lampião 3 parece importante...";
+    [Tooltip("Lista de mensagens de feedback para tentativas erradas. A ordem importa.")]
+    [SerializeField] private List<string> mensagensDeFeedback;
 
     private bool estaTrancada = true;
     private bool podeVerificar = true;
@@ -21,13 +21,30 @@ public class PortaPuzzle : MonoBehaviour
 
     private void Awake()
     {
-        GetComponent<Collider2D>().isTrigger = true;
+        if (GetComponent<Collider2D>() != null)
+        {
+            GetComponent<Collider2D>().isTrigger = true;
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+        // A verificação só acontece se o sistema estiver pronto.
+        if (!other.CompareTag("Player") || !podeVerificar) return;
+        
+        VerificarPuzzle();
+    }
+
+    private void OnTriggerStay2D(Collider2D other)
+    {
+        // Adicionado para garantir a verificação caso o jogador pare dentro do trigger.
         if (!other.CompareTag("Player") || !podeVerificar) return;
 
+        VerificarPuzzle();
+    }
+
+    private void VerificarPuzzle()
+    {
         if (!estaTrancada)
         {
             IniciarTransicao();
@@ -41,41 +58,57 @@ public class PortaPuzzle : MonoBehaviour
         }
         else
         {
-            tentativasErradas++;
-            string mensagemAtual = (tentativasErradas >= 3) ? mensagemDica : mensagemErro;
-
-            StartCoroutine(MostrarMensagemTemporaria(mensagemAtual));
-            puzzleManager.ResetarTodosLampioes();
-            StartCoroutine(CooldownVerificacao());
+            // Ao falhar, inicia a corrotina que gerencia todo o fluxo de feedback.
+            StartCoroutine(ProcessarTentativaErrada());
         }
     }
 
-    private IEnumerator MostrarMensagemTemporaria(string mensagem)
+    private IEnumerator ProcessarTentativaErrada()
     {
-        ReflectionData dadosDaMensagem = new ReflectionData 
-        { 
-            reflectionLines = new List<string> { mensagem } 
-        };
-        
-        DialogueManager.Instance.StartReflection(dadosDaMensagem);
-        
-        yield return new WaitForSeconds(3.0f);
-        
-        if (DialogueManager.Instance.IsDialogueBoxActive())
-        {
-            DialogueManager.Instance.CloseDialogueBox();
-        }
-    }
-
-    private IEnumerator CooldownVerificacao()
-    {
+        // 1. Trava o sistema imediatamente. Nenhuma outra verificação pode acontecer.
         podeVerificar = false;
-        yield return new WaitForSeconds(2.0f);
+
+        // 2. Seleciona a mensagem correta.
+        string mensagemAtual = "";
+        if (mensagensDeFeedback != null && mensagensDeFeedback.Count > 0)
+        {
+            int indiceMensagem = Mathf.Min(tentativasErradas, mensagensDeFeedback.Count - 1);
+            mensagemAtual = mensagensDeFeedback[indiceMensagem];
+        }
+        
+        tentativasErradas++;
+
+        // 3. Reseta os lampiões.
+        puzzleManager.ResetarTodosLampioes();
+
+        // 4. Mostra a mensagem, se houver uma.
+        if (!string.IsNullOrEmpty(mensagemAtual))
+        {
+            ReflectionData dadosDaMensagem = ScriptableObject.CreateInstance<ReflectionData>();
+            dadosDaMensagem.reflectionLines = new List<string> { mensagemAtual };
+            DialogueManager.Instance.StartReflection(dadosDaMensagem);
+            
+            // 5. Espera um tempo fixo para a leitura.
+            yield return new WaitForSeconds(3.0f);
+            
+            if (DialogueManager.Instance.IsDialogueBoxActive())
+            {
+                DialogueManager.Instance.CloseDialogueBox();
+            }
+            
+            Destroy(dadosDaMensagem);
+        }
+        
+        // 6. Destrava o sistema, permitindo uma nova tentativa.
         podeVerificar = true;
     }
 
     private void IniciarTransicao()
     {
+        // Garante que a transição só seja chamada uma vez.
+        if (!podeVerificar) return;
+        podeVerificar = false;
+
         if (FadeController.Instance != null) {
             FadeController.Instance.StartFadeOut(() => {
                 GameManager.Instance.SetNextSpawnPoint(spawnPointInNextScene);
@@ -90,6 +123,5 @@ public class PortaPuzzle : MonoBehaviour
     public void Destrancar()
     {
         estaTrancada = false;
-        Debug.Log("A porta foi destrancada!");
     }
 }
