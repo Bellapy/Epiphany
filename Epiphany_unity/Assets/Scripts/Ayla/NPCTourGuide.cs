@@ -2,13 +2,10 @@ using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.Events;
 
-// Nova classe para definir um waypoint com eventos.
-// [System.Serializable] permite que ela apareça no Inspector.
 [System.Serializable]
 public class WaypointEvent
 {
     public Transform target;
-    [Tooltip("Evento disparado quando o NPC chega a este waypoint.")]
     public UnityEvent onWaypointReached;
 }
 
@@ -16,17 +13,17 @@ public class WaypointEvent
 public class NPCTourGuide : MonoBehaviour
 {
     [Header("Configuração do Tour")]
-    [Tooltip("A lista de waypoints e eventos que o NPC seguirá.")]
     [SerializeField] private List<WaypointEvent> tourPath;
-    [SerializeField] private float moveSpeed = 2.0f;
+    [SerializeField] private float moveSpeed = 1.2f;
 
     [Header("Comportamento de Espera")]
     [SerializeField] private Transform playerTransform;
+    [Tooltip("Se o jogador estiver mais longe que isso, Ayla para.")]
     [SerializeField] private float maxDistanceToPlayer = 5.0f;
-    [SerializeField] private float resumeDistanceToPlayer = 3.0f;
+    [Tooltip("Ayla volta a andar quando o jogador está mais perto que isso.")]
+    [SerializeField] private float resumeDistanceToPlayer = 4.0f;
 
     [Header("Eventos Globais")]
-    [Tooltip("Disparado quando o NPC chega ao último waypoint do tour.")]
     public UnityEvent OnTourCompleted;
 
     private Animator animator;
@@ -77,10 +74,9 @@ public class NPCTourGuide : MonoBehaviour
             SetAnimation(Vector2.zero);
             return;
         }
-
+        
         if (currentWaypointIndex >= tourPath.Count)
         {
-            // Tour concluído
             isTourActive = false;
             SetAnimation(Vector2.zero);
             this.enabled = false;
@@ -91,12 +87,13 @@ public class NPCTourGuide : MonoBehaviour
         Transform targetWaypoint = tourPath[currentWaypointIndex].target;
         Vector3 direction = (targetWaypoint.position - transform.position).normalized;
 
-        transform.position = Vector3.MoveTowards(transform.position, targetWaypoint.position, moveSpeed * Time.deltaTime);
+        // <<< A CORREÇÃO ESTÁ AQUI >>>
+        // Usamos Time.unscaledDeltaTime para que o movimento ignore a escala de tempo do jogo (pausa).
+        transform.position = Vector3.MoveTowards(transform.position, targetWaypoint.position, moveSpeed * Time.unscaledDeltaTime);
         SetAnimation(direction);
 
         if (Vector3.Distance(transform.position, targetWaypoint.position) < 0.1f)
         {
-            // Dispara o evento do waypoint que acabamos de alcançar.
             tourPath[currentWaypointIndex].onWaypointReached.Invoke();
             currentWaypointIndex++;
         }
@@ -113,11 +110,5 @@ public class NPCTourGuide : MonoBehaviour
         {
             animator.SetInteger("MovementState", 4);
         }
-    }
-
-    // Novo método público para ser chamado por um evento de waypoint.
-    public void PauseTour()
-    {
-        isTourActive = false;
     }
 }

@@ -53,5 +53,11 @@ TagManager:
   - name: Parallax_Frente
     uniqueID: 1537393173
     locked: 0
+  - name: muro
+    uniqueID: 4139696217
+    locked: 0
+  - name: porta
+    uniqueID: 1963708415
+    locked: 0
   m_RenderingLayers:
   - Default

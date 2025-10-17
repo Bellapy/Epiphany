@@ -50,6 +50,11 @@ MonoBehaviour:
     onLineCompleteEvent:
       m_PersistentCalls:
         m_Calls: []
+  - sentence: "J\xE1 estamos chegando!"
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
   hasChoice: 0
   choicePrompt: 
   choiceOptions: []

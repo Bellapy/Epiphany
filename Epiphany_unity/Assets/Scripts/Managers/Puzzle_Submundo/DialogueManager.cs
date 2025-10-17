@@ -24,6 +24,7 @@ public class DialogueManager : MonoBehaviour
     private bool isTyping = false;
     private string currentFullSentence;
     private DialogueData currentDialogueData;
+    private bool isDialogueAutomatic = false; 
     public int LastChoiceIndex { get; private set; } = -1;
 
     private void Awake()
@@ -69,12 +70,15 @@ public class DialogueManager : MonoBehaviour
         if (dialogueBox != null) dialogueBox.SetActive(false);
     }
 
-    public void StartDialogue(DialogueData dialogue)
-    {
+    public void StartDialogue(DialogueData dialogue, bool isAutomatic = false)
+{
         StopAllCoroutines();
-        if (dialogueBoxCanvasGroup != null) dialogueBoxCanvasGroup.alpha = 1f; // Garante visibilidade
-        
+        if (dialogueBoxCanvasGroup != null) dialogueBoxCanvasGroup.alpha = 1f;
+
         if (dialogueBox == null) { Debug.LogError("ERRO: O Dialogue Box não foi conectado nesta cena!"); return; }
+
+        isDialogueAutomatic = isAutomatic; // <<< ADICIONE ESTA LINHA para guardar o estado
+
         LastChoiceIndex = -1;
         currentDialogueData = dialogue;
         dialogueBox.SetActive(true);
@@ -134,9 +138,9 @@ public class DialogueManager : MonoBehaviour
     }
 
     public void Update()
-    {
-        if (dialogueBox == null || !dialogueBox.activeInHierarchy) { return; }
-        if (isTyping && (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Space))) {
+{
+    if (dialogueBox == null || !dialogueBox.activeInHierarchy || isDialogueAutomatic) { return; } // <<< ADICIONE "|| isDialogueAutomatic"
+    if (isTyping && (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Space))) {
             StopAllCoroutines();
             if (dialogueText != null) dialogueText.text = currentFullSentence;
             isTyping = false;
@@ -155,16 +159,30 @@ public class DialogueManager : MonoBehaviour
     }
 
     private IEnumerator TypeSentence(string sentence)
+{
+    if (dialogueText == null) { yield break; }
+    isTyping = true;
+    dialogueText.text = "";
+    foreach (char letter in sentence.ToCharArray())
     {
-        if (dialogueText == null) { yield break; }
-        isTyping = true;
-        dialogueText.text = "";
-        foreach (char letter in sentence.ToCharArray()) {
-            dialogueText.text += letter;
-            yield return new WaitForSeconds(typingSpeed);
-        }
-        isTyping = false;
+        dialogueText.text += letter;
+        yield return new WaitForSeconds(typingSpeed);
     }
+    isTyping = false;
+
+    // --- NOVA LÓGICA AUTOMÁTICA ---
+    if (isDialogueAutomatic)
+    {
+        // Se for automático, inicia a coroutine para avançar sozinho
+        StartCoroutine(AutoAdvanceAfterDelay(2.0f)); // Espera 2 segundos
+    }
+    // --- FIM DA NOVA LÓGICA ---
+}
+    private IEnumerator AutoAdvanceAfterDelay(float delay)
+{
+    yield return new WaitForSeconds(delay);
+    DisplayNextSentence();
+}
 
     private void EndDialogue()
     {

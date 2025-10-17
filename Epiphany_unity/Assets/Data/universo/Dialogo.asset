@@ -1,0 +1,105 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9228e584220b007488a3081b0ee915e9, type: 3}
+  m_Name: Dialogo
+  m_EditorClassIdentifier: 
+  speakerName: 
+  speakerPortrait: {fileID: 0}
+  dialogueLines:
+  - sentence: "Todos os dias, ou quase todos, eu venho a este lugar para olhar o
+      c\xE9u. Sinto que algo t\xE3o simples \xE9 muito deixado de lado por todo mundo\u2026"
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - sentence: "mas, na verdade, \xE9 algo m\xE1gico e incr\xEDvel. E vou te contar
+      algumas coisas: se voc\xEA vir uma estrela cadente, grite para mim, viu?"
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - sentence: "Ningu\xE9m nunca construiu uma m\xE1quina do tempo que eu conhe\xE7a\u2026
+      mas n\xF3s j\xE1 temos uma: nossos olhos. "
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - sentence: " Quando olhamos para o c\xE9u, estamos literalmente olhando para o
+      passado, pequena. Vou explicar."
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - sentence: "H\xE1 milhares de estrelas espalhadas pelo universo, todas muito,
+      mas muito longe de n\xF3s \u2014 voc\xEA nem consegue imaginar a propor\xE7\xE3o. "
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - sentence: "Por serem t\xE3o distantes, nem algo t\xE3o r\xE1pido quanto a luz
+      consegue chegar sem atraso. "
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - sentence: "A luz que chega aos nossos olhos foi emitida h\xE1 muito tempo, e
+      quando chega aqui, j\xE1 n\xE3o \xE9 mais exatamente a mesma\u2026"
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - sentence: " Portanto, as estrelas que vemos no c\xE9u s\xE3o fantasmas do passado.
+      Quanto mais distante a estrela, mais distante \xE9 o tempo que estamos vendo.\r\n"
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - sentence: "Por exemplo, nosso querido Sol est\xE1 a apenas 8 minutos no passado
+      \u2014 perto, se compararmos com as outras estrelas."
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - sentence: "Sirius, a estrela mais brilhante do c\xE9u noturno, nos mostra sua
+      luz como era h\xE1 cerca de 8,6 anos."
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - sentence: "E Rigel, na constela\xE7\xE3o de \xD3rion, nos revela uma imagem de
+      860 anos atr\xE1s. "
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - sentence: Sabe o que significa?
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - sentence: "Que talvez ela j\xE1 tenha mudado completamente ou at\xE9 colapsado
+      em seu n\xFAcleo, mas n\xF3s ainda estamos vendo seu brilho antigo, viajando
+      atrav\xE9s do tempo at\xE9 n\xF3s."
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - sentence: "Parece que hoje tem uma chuva de estrelas cadentes, que sorte a nossa
+      de poder estar aqui, nesse momento\u2026"
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  hasChoice: 0
+  choicePrompt: 
+  choiceOptions: []
+  nextDialogueOnEnd: {fileID: 0}

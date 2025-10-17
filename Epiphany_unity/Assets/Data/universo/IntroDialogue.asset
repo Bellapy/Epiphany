@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9228e584220b007488a3081b0ee915e9, type: 3}
-  m_Name: Maosdadas
+  m_Name: IntroDialogue
   m_EditorClassIdentifier: 
   speakerName: Ayla
   speakerPortrait: {fileID: 0}
   dialogueLines:
-  - sentence: "Pegue minha m\xE3o agora, pequena. O ch\xE3o aqui est\xE1 um pouco
-      escorregadio por causa do musgo, n\xF3s j\xE1 estamos chegando!\n"
+  - sentence: "Pronto chegamos! Venha, deite aqui tamb\xE9m. Agora relaxe e apenas
+      olhe para cima."
     triggerEventAfterLine: 0
     onLineCompleteEvent:
       m_PersistentCalls:
