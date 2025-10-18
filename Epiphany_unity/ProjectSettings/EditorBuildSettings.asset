@@ -53,9 +53,18 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/03_Floresta/Floresta.unity
     guid: c2c62dea9b36da7488fcf7fd1adc77a1
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/03_Floresta/estrelas.unity
     guid: 3166611fc469a02409eefe6599f24d63
+  - enabled: 1
+    path: Assets/Scenes/02_CasaAyla/quarto2.unity
+    guid: 03d8e7e210884a54f857237f4c62d5e4
+  - enabled: 1
+    path: Assets/Scenes/04_universo/gramado.unity
+    guid: 89754eb498f711a498c9f54bbdf7a681
+  - enabled: 1
+    path: Assets/Scenes/05_tenda/zric.unity
+    guid: 1aa843ad8c82fc746a34cc11b99cc03a
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0

@@ -9,6 +9,7 @@ public class DialogueManager : MonoBehaviour
 {
     public static DialogueManager Instance { get; private set; }
     public static event System.Action OnDialogueEnd;
+    public static event System.Action<int> OnDialogueLineStart;
 
     private GameObject dialogueBox;
     private CanvasGroup dialogueBoxCanvasGroup; // Nova variável
@@ -150,13 +151,21 @@ public class DialogueManager : MonoBehaviour
     }
 
     private void DisplayNextSentence()
-    {
-        if (lines.Count == 0) { EndDialogue(); return; }
-        DialogueLine currentLine = lines.Dequeue();
-        currentFullSentence = currentLine.sentence;
-        StopAllCoroutines();
-        StartCoroutine(TypeSentence(currentFullSentence));
-    }
+{
+    if (lines.Count == 0) { EndDialogue(); return; }
+
+    DialogueLine currentLine = lines.Dequeue();
+    
+    // --- NOVA ADIÇÃO ---
+    // Calcula o índice da linha atual e dispara o evento
+    int currentLineIndex = currentDialogueData.dialogueLines.IndexOf(currentLine);
+    OnDialogueLineStart?.Invoke(currentLineIndex);
+    // --- FIM DA NOVA ADIÇÃO ---
+
+    currentFullSentence = currentLine.sentence;
+    StopAllCoroutines();
+    StartCoroutine(TypeSentence(currentFullSentence));
+}
 
     private IEnumerator TypeSentence(string sentence)
 {

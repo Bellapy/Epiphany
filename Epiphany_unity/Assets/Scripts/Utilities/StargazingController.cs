@@ -1,12 +1,11 @@
 using UnityEngine;
 using System.Collections;
-using UnityEngine.UI; // Para controlar o texto de instrução
-using TMPro; // Se usar TextMeshPro
+using TMPro;
 
 public class StargazingController : MonoBehaviour
 {
-    private enum SceneState { Intro, WaitingForPlayer, Stargazing, Finished }
-    private SceneState currentState = SceneState.Intro;
+    private enum SceneState { Arriving, Intro, WaitingForPlayer, Stargazing, Finished }
+    private SceneState currentState = SceneState.Arriving;
 
     [Header("Identificador de Estado")]
     [SerializeField] private string sceneCompletionFlag = "StargazingSceneCompleted";
@@ -14,75 +13,170 @@ public class StargazingController : MonoBehaviour
     [Header("Referências de Personagens")]
     [SerializeField] private GameObject aylaStanding;
     [SerializeField] private GameObject aylaLyingDown;
+    [SerializeField] private Transform aylaLieDownPoint; 
     [SerializeField] private GameObject playerStanding;
     [SerializeField] private GameObject playerLyingDown;
 
     [Header("Referências de Interação")]
-    [SerializeField] private GameObject lieDownZone; // A ZonaDeitar com o Collider
+    [SerializeField] private GameObject lieDownZone;
     
     [Header("Referências de Câmera/Visão")]
-    [SerializeField] private Camera charactersCamera; // Câmera principal
-    [SerializeField] private Camera skyCamera; // Câmera do céu
+    [SerializeField] private Camera charactersCamera;
+    [SerializeField] private Camera skyCamera;
 
     [Header("Referências de UI")]
-    [SerializeField] private TextMeshProUGUI instructionText; // "Aperte E para escolher onde olhar"
+    [SerializeField] private TextMeshProUGUI instructionText;
 
     [Header("Diálogos da Cena")]
-    [SerializeField] private DialogueData introDialogue; // "Pronto, chegamos!..."
-    [SerializeField] private DialogueData stargazingDialogue; // Diálogo longo sobre as estrelas
+    [SerializeField] private DialogueData introDialogue;
+    [SerializeField] private DialogueData stargazingDialogue;
+
+    [Header("Configurações de Cena")] 
+    [SerializeField] private float aylaWalkSpeed = 1.0f;
+
+    private bool isViewingSky = false;
+    private bool canSwitchCamera = false;
+    private Animator aylaAnimator;
 
     void Awake()
+{
+    if (PlayerPrefs.GetInt(sceneCompletionFlag, 0) == 1)
     {
-        // Lógica de Persistência
-        if (PlayerPrefs.GetInt(sceneCompletionFlag, 0) == 1)
-        {
-            Debug.Log("Cena de observação já concluída. Desativando controller.");
-            // Aqui você pode configurar o estado da cena para quando o jogador retorna
-            // Ex: Deixar Ayla e Player desativados.
-            if(aylaStanding != null) aylaStanding.SetActive(false);
-            if(aylaLyingDown != null) aylaLyingDown.SetActive(false);
-            gameObject.SetActive(false); // Desativa o próprio controller
-            return;
-        }
+        Debug.Log("Cena de observação já concluída. Desativando controller e Ayla.");
+        
+        // Adicione estas linhas para garantir que ela não esteja lá:
+        if (aylaStanding != null) aylaStanding.SetActive(false);
+        if (aylaLyingDown != null) aylaLyingDown.SetActive(false);
+        if (lieDownZone != null) lieDownZone.SetActive(false);
+
+        gameObject.SetActive(false); 
+        return;
     }
+}
+
+    private void OnEnable() { DialogueManager.OnDialogueEnd += HandleDialogueEnd; }
+    private void OnDisable() { DialogueManager.OnDialogueEnd -= HandleDialogueEnd; }
 
     void Start()
     {
-        // Configuração inicial da cena
-        if(aylaLyingDown != null) aylaLyingDown.SetActive(false);
-        if(playerLyingDown != null) playerLyingDown.SetActive(false);
-        if(lieDownZone != null) lieDownZone.SetActive(false); // Começa desativada
-        if(skyCamera != null) skyCamera.gameObject.SetActive(false);
-        if(charactersCamera != null) charactersCamera.gameObject.SetActive(true);
-        if(instructionText != null) instructionText.gameObject.SetActive(false);
+        aylaLyingDown.SetActive(false);
+        playerLyingDown.SetActive(false);
+        lieDownZone.SetActive(false);
+        skyCamera.gameObject.SetActive(false);
+        charactersCamera.gameObject.SetActive(true);
+        instructionText.gameObject.SetActive(false);
         
-        // Inicia a primeira fala da Ayla
+        if (aylaStanding != null)
+        {
+            aylaAnimator = aylaStanding.GetComponent<Animator>();
+        }
+        
         StartCoroutine(IntroSequence());
     }
 
     private IEnumerator IntroSequence()
     {
-        // Trava o movimento do jogador durante a introdução
-        if(playerStanding != null) playerStanding.GetComponent<PlayerController>()?.DisableMovement();
-
-        // Inicia o primeiro diálogo
-        DialogueManager.Instance.StartDialogue(introDialogue, true); // Modo automático
-
-        // Espera o diálogo terminar (precisamos de um evento ou de uma checagem)
-        // Por simplicidade, vamos esperar um tempo fixo por enquanto.
-        // O ideal seria usar DialogueManager.OnDialogueEnd
-        yield return new WaitForSeconds(5f); // Ajuste este tempo para a duração da fala
-
-        Debug.Log("Ayla deitou.");
-        if(aylaStanding != null) aylaStanding.SetActive(false);
-        if(aylaLyingDown != null) aylaLyingDown.SetActive(true);
+        currentState = SceneState.Intro;
         
-        // Libera o jogador e ativa a zona para deitar
-        if(playerStanding != null) playerStanding.GetComponent<PlayerController>()?.EnableMovement();
-        if(lieDownZone != null) lieDownZone.SetActive(true);
+        yield return null; 
+        
+        DialogueManager.Instance.StartDialogue(introDialogue, true);
 
-        currentState = SceneState.WaitingForPlayer;
+        SpriteRenderer aylaSprite = aylaStanding.GetComponent<SpriteRenderer>();
+
+        while (Vector3.Distance(aylaStanding.transform.position, aylaLieDownPoint.position) > 0.1f)
+        {
+            Vector3 direction = (aylaLieDownPoint.position - aylaStanding.transform.position).normalized;
+            aylaStanding.transform.position = Vector3.MoveTowards(aylaStanding.transform.position, aylaLieDownPoint.position, aylaWalkSpeed * Time.deltaTime);
+
+            if (aylaAnimator != null) aylaAnimator.SetInteger("MovementState", 5); 
+            if (aylaSprite != null) aylaSprite.flipX = direction.x < 0;
+
+            yield return null; 
+        }
+
+        aylaStanding.transform.position = aylaLieDownPoint.position;
     }
 
-    // Os outros métodos (Update, PlayerLiesDown, etc.) virão nos próximos passos.
+    private void HandleDialogueEnd()
+    {
+        if (currentState == SceneState.Intro)
+        {
+            lieDownZone.SetActive(true);
+            currentState = SceneState.WaitingForPlayer;
+        }
+        else if (currentState == SceneState.Stargazing)
+        {
+            currentState = SceneState.Finished;
+            StartCoroutine(EndSceneSequence());
+        }
+    }
+
+    public void PlayerLiesDown()
+    {
+        if (currentState != SceneState.WaitingForPlayer) return;
+        
+        currentState = SceneState.Stargazing;
+
+        playerStanding.SetActive(false);
+        playerLyingDown.SetActive(true);
+        
+        instructionText.gameObject.SetActive(true);
+        
+        DialogueManager.Instance.StartDialogue(stargazingDialogue); 
+
+        // CORREÇÃO DO INPUT DUPLO: Habilita a troca de câmera em uma corrotina
+        StartCoroutine(EnableCameraSwitchAfterDelay());
+    }
+
+    // NOVA CORROTINA para resolver o input duplo
+    private IEnumerator EnableCameraSwitchAfterDelay()
+    {
+        // Espera pelo final do frame atual.
+        // Isso garante que o Input.GetKeyDown(KeyCode.E) do frame atual já tenha sido processado.
+        yield return new WaitForEndOfFrame();
+        canSwitchCamera = true;
+    }
+
+    void Update()
+    {
+        if (currentState == SceneState.WaitingForPlayer)
+        {
+            if (aylaAnimator != null)
+            {
+                aylaAnimator.SetInteger("MovementState", 0);
+            }
+        }
+
+        // A lógica de troca de câmera agora depende do 'canSwitchCamera'
+        if (canSwitchCamera && Input.GetKeyDown(KeyCode.E))
+        {
+            isViewingSky = !isViewingSky;
+            skyCamera.gameObject.SetActive(isViewingSky);
+            charactersCamera.gameObject.SetActive(!isViewingSky);
+        }
+    }
+    
+    private IEnumerator EndSceneSequence()
+{
+    instructionText.gameObject.SetActive(false);
+    yield return new WaitForSeconds(3.0f);
+
+    Debug.Log("Iniciando fade-out e transição de cena.");
+    if (FadeController.Instance != null)
+    {
+        PlayerPrefs.SetInt(sceneCompletionFlag, 1);
+        PlayerPrefs.Save();
+        
+        // --- LÓGICA DE TRANSIÇÃO AQUI ---
+        FadeController.Instance.StartFadeOut(() => {
+            // 1. Define o ponto de spawn na próxima cena.
+            
+
+            // 2. Carrega a cena do quarto de visitas.
+            GameManager.Instance.LoadScene("quarto2"); // <<< SUBSTITUA PELO NOME REAL
+        });
+        // --- FIM DA LÓGICA DE TRANSIÇÃO ---
+    }
+}
 }

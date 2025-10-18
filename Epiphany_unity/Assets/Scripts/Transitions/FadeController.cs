@@ -1,28 +1,31 @@
 using UnityEngine;
-using System.Collections;
+using UnityEngine.UI; // Essencial para ter acesso ao componente 'Image'
 using System;
+using System.Collections;
 
 public class FadeController : MonoBehaviour
 {
-    [Header("Configurações do Fade")]
-    [Tooltip("O CanvasGroup do painel que será usado para o fade.")]
-    public CanvasGroup fadePanelCanvasGroup;
+    [Header("Referências do Painel")]
+    [Tooltip("Arraste aqui o CanvasGroup do seu painel de fade.")]
+    [SerializeField] private CanvasGroup fadePanelCanvasGroup;
+    
+    [Tooltip("Arraste a Imagem do seu painel de fade aqui (para mudança de cor).")]
+    [SerializeField] private Image fadePanelImage;
 
-    [Tooltip("Duração do fade em segundos.")]
-    public float fadeDuration = 1.0f;
+    [Header("Configurações de Tempo")]
+    [Tooltip("Duração padrão do fade em segundos.")]
+    public float fadeDuration = 1.0f; // Variável agora é pública para ser acessada por outros scripts
+
+    public static FadeController Instance { get; private set; }
 
     private Coroutine currentFadeCoroutine;
 
-    // Singleton para fácil acesso
-    public static FadeController Instance { get; private set; }
-
     void Awake()
     {
-        // Configuração do Singleton
         if (Instance == null)
         {
             Instance = this;
-            // Se quiser que persista entre cenas, descomente a linha abaixo
+            // Se este objeto precisar persistir entre as cenas, descomente a linha abaixo.
             // DontDestroyOnLoad(gameObject);
         }
         else if (Instance != this)
@@ -33,63 +36,65 @@ public class FadeController : MonoBehaviour
 
         if (fadePanelCanvasGroup == null)
         {
-            Debug.LogError("FadeController: CanvasGroup do painel de fade não foi atribuído no Inspector!");
+            Debug.LogError("[FadeController] ERRO: O 'Fade Panel Canvas Group' não foi atribuído no Inspector!");
+            this.enabled = false;
             return;
         }
-
-        // Inicializa o painel transparente e ativo
+        
         fadePanelCanvasGroup.alpha = 0f;
         fadePanelCanvasGroup.gameObject.SetActive(false);
     }
 
     /// <summary>
-    /// Faz a tela escurecer (fade out).
+    /// Inicia um fade para uma cor (preto por padrão), tornando a tela opaca.
     /// </summary>
-    public void StartFadeOut(Action onComplete = null)
+    /// <param name="onComplete">Ação a ser executada quando o fade terminar.</param>
+    /// <param name="fadeColor">A cor para a qual a tela fará o fade. Se nulo, usa preto.</param>
+    public void StartFadeOut(Action onComplete = null, Color? fadeColor = null)
     {
-        if (fadePanelCanvasGroup == null)
+        if (!this.enabled) return;
+
+        if (fadePanelImage != null)
         {
-            Debug.LogError("FadeController: CanvasGroup não atribuído.");
-            onComplete?.Invoke();
-            return;
+            fadePanelImage.color = fadeColor ?? Color.black;
+        }
+        else
+        {
+            Debug.LogWarning("[FadeController] Fade Panel Image não atribuído. Usando a cor existente.");
         }
 
         if (currentFadeCoroutine != null)
+        {
             StopCoroutine(currentFadeCoroutine);
+        }
 
-        // Ativa o painel e inicia fade para alpha = 1 (preto opaco)
         fadePanelCanvasGroup.gameObject.SetActive(true);
         currentFadeCoroutine = StartCoroutine(FadeRoutine(1f, onComplete));
     }
 
     /// <summary>
-    /// Faz a tela clarear (fade in).
+    /// Inicia um fade a partir de uma tela opaca, tornando a cena visível.
     /// </summary>
+    /// <param name="onComplete">Ação a ser executada quando o fade terminar.</param>
     public void StartFadeIn(Action onComplete = null)
     {
-        if (fadePanelCanvasGroup == null)
-        {
-            Debug.LogError("FadeController: CanvasGroup não atribuído.");
-            onComplete?.Invoke();
-            return;
-        }
+        if (!this.enabled) return;
 
         if (currentFadeCoroutine != null)
+        {
             StopCoroutine(currentFadeCoroutine);
+        }
 
-        // Para o fade in funcionar, o painel deve estar visível e com alpha 1
         fadePanelCanvasGroup.alpha = 1f;
         fadePanelCanvasGroup.gameObject.SetActive(true);
-        currentFadeCoroutine = StartCoroutine(FadeRoutine(0f, () =>
-        {
-            // Após fade in, desativa o painel para melhorar performance
+        currentFadeCoroutine = StartCoroutine(FadeRoutine(0f, () => {
             fadePanelCanvasGroup.gameObject.SetActive(false);
             onComplete?.Invoke();
         }));
     }
 
     /// <summary>
-    /// Coroutine que faz a interpolação do alpha.
+    /// A rotina interna que interpola o valor alpha do CanvasGroup.
     /// </summary>
     private IEnumerator FadeRoutine(float targetAlpha, Action onComplete)
     {

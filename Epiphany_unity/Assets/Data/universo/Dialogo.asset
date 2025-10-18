@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9228e584220b007488a3081b0ee915e9, type: 3}
   m_Name: Dialogo
   m_EditorClassIdentifier: 
-  speakerName: 
+  speakerName: Ayla
   speakerPortrait: {fileID: 0}
   dialogueLines:
   - sentence: "Todos os dias, ou quase todos, eu venho a este lugar para olhar o
