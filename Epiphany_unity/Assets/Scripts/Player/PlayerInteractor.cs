@@ -9,23 +9,24 @@ public class PlayerInteractor : MonoBehaviour
     
     // Chamado pelo componente Player Input quando a tecla "E" é pressionada
     public void OnInteract(InputValue value)
+{
+    if (value.isPressed && interactablesInRange.Count > 0)
     {
-        if (value.isPressed && interactablesInRange.Count > 0)
-        {
-            // Interage com o último objeto que entrou no alcance
-            interactablesInRange[interactablesInRange.Count - 1].Interact();
-        }
+        // LOG DE DIAGNÓSTICO
+        Debug.Log($"[PlayerInteractor] Tentando interagir com: {interactablesInRange[interactablesInRange.Count - 1]}");
+        interactablesInRange[interactablesInRange.Count - 1].Interact();
     }
+}
 
     // Chamado quando o círculo de alcance do jogador entra em um trigger
     private void OnTriggerEnter2D(Collider2D other)
+{
+    IInteractable interactable = other.GetComponent<IInteractable>();
+    if (interactable != null)
     {
-        IInteractable interactable = other.GetComponent<IInteractable>();
-        if (interactable != null)
-        {
-            // Adiciona o objeto à lista de interativos
-            interactablesInRange.Add(interactable);
-            
+        // LOG DE DIAGNÓSTICO
+        Debug.Log($"[PlayerInteractor] Entrou no alcance de: {other.gameObject.name}");
+        interactablesInRange.Add(interactable);
             // Se esta é a primeira interação no alcance, manda o UIManager mostrar o prompt
             if (UIManager.Instance != null)
             {

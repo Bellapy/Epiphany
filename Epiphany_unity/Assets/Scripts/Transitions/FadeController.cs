@@ -76,22 +76,31 @@ public class FadeController : MonoBehaviour
     /// Inicia um fade a partir de uma tela opaca, tornando a cena visível.
     /// </summary>
     /// <param name="onComplete">Ação a ser executada quando o fade terminar.</param>
-    public void StartFadeIn(Action onComplete = null)
+    public void StartFadeIn(Action onComplete = null, Color? fadeColor = null)
     {
-        if (!this.enabled) return;
+    if (!this.enabled) return;
 
-        if (currentFadeCoroutine != null)
-        {
-            StopCoroutine(currentFadeCoroutine);
-        }
-
-        fadePanelCanvasGroup.alpha = 1f;
-        fadePanelCanvasGroup.gameObject.SetActive(true);
-        currentFadeCoroutine = StartCoroutine(FadeRoutine(0f, () => {
-            fadePanelCanvasGroup.gameObject.SetActive(false);
-            onComplete?.Invoke();
-        }));
+    // --- NOVA LÓGICA DE COR ---
+    // Define a cor ANTES de começar o fade in.
+    if (fadePanelImage != null)
+    {
+        // Se uma cor foi fornecida, usa-a. Senão, usa a cor que já estava lá.
+        fadePanelImage.color = fadeColor ?? fadePanelImage.color;
     }
+    // --- FIM DA NOVA LÓGICA ---
+
+    if (currentFadeCoroutine != null)
+    {
+        StopCoroutine(currentFadeCoroutine);
+    }
+
+    fadePanelCanvasGroup.alpha = 1f;
+    fadePanelCanvasGroup.gameObject.SetActive(true);
+    currentFadeCoroutine = StartCoroutine(FadeRoutine(0f, () => {
+        fadePanelCanvasGroup.gameObject.SetActive(false);
+        onComplete?.Invoke();
+    }));
+}
 
     /// <summary>
     /// A rotina interna que interpola o valor alpha do CanvasGroup.

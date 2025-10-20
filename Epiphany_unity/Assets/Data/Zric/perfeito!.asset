@@ -1,0 +1,54 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9228e584220b007488a3081b0ee915e9, type: 3}
+  m_Name: perfeito!
+  m_EditorClassIdentifier: 
+  speakerName: Zric
+  speakerPortrait: {fileID: 0}
+  dialogueLines:
+  - sentence: "Perfeito! voc\xEA \xE9 muito boa nisso. Meu presente \xE9 pequeno
+      diante da sua bondade\u2026 mas tenho certeza de que ser\xE1 \xFAtil na sua
+      jornada!\r\n"
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - sentence: "Tome, esta flauta \xE9 feita de marfim, de um dente de elefante\u2026
+      n\xE3o se preocupe, ele j\xE1 havia partido antes de eu conseguir o marfim. "
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - sentence: "Mas, na realidade, muitos elefantes s\xE3o mortos apenas por seus
+      dentes. \xC9 triste pensar que tanta vida \xE9 perdida por vaidade e gan\xE2ncia. "
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - sentence: "Cada escolha nossa, mesmo pequena, pode afetar o mundo de formas que
+      nem imaginamos. Use esta flauta com cuidado \u2014 que ela n\xE3o seja s\xF3
+      um instrumento, "
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - sentence: "mas tamb\xE9m um lembrete de que devemos respeitar e proteger todos
+      os seres, e que a bondade e a aten\xE7\xE3o podem mudar destinos! obrigado
+      pequena!\r\n"
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  hasChoice: 0
+  choicePrompt: 
+  choiceOptions: []
+  nextDialogueOnEnd: {fileID: 0}
