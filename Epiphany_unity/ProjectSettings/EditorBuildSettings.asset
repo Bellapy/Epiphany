@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: "Assets/Scenes/Configura\xE7\xF5es/Initializer.unity"
+    guid: 76456c36b35738d4081c9bb3dd5f66e5
+  - enabled: 0
     path: Assets/Scenes/00_Menu/Menu.unity
     guid: 0a2e5bdc6b99f0a428f69fe5c8c90b60
   - enabled: 1
@@ -44,12 +47,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/02_CasaAyla/cozinha.unity
     guid: ed62fad0ae75e2645a46259368d0dba3
-  - enabled: 0
-    path: Assets/Scenes/06_Narval/03_BosqueLuminescente/arvores.unity
-    guid: 67dca28f42c907146bf008193e06302e
-  - enabled: 0
-    path: Assets/Scenes/03_BosqueLuminescente/EndingScene.unity
-    guid: 13622a291e7007a48b52703e2f4c841e
   - enabled: 1
     path: Assets/Scenes/03_Floresta/Floresta.unity
     guid: c2c62dea9b36da7488fcf7fd1adc77a1
@@ -58,7 +55,7 @@ EditorBuildSettings:
     guid: 3166611fc469a02409eefe6599f24d63
   - enabled: 1
     path: Assets/Scenes/02_CasaAyla/quarto2.unity
-    guid: 03d8e7e210884a54f857237f4c62d5e4
+    guid: ec9a146f22e44134cacae35513bec334
   - enabled: 1
     path: Assets/Scenes/04_universo/gramado.unity
     guid: 89754eb498f711a498c9f54bbdf7a681
@@ -66,5 +63,6 @@ EditorBuildSettings:
     path: Assets/Scenes/05_tenda/zric.unity
     guid: 1aa843ad8c82fc746a34cc11b99cc03a
   m_configObjects:
+    com.unity.input.settings: {fileID: 11400000, guid: 9eb4347ff3ca42843b3c7d015ad8c7d0, type: 2}
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0

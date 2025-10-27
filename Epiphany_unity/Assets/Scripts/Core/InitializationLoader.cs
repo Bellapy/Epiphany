@@ -3,15 +3,16 @@ using UnityEngine.SceneManagement;
 
 public class InitializationLoader : MonoBehaviour
 {
-   
+    private static bool isInitialized = false;
+
     void Awake()
     {
-        
-        if (GameManager.Instance == null)
+        if (isInitialized)
         {
-            Debug.Log("Managers não encontrados. Carregando a cena Initializer...");
-           
-            SceneManager.LoadScene("Initializer", LoadSceneMode.Additive);
+            Destroy(gameObject);
+            return;
         }
+        SceneManager.LoadScene("Initializer", LoadSceneMode.Additive);
+        isInitialized = true;
     }
 }

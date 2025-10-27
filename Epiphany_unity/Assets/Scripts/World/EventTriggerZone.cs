@@ -8,7 +8,6 @@ public class EventTriggerZone : MonoBehaviour
     [Tooltip("Um evento customizável que será disparado quando o jogador entrar na zona.")]
     public UnityEvent onTriggerEnterEvent; 
 
-
     [SerializeField] private Animator targetAnimator;
     [SerializeField] private string triggerName = "Activate";
     [SerializeField] private ReflectionData reflectionData;
@@ -28,14 +27,11 @@ public class EventTriggerZone : MonoBehaviour
 
         if (other.CompareTag("Player"))
         {
-            Debug.Log($"[EventTriggerZone] Jogador entrou na zona '{gameObject.name}'. Disparando eventos.");
-            
             onTriggerEnterEvent.Invoke();
 
             if (targetAnimator != null)
             {
                 targetAnimator.SetTrigger(triggerName);
-                Debug.Log($"Evento: Animação '{triggerName}' disparada.");
             }
 
             if (reflectionData != null && DialogueManager.Instance != null)

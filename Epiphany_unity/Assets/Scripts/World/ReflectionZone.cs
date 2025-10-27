@@ -3,6 +3,7 @@ using UnityEngine;
 [RequireComponent(typeof(Collider2D))]
 public class ReflectionZone : MonoBehaviour
 {
+    [Header("Configuração da Reflexão")]
     [SerializeField] private ReflectionData reflectionData;
     [SerializeField] private bool triggerOnce = true;
 

@@ -13,17 +13,9 @@ public class PersonalReflectionTrigger : MonoBehaviour, IInteractable
 
     public void Interact()
     {
-        // A verificação agora é pelo DialogueManager, não pelo UIManager
         if (reflectionData != null && DialogueManager.Instance != null)
         {
-            Debug.Log($"Gatilho pessoal '{gameObject.name}' interagido. Mostrando reflexão.");
-            
-            // <<< A CHAMADA FOI CORRIGIDA PARA FALAR DIRETO COM O DIALOGUEMANAGER >>>
             DialogueManager.Instance.StartReflection(reflectionData);
-        }
-        else
-        {
-            Debug.LogWarning($"Gatilho '{gameObject.name}' não tem ReflectionData ou DialogueManager não foi encontrado.");
         }
     }
 }

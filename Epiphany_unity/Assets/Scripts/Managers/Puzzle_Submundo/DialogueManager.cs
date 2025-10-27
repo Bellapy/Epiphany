@@ -8,11 +8,26 @@ using UnityEngine.SceneManagement;
 public class DialogueManager : MonoBehaviour
 {
     public static DialogueManager Instance { get; private set; }
-    public static event System.Action OnDialogueEnd;
-    public static event System.Action<int> OnDialogueLineStart;
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else if (Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+    }
+
+    public event System.Action OnDialogueEnd;
+    public event System.Action<int> OnDialogueLineStart;
 
     private GameObject dialogueBox;
-    private CanvasGroup dialogueBoxCanvasGroup; // Nova variável
+    private CanvasGroup dialogueBoxCanvasGroup;
     private TextMeshProUGUI speakerNameText;
     private TextMeshProUGUI dialogueText;
     private Image speakerPortrait;
@@ -21,40 +36,28 @@ public class DialogueManager : MonoBehaviour
     [Header("Configurações")]
     [SerializeField] private float typingSpeed = 0.04f;
 
-    private Queue<DialogueLine> lines;
+    private Queue<DialogueLine> lines = new Queue<DialogueLine>();
     private bool isTyping = false;
     private string currentFullSentence;
     private DialogueData currentDialogueData;
     private bool isDialogueAutomatic = false; 
     public int LastChoiceIndex { get; private set; } = -1;
 
-    private void Awake()
-    {
-        if (Instance != null && Instance != this) { Destroy(gameObject); return; }
-        Instance = this;
-        DontDestroyOnLoad(gameObject);
-        lines = new Queue<DialogueLine>();
-    }
+    // REMOVIDO: OnEnable, OnDisable, e OnSceneLoaded não são mais necessários.
+    // A lógica de limpeza foi movida para ConnectUI para evitar race conditions.
 
-    private void OnEnable() { SceneManager.sceneLoaded += OnSceneLoaded; }
-    private void OnDisable() { SceneManager.sceneLoaded -= OnSceneLoaded; }
-
-    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    public void ConnectUI(UIDialogueConnector connector)
     {
+        // --- LÓGICA DE LIMPEZA MOVIDA PARA CÁ ---
+        // Garante que qualquer diálogo antigo seja interrompido antes de conectar a nova UI.
         StopAllCoroutines();
         isTyping = false;
         currentDialogueData = null;
         LastChoiceIndex = -1;
-        dialogueBox = null;
-        dialogueBoxCanvasGroup = null; // Limpa a referência
-        speakerNameText = null;
-        dialogueText = null;
-        speakerPortrait = null;
-        choiceButtons = null;
-    }
+        // --- FIM DA LÓGICA DE LIMPEZA ---
 
-    public void ConnectUI(UIDialogueConnector connector)
-    {
+        if (connector == null) return;
+
         dialogueBox = connector.dialogueBox;
         if (dialogueBox != null)
         {
@@ -72,13 +75,17 @@ public class DialogueManager : MonoBehaviour
     }
 
     public void StartDialogue(DialogueData dialogue, bool isAutomatic = false)
-{
+    {
+        if (dialogueBox == null)
+        {
+            Debug.LogError("[DialogueManager] Tentou iniciar um diálogo, mas nenhuma UI está conectada! Verifique se a cena tem um UIDialogueConnector.");
+            return;
+        }
+
         StopAllCoroutines();
         if (dialogueBoxCanvasGroup != null) dialogueBoxCanvasGroup.alpha = 1f;
 
-        if (dialogueBox == null) { Debug.LogError("ERRO: O Dialogue Box não foi conectado nesta cena!"); return; }
-
-        isDialogueAutomatic = isAutomatic; // <<< ADICIONE ESTA LINHA para guardar o estado
+        isDialogueAutomatic = isAutomatic;
 
         LastChoiceIndex = -1;
         currentDialogueData = dialogue;
@@ -96,10 +103,15 @@ public class DialogueManager : MonoBehaviour
 
     public void StartReflection(ReflectionData reflection)
     {
-        StopAllCoroutines();
-        if (dialogueBoxCanvasGroup != null) dialogueBoxCanvasGroup.alpha = 1f; // Garante visibilidade
+        if (dialogueBox == null)
+        {
+            Debug.LogError("[DialogueManager] Tentou iniciar uma reflexão, mas nenhuma UI está conectada!");
+            return;
+        }
 
-        if (dialogueBox == null) { Debug.LogError("ERRO: O Dialogue Box não foi conectado nesta cena!"); return; }
+        StopAllCoroutines();
+        if (dialogueBoxCanvasGroup != null) dialogueBoxCanvasGroup.alpha = 1f;
+
         LastChoiceIndex = -1;
         currentDialogueData = null;
         dialogueBox.SetActive(true);
@@ -139,68 +151,76 @@ public class DialogueManager : MonoBehaviour
     }
 
     public void Update()
-{
-    if (dialogueBox == null || !dialogueBox.activeInHierarchy || isDialogueAutomatic) { return; } // <<< ADICIONE "|| isDialogueAutomatic"
-    if (isTyping && (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Space))) {
+    {
+        if (dialogueBox == null || !dialogueBox.activeInHierarchy || isDialogueAutomatic) return;
+        
+        if (isTyping && (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Space))) 
+        {
             StopAllCoroutines();
             if (dialogueText != null) dialogueText.text = currentFullSentence;
             isTyping = false;
-        } else if (!isTyping && (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Space))) {
+        } 
+        else if (!isTyping && (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Space))) 
+        {
             DisplayNextSentence();
         }
     }
 
     private void DisplayNextSentence()
-{
-    if (lines.Count == 0) { EndDialogue(); return; }
+    {
+        if (lines.Count == 0) { EndDialogue(); return; }
 
-    DialogueLine currentLine = lines.Dequeue();
-    
-    // --- NOVA ADIÇÃO ---
-    // Calcula o índice da linha atual e dispara o evento
-    int currentLineIndex = currentDialogueData.dialogueLines.IndexOf(currentLine);
-    OnDialogueLineStart?.Invoke(currentLineIndex);
-    // --- FIM DA NOVA ADIÇÃO ---
+        DialogueLine currentLine = lines.Dequeue();
+        
+        if (currentDialogueData != null && currentDialogueData.dialogueLines != null)
+        {
+            int currentLineIndex = currentDialogueData.dialogueLines.IndexOf(currentLine);
+            if (currentLineIndex != -1)
+            {
+                OnDialogueLineStart?.Invoke(currentLineIndex);
+            }
+        }
 
-    currentFullSentence = currentLine.sentence;
-    StopAllCoroutines();
-    StartCoroutine(TypeSentence(currentFullSentence));
-}
+        currentFullSentence = currentLine.sentence;
+        StopAllCoroutines();
+        StartCoroutine(TypeSentence(currentFullSentence));
+    }
 
     private IEnumerator TypeSentence(string sentence)
-{
-    if (dialogueText == null) { yield break; }
-    isTyping = true;
-    dialogueText.text = "";
-    foreach (char letter in sentence.ToCharArray())
     {
-        dialogueText.text += letter;
-        yield return new WaitForSeconds(typingSpeed);
-    }
-    isTyping = false;
+        if (dialogueText == null) { yield break; }
+        isTyping = true;
+        dialogueText.text = "";
+        foreach (char letter in sentence.ToCharArray())
+        {
+            dialogueText.text += letter;
+            yield return new WaitForSeconds(typingSpeed);
+        }
+        isTyping = false;
 
-    // --- NOVA LÓGICA AUTOMÁTICA ---
-    if (isDialogueAutomatic)
-    {
-        // Se for automático, inicia a coroutine para avançar sozinho
-        StartCoroutine(AutoAdvanceAfterDelay(2.0f)); // Espera 2 segundos
+        if (isDialogueAutomatic)
+        {
+            StartCoroutine(AutoAdvanceAfterDelay(2.0f));
+        }
     }
-    // --- FIM DA NOVA LÓGICA ---
-}
     private IEnumerator AutoAdvanceAfterDelay(float delay)
-{
-    yield return new WaitForSeconds(delay);
-    DisplayNextSentence();
-}
+    {
+        yield return new WaitForSeconds(delay);
+        DisplayNextSentence();
+    }
 
     private void EndDialogue()
     {
-        if (currentDialogueData != null && currentDialogueData.hasChoice) {
-            if (dialogueText != null) {
+        if (currentDialogueData != null && currentDialogueData.hasChoice) 
+        {
+            if (dialogueText != null) 
+            {
                 dialogueText.text = currentDialogueData.choicePrompt;
             }
             PresentChoice(currentDialogueData);
-        } else {
+        } 
+        else 
+        {
             if(dialogueBox != null) dialogueBox.SetActive(false);
             OnDialogueEnd?.Invoke();
         }
@@ -210,7 +230,7 @@ public class DialogueManager : MonoBehaviour
     {
         if (choiceButtons == null || choiceButtons.Count == 0) return;
         for (int i = 0; i < data.choiceOptions.Count; i++) {
-            if (i < choiceButtons.Count) {
+            if (i < choiceButtons.Count && choiceButtons[i] != null) {
                 choiceButtons[i].gameObject.SetActive(true);
                 choiceButtons[i].GetComponentInChildren<TextMeshProUGUI>().text = data.choiceOptions[i].optionText;
                 choiceButtons[i].onClick.RemoveAllListeners();
@@ -221,26 +241,22 @@ public class DialogueManager : MonoBehaviour
     }
 
     public void SelectChoice(int choiceIndex)
-{
-    LastChoiceIndex = choiceIndex;
-    // Esconde os botões imediatamente
-    foreach (Button button in choiceButtons) { if(button != null) button.gameObject.SetActive(false); }
-
-    // Pega a opção que foi escolhida
-    ChoiceOption chosenOption = currentDialogueData.choiceOptions[choiceIndex];
-
-    // Se a opção escolhida tem um próximo diálogo, comece-o.
-    if (chosenOption.nextDialogue != null)
     {
-        StartDialogue(chosenOption.nextDialogue);
+        LastChoiceIndex = choiceIndex;
+        foreach (Button button in choiceButtons) { if(button != null) button.gameObject.SetActive(false); }
+
+        ChoiceOption chosenOption = currentDialogueData.choiceOptions[choiceIndex];
+
+        if (chosenOption.nextDialogue != null)
+        {
+            StartDialogue(chosenOption.nextDialogue);
+        }
+        else
+        {
+            CloseDialogueBox();
+            OnDialogueEnd?.Invoke();
+        }
     }
-    // Senão (como no nosso botão "Sair"), apenas feche a caixa de diálogo.
-    else
-    {
-        CloseDialogueBox();
-        OnDialogueEnd?.Invoke(); // Dispara o evento de fim de diálogo para que outros sistemas (se houver) possam reagir.
-    }
-}
 
     public bool IsDialogueBoxActive()
     {
@@ -252,7 +268,8 @@ public class DialogueManager : MonoBehaviour
     {
         StopAllCoroutines();
         isTyping = false;
-        if (dialogueBox != null) {
+        if (dialogueBox != null) 
+        {
             dialogueBox.SetActive(false);
         }
     }

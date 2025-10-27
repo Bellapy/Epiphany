@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System;
 
 public class InventoryUI : MonoBehaviour
 {
@@ -9,39 +10,37 @@ public class InventoryUI : MonoBehaviour
 
     private bool isInventoryOpen = false;
 
-    // Awake é executado antes de Start, garantindo que o registro aconteça o mais cedo possível.
-    void Awake()
+    void Start()
     {
-        // Garante que o inventário comece fechado
         if (inventoryPanel != null)
         {
             inventoryPanel.SetActive(false);
         }
 
-        // A UI se apresenta/registra no Manager.
         if (InventoryManager.Instance != null)
         {
-            InventoryManager.Instance.RegisterUI(this);
+            InventoryManager.Instance.OnInventoryChanged += UpdateUI;
         }
-        else
+        
+        UpdateUI();
+    }
+
+    private void OnDestroy()
+    {
+        if (InventoryManager.Instance != null)
         {
-            // Este erro pode aparecer se o InventoryManager for criado depois da UI,
-            // mas com a configuração de Singleton, é improvável.
-            Debug.LogError("[InventoryUI] Não foi possível encontrar o InventoryManager para se registrar!");
+            InventoryManager.Instance.OnInventoryChanged -= UpdateUI;
         }
     }
 
-    private void OnEnable()
+    void Update()
     {
-        InventoryManager.OnInventoryChanged += UpdateUI;
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            ToggleInventory();
+        }
     }
 
-    private void OnDisable()
-    {
-        InventoryManager.OnInventoryChanged -= UpdateUI;
-    }
-
-    // Este método é público para ser chamado externamente (pelo Manager).
     public void ToggleInventory()
     {
         isInventoryOpen = !isInventoryOpen;
@@ -57,19 +56,22 @@ public class InventoryUI : MonoBehaviour
 
     private void UpdateUI()
     {
-        if (!isInventoryOpen) return; // Otimização: não desenha a UI se ela não estiver visível.
+        if (uiSlots == null || InventoryManager.Instance == null) return;
 
         List<InventorySlot> inventoryData = InventoryManager.Instance.GetInventorySlots();
 
         for (int i = 0; i < uiSlots.Count; i++)
         {
-            if (i < inventoryData.Count)
+            if (i < uiSlots.Count && uiSlots[i] != null)
             {
-                uiSlots[i].DrawSlot(inventoryData[i]);
-            }
-            else
-            {
-                uiSlots[i].ClearSlot();
+                if (i < inventoryData.Count && inventoryData[i] != null)
+                {
+                    uiSlots[i].DrawSlot(inventoryData[i]);
+                }
+                else
+                {
+                    uiSlots[i].ClearSlot();
+                }
             }
         }
     }

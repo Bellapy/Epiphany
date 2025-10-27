@@ -1,5 +1,3 @@
-// Em SceneTransitionTrigger.cs
-
 using UnityEngine;
 using System.Collections.Generic;
 
@@ -18,15 +16,20 @@ public class SceneTransitionTrigger : MonoBehaviour
     [Tooltip("Marque se a porta deve começar trancada.")]
     [SerializeField] private bool isLocked = false;
     
-    // --- NOVA ADIÇÃO ---
     [Header("Flags de Evento (Opcional)")]
     [Tooltip("Se preenchido, define este PlayerPrefs flag como '1' (concluído) ao usar a transição.")]
     [SerializeField] private string eventFlagToSetOnTransition;
-    // --- FIM DA NOVA ADIÇÃO ---
+
+    private FadeController fadeController;
 
     private void Awake()
     {
         GetComponent<Collider2D>().isTrigger = true;
+    }
+    
+    void Start()
+    {
+        fadeController = FindFirstObjectByType<FadeController>();
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -40,22 +43,17 @@ public class SceneTransitionTrigger : MonoBehaviour
 
     private void StartSceneTransition()
     {
+        if (GameManager.Instance == null)
+        {
+            return;
+        }
+
         this.enabled = false;
 
-        // --- NOVA ADIÇÃO ---
-        // Se um nome de flag foi definido, salva-o como concluído.
         if (!string.IsNullOrEmpty(eventFlagToSetOnTransition))
         {
             PlayerPrefs.SetInt(eventFlagToSetOnTransition, 1);
             PlayerPrefs.Save();
-            Debug.Log($"[SceneTransitionTrigger] Flag de evento '{eventFlagToSetOnTransition}' marcada como concluída.");
-        }
-        // --- FIM DA NOVA ADIÇÃO ---
-
-        if (GameManager.Instance == null)
-        {
-            Debug.LogError("GameManager não encontrado! A transição de cena falhou.");
-            return;
         }
 
         GameManager.Instance.SetNextSpawnPoint(spawnPointNameInNextScene);
@@ -65,9 +63,9 @@ public class SceneTransitionTrigger : MonoBehaviour
             GameManager.Instance.AddObjectToActivateOnLoad(objectName);
         }
 
-        if (FadeController.Instance != null)
+        if (fadeController != null)
         {
-            FadeController.Instance.StartFadeOut(() => {
+            fadeController.StartFadeOut(() => {
                 GameManager.Instance.LoadScene(sceneToLoad);
             });
         }

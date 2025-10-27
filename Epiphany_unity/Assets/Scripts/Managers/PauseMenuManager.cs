@@ -1,43 +1,36 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+using UnityEngine.Audio;
 
 public class PauseMenuManager : MonoBehaviour
 {
-    // Singleton: Uma forma de garantir que teremos apenas UM PauseMenuManager no jogo
-    // e que ele seja facilmente acessível de qualquer outro script.
-    public static PauseMenuManager Instance { get; private set; }
+    [Header("Referências da UI")]
+    [SerializeField] private GameObject optionsPanel;
 
-    [Header("Configuração do Menu")]
-    [Tooltip("Arraste o Prefab 'PauseMenuContainer' aqui.")]
-    [SerializeField] private GameObject pauseMenuPrefab;
+    [Header("Configurações de Áudio")]
+    [SerializeField] private AudioMixer masterMixer;
+    [SerializeField] private Slider volumeSlider;
+    private const string MIXER_VOLUME_PARAM = "MasterVolume";
+    private const string VOLUME_PREF_KEY = "MasterVolumePreference";
 
-    private GameObject pauseMenuInstance; // A cópia do menu que realmente existe na cena.
     private bool isPaused = false;
 
-    private void Awake()
+    void Start()
     {
-        // Lógica do Singleton
-        if (Instance != null && Instance != this)
-        {
-            Destroy(gameObject);
-            return;
-        }
-        Instance = this;
-        
-        // Garante que nosso manager não seja destruído ao trocar de cena.
-        DontDestroyOnLoad(gameObject);
+        if (optionsPanel != null) optionsPanel.SetActive(false);
 
-        // Cria a instância do menu a partir do Prefab, mas a deixa escondida.
-        if (pauseMenuPrefab != null)
+        if (volumeSlider != null && masterMixer != null)
         {
-            pauseMenuInstance = Instantiate(pauseMenuPrefab);
-            pauseMenuInstance.SetActive(false);
+            float savedVolume = PlayerPrefs.GetFloat(VOLUME_PREF_KEY, 1f);
+            volumeSlider.value = savedVolume;
+            SetVolume(savedVolume);
+            
+            volumeSlider.onValueChanged.AddListener(OnVolumeSliderChanged);
         }
     }
 
     void Update()
     {
-        // Ouve a tecla 'F' para abrir/fechar o menu.
         if (Input.GetKeyDown(KeyCode.F))
         {
             TogglePause();
@@ -47,30 +40,26 @@ public class PauseMenuManager : MonoBehaviour
     public void TogglePause()
     {
         isPaused = !isPaused;
-        if (isPaused)
-        {
-            Pause();
-        }
-        else
-        {
-            Resume();
-        }
+        optionsPanel.SetActive(isPaused);
+        Time.timeScale = isPaused ? 0f : 1f;
+        Debug.Log($"[PauseMenuManager] TogglePause chamado. Jogo pausado: {isPaused}");
     }
 
-    private void Pause()
+    public void OnVolumeSliderChanged(float value)
     {
-        isPaused = true;
-        // Congela o tempo no jogo. Essencial para pausar de verdade!
-        Time.timeScale = 0f; 
-        pauseMenuInstance.SetActive(true);
+        SetVolume(value);
     }
 
-    // Este método precisa ser público para que o botão "Voltar" possa chamá-lo.
-    public void Resume()
+    private void SetVolume(float linearValue)
     {
-        isPaused = false;
-        // Retorna o tempo ao normal.
-        Time.timeScale = 1f;
-        pauseMenuInstance.SetActive(false);
+        // Garante que o valor linear nunca seja zero para evitar -Infinity dB
+        if (linearValue <= 0)
+        {
+            linearValue = 0.0001f;
+        }
+        
+        float dbValue = Mathf.Log10(linearValue) * 20;
+        masterMixer.SetFloat(MIXER_VOLUME_PARAM, dbValue);
+        PlayerPrefs.SetFloat(VOLUME_PREF_KEY, linearValue);
     }
 }

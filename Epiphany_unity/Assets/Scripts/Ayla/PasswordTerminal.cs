@@ -7,7 +7,7 @@ public class PasswordTerminal : MonoBehaviour, IInteractable
 {
     [Header("Configuração do Puzzle")]
     [SerializeField] private string correctPassword = "gatomolhado";
-    private int passwordLength = 11;
+    [SerializeField] private int passwordLength = 11;
 
     [Header("Referências de UI")]
     [SerializeField] private GameObject passwordPanel;
@@ -20,6 +20,7 @@ public class PasswordTerminal : MonoBehaviour, IInteractable
 
     private StringBuilder currentInput;
     private bool isPanelOpen = false;
+    private FadeController fadeController;
 
     void Awake()
     {
@@ -33,6 +34,11 @@ public class PasswordTerminal : MonoBehaviour, IInteractable
         {
             passwordPanelCanvasGroup = passwordPanel.GetComponent<CanvasGroup>();
         }
+    }
+
+    void Start()
+    {
+        fadeController = FindFirstObjectByType<FadeController>();
     }
 
     public void Interact()
@@ -121,7 +127,6 @@ public class PasswordTerminal : MonoBehaviour, IInteractable
     {
         if (currentInput.ToString() == correctPassword)
         {
-            Debug.Log("Senha correta! Iniciando fade para branco.");
             isPanelOpen = false;
 
             if (teleportEffectPrefab != null)
@@ -135,28 +140,28 @@ public class PasswordTerminal : MonoBehaviour, IInteractable
             
             StartCoroutine(FadeOutPasswordPanel());
 
-            FadeController.Instance.StartFadeOut(() => {
-                Debug.Log("Fade para branco concluído. Carregando cena 'zric'.");
-                
-                // Opcional: Se você tiver um ponto de spawn específico na cena do Zric.
-                // Exemplo: GameManager.Instance.SetNextSpawnPoint("SpawnFromTeleporter");
-
+            if (fadeController != null && GameManager.Instance != null)
+            {
+                fadeController.StartFadeOut(() => {
+                    GameManager.Instance.LoadScene("zric");
+                }, Color.white);
+            }
+            else if (GameManager.Instance != null)
+            {
                 GameManager.Instance.LoadScene("zric");
-
-            }, Color.white);
+            }
         }
         else
         {
-            Debug.Log("Senha incorreta. Resetando.");
             StartCoroutine(IncorrectPasswordRoutine());
         }
     }
     
     private IEnumerator FadeOutPasswordPanel()
     {
-        if (passwordPanelCanvasGroup == null) yield break;
+        if (passwordPanelCanvasGroup == null || fadeController == null) yield break;
 
-        float duration = FadeController.Instance.fadeDuration;
+        float duration = fadeController.fadeDuration;
         float elapsedTime = 0f;
         
         while (elapsedTime < duration)

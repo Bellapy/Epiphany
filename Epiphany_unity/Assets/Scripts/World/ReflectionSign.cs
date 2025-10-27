@@ -7,22 +7,16 @@ public class ReflectionSign : MonoBehaviour, IInteractable
     [Tooltip("Arraste o ScriptableObject com o texto da reflexão aqui.")]
     [SerializeField] private ReflectionData reflectionData;
 
+    private void Awake()
+    {
+        GetComponent<Collider2D>().isTrigger = true;
+    }
+
     public void Interact()
     {
         if (reflectionData != null && DialogueManager.Instance != null)
         {
-            Debug.Log($"Placa '{gameObject.name}' interagida. Chamando StartReflection.");
-            
             DialogueManager.Instance.StartReflection(reflectionData);
         }
-        else
-        {
-            Debug.LogWarning($"Placa '{gameObject.name}' não tem ReflectionData ou DialogueManager não foi encontrado.");
-        }
-    }
-
-    private void Awake()
-    {
-        GetComponent<Collider2D>().isTrigger = true;
     }
 }

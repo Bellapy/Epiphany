@@ -15,14 +15,8 @@ public class UIDialogueConnector : MonoBehaviour
     [Header("Componentes de Prompt de Interação")]
     public CanvasGroup interactionPromptCanvasGroup;
 
-
     void Start() 
     {
-        if (UIManager.Instance != null)
-        {
-            UIManager.Instance.ConnectUI(this);
-        }
-
         if (DialogueManager.Instance != null)
         {
             DialogueManager.Instance.ConnectUI(this);

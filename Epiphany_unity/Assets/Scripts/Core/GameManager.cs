@@ -5,7 +5,23 @@ using System.Linq;
 
 public class GameManager : MonoBehaviour
 {
+    // --- INÍCIO DA LÓGICA DO SINGLETON ---
     public static GameManager Instance { get; private set; }
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else if (Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+    }
+    // --- FIM DA LÓGICA DO SINGLETON ---
 
     public string NextPlayerSpawnPointName { get; private set; }
     public Vector3 NextPlayerPosition { get; private set; }
@@ -16,27 +32,14 @@ public class GameManager : MonoBehaviour
     [Header("Flags de Estado da História")]
     public bool HasCompletedKitchenDialogue { get; set; } = false;
 
-    void Awake()
+    private void OnEnable()
     {
-        if (Instance == null)
-        {
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
-            SceneManager.sceneLoaded += OnSceneLoaded;
-        }
-        else if (Instance != this)
-        {
-            Destroy(gameObject);
-            return;
-        }
+        SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
-    void OnDestroy()
+    private void OnDisable()
     {
-        if (Instance == this)
-        {
-            SceneManager.sceneLoaded -= OnSceneLoaded;
-        }
+        SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
     public void LoadScene(string sceneName)
@@ -73,6 +76,8 @@ public class GameManager : MonoBehaviour
 
     private void PositionPlayerInScene()
     {
+        // Usar FindFirstObjectByType aqui é aceitável, pois é uma operação centralizada
+        // que acontece apenas uma vez por carregamento de cena.
         PlayerController player = FindFirstObjectByType<PlayerController>();
         if (player == null) return;
         
@@ -89,8 +94,6 @@ public class GameManager : MonoBehaviour
             }
             else
             {
-                // <<< A CORREÇÃO ESTÁ AQUI >>>
-                // Usamos SceneManager.GetActiveScene() para obter a cena atual.
                 Debug.LogWarning($"[GameManager] Aviso: Ponto de spawn '{NextPlayerSpawnPointName}' não encontrado na cena '{SceneManager.GetActiveScene().name}'.");
             }
         }

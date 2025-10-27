@@ -1,30 +1,38 @@
 using UnityEngine;
 using System.Collections;
-using System.Collections.Generic; // Necessário para List
+using System.Collections.Generic;
 
 public class AudioManager : MonoBehaviour
 {
+    // --- INÍCIO DA LÓGICA DO SINGLETON ---
     public static AudioManager Instance { get; private set; }
+
+    void Awake()
+    {
+        // Se NÃO existe nenhuma instância ainda...
+        if (Instance == null)
+        {
+            // ...eu me torno a instância.
+            Instance = this;
+            // E eu não devo ser destruído ao carregar novas cenas.
+            DontDestroyOnLoad(gameObject);
+        }
+        // Se uma instância JÁ EXISTE e não sou eu...
+        else if (Instance != this)
+        {
+            // ...então eu sou uma duplicata desnecessária. Me destruo.
+            Destroy(gameObject);
+            // Retornar aqui é crucial para não executar o resto do Awake()
+            return;
+        }
+    }
+    // --- FIM DA LÓGICA DO SINGLETON ---
 
     [Header("Fontes de Áudio")]
     [SerializeField] private AudioSource musicSource;
     [SerializeField] private AudioSource sfxSource;
 
-    // Lista para rastrear todos os SFX temporários que criamos.
     private List<GameObject> activeSfxObjects = new List<GameObject>();
-
-    void Awake()
-    {
-        if (Instance != null && Instance != this)
-        {
-            Destroy(gameObject);
-            return;
-        }
-        Instance = this;
-        DontDestroyOnLoad(gameObject);
-    }
-
-    // --- MÉTODOS PÚBLICOS PARA CONTROLAR O ÁUDIO ---
 
     public void PlayMusic(AudioClip musicClip)
     {
@@ -38,28 +46,28 @@ public class AudioManager : MonoBehaviour
     public void PlayMusicWithFade(AudioClip musicClip, float fadeDuration = 1.0f)
     {
         if (musicSource == null) return;
-        StartCoroutine(FadeInMusic(musicClip, fadeDuration));
+        // IMPORTANTE: A corrotina agora é iniciada na instância Singleton (Instance)
+        // para garantir que funcione mesmo se uma duplicata tentar chamar.
+        Instance.StartCoroutine(FadeInMusic(musicClip, fadeDuration));
     }
 
     public void StopMusicWithFade(float fadeDuration = 1.0f)
     {
         if (musicSource == null) return;
-        StartCoroutine(FadeOutMusic(fadeDuration));
+        Instance.StartCoroutine(FadeOutMusic(fadeDuration));
     }
 
-    // Função de SFX antiga, agora redirecionada para a nova.
     public void PlaySFX(AudioClip sfxClip)
     {
         PlaySFXAtPoint(sfxClip, Vector3.zero);
     }
 
-    // Função de teste que cria um AudioSource temporário.
     public void PlaySFXAtPoint(AudioClip sfxClip, Vector3 position)
     {
         if (sfxClip == null) return;
 
         GameObject tempAudioObject = new GameObject("TempSFX_" + sfxClip.name);
-        activeSfxObjects.Add(tempAudioObject); // Adiciona à lista de rastreamento
+        activeSfxObjects.Add(tempAudioObject);
         tempAudioObject.transform.position = position;
         AudioSource audioSource = tempAudioObject.AddComponent<AudioSource>();
         
@@ -67,17 +75,11 @@ public class AudioManager : MonoBehaviour
         audioSource.spatialBlend = 0.0f;
         audioSource.Play();
 
-        // Passamos a lista para a corrotina para que ela possa se remover
-        StartCoroutine(DestroyAfterPlaying(tempAudioObject, sfxClip.length));
+        Instance.StartCoroutine(DestroyAfterPlaying(tempAudioObject, sfxClip.length));
     }
 
-    /// <summary>
-    /// Para e destrói todos os efeitos sonoros temporários que estão tocando.
-    /// </summary>
     public void StopAllSFX()
     {
-        Debug.Log("[AudioManager] Parando todos os SFX...");
-        // Itera sobre uma cópia da lista para poder modificar a original
         foreach (GameObject sfxObject in new List<GameObject>(activeSfxObjects))
         {
             if (sfxObject != null)
@@ -85,15 +87,12 @@ public class AudioManager : MonoBehaviour
                 Destroy(sfxObject);
             }
         }
-        activeSfxObjects.Clear(); // Limpa a lista
+        activeSfxObjects.Clear();
     }
-
-    // --- CORROTINAS INTERNAS ---
 
     private IEnumerator DestroyAfterPlaying(GameObject objectToDestroy, float delay)
     {
         yield return new WaitForSeconds(delay);
-        // Remove da lista antes de destruir
         activeSfxObjects.Remove(objectToDestroy);
         if (objectToDestroy != null)
         {

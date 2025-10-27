@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8880383044098008962}
   - component: {fileID: 8346526919571038546}
-  - component: {fileID: 7296743421912803174}
   m_Layer: 0
   m_Name: MenuManager
   m_TagString: Untagged
@@ -46,19 +45,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nomeDoLevelDeJogo: AnimacaoInicial
---- !u!114 &7296743421912803174
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7863929923873448833}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f21d5391a61909540859f87ead2df268, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  optionsPanelPrefab: {fileID: 5345245180951600347, guid: 2f98d966534b6cb4895820fd8dafd66f, type: 3}
-  persistentCanvas: {fileID: 0}
-  masterMixer: {fileID: 24100000, guid: 2bf32e3037a035f4f9f9690a02e476b3, type: 2}
-  masterVolumeParameterName: MasterVolume

@@ -47,7 +47,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   musicSource: {fileID: 5582095439135434462}
-  sfxSource: {fileID: 7718781829543598293}
+  sfxSource: {fileID: 5582095439135434462}
 --- !u!82 &5582095439135434462
 AudioSource:
   m_ObjectHideFlags: 0
@@ -58,8 +58,8 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 8a65231abd8158f438b3a1e2f94dbada, type: 3}
+  m_Resource: {fileID: 8300000, guid: 8a65231abd8158f438b3a1e2f94dbada, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1

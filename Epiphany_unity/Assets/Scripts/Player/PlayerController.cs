@@ -4,14 +4,23 @@ using System.Collections;
 
 public class PlayerController : MonoBehaviour
 {
-    // ... (suas variáveis de sempre) ...
-    [Header("Configurações de Movimento")] [SerializeField] private float moveSpeed = 5f;
-    [Header("Referências de Componentes")] private Rigidbody2D rb; private Animator animator; private SpriteRenderer spriteRenderer; private PlayerInput playerInput;
-    [Header("Controle de Input e Estado")] private Vector2 currentMovementInput; private bool isFacingRight = true; private int lastVerticalDirection = -1; private bool canMove = true; private bool isInCutscene = false;
+    [Header("Configurações de Movimento")] 
+    [SerializeField] private float moveSpeed = 5f;
+    
+    private Rigidbody2D rb; 
+    private Animator animator; 
+    private SpriteRenderer spriteRenderer; 
+    private PlayerInput playerInput;
+    private FadeController fadeController;
+    
+    private Vector2 currentMovementInput; 
+    private bool isFacingRight = true; 
+    private int lastVerticalDirection = -1; 
+    private bool canMove = true; 
+    private bool isInCutscene = false;
 
-    // --- Variáveis para a Lógica da Escada ---
     private bool canClimb = false;
-    private LadderZone currentLadderZone; // Referência para a zona de escada atual
+    private LadderZone currentLadderZone;
 
     private RigidbodyType2D originalBodyType;
 
@@ -22,6 +31,11 @@ public class PlayerController : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         playerInput = GetComponent<PlayerInput>();
         if (rb != null) { originalBodyType = rb.bodyType; }
+    }
+    
+    void Start()
+    {
+        fadeController = FindFirstObjectByType<FadeController>();
     }
 
     void FixedUpdate()
@@ -37,14 +51,11 @@ public class PlayerController : MonoBehaviour
     {
         if (isInCutscene) return;
 
-        // <<< A NOVA LÓGICA DE ATIVAÇÃO ESTÁ AQUI >>>
-        // Se o jogador pode subir E apertou para cima...
         if (canClimb && currentMovementInput.y > 0.1f && currentLadderZone != null)
         {
-            // ...inicia a sequência automática!
-            canClimb = false; // Impede que seja chamado de novo
+            canClimb = false;
             currentLadderZone.StartAutomaticClimb(this);
-            return; // Para a execução do Update para evitar conflitos de animação
+            return;
         }
 
         UpdateAnimationsAndFlip();
@@ -57,7 +68,6 @@ public class PlayerController : MonoBehaviour
     
     public void EnableMovement()
     {
-        Debug.Log("Habilitando movimento do jogador.");
         canMove = true;
         isInCutscene = false;
         if(rb != null) { rb.bodyType = originalBodyType; }
@@ -65,29 +75,26 @@ public class PlayerController : MonoBehaviour
     }
 
     public void DisableMovement()
-{
-    Debug.Log("Desabilitando movimento do jogador.");
-    canMove = false;
-    currentMovementInput = Vector2.zero;
-    
-    if (rb != null)
     {
-        rb.linearVelocity = Vector2.zero;
+        canMove = false;
+        currentMovementInput = Vector2.zero;
+        
+        if (rb != null)
+        {
+            rb.linearVelocity = Vector2.zero;
+        }
+       
+        if (animator != null)
+        {
+            int idleState = (lastVerticalDirection == 1) ? 4 : 0;
+            animator.SetInteger("MovementState", idleState);
+        }
+        
+        if (playerInput != null)
+        {
+            playerInput.SwitchCurrentActionMap("PuzzleUI");
+        }
     }
-
-   
-    if (animator != null)
-    {
-        // Se a última direção foi para cima, usa o idle de costas (estado 4), senão, o de frente (estado 0).
-        int idleState = (lastVerticalDirection == 1) ? 4 : 0;
-        animator.SetInteger("MovementState", idleState);
-    }
-    
-    if (playerInput != null)
-    {
-        playerInput.SwitchCurrentActionMap("PuzzleUI");
-    }
-}
 
     private void UpdateAnimationsAndFlip()
     {
@@ -104,7 +111,6 @@ public class PlayerController : MonoBehaviour
         if (spriteRenderer != null && currentMovementState == 1) { if (moveX > 0 && !isFacingRight) { isFacingRight = true; spriteRenderer.flipX = false; } else if (moveX < 0 && isFacingRight) { isFacingRight = false; spriteRenderer.flipX = true; } }
     }
     
-    // Agora este método recebe a referência da LadderZone
     public void SetCanClimb(bool status, LadderZone ladder)
     {
         canClimb = status;
@@ -118,6 +124,8 @@ public class PlayerController : MonoBehaviour
 
     private IEnumerator ClimbStairsCoroutine(Transform startPoint, Transform endPoint, string sceneName, string spawnName)
     {
+        if (GameManager.Instance == null) yield break;
+
         isInCutscene = true;
         DisableMovement();
         rb.bodyType = RigidbodyType2D.Kinematic;
@@ -140,8 +148,8 @@ public class PlayerController : MonoBehaviour
             yield return null;
         }
 
-        if (FadeController.Instance != null) {
-            FadeController.Instance.StartFadeOut(() => {
+        if (fadeController != null) {
+            fadeController.StartFadeOut(() => {
                 GameManager.Instance.SetNextSpawnPoint(spawnName);
                 GameManager.Instance.LoadScene(sceneName);
             });

@@ -1,53 +1,53 @@
-// Em PlayerInteractor.cs
 using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections.Generic;
 
 public class PlayerInteractor : MonoBehaviour
 {
+    [Header("Referências de Sistema")]
+    [SerializeField] private UIManager uiManager;
+
     private List<IInteractable> interactablesInRange = new List<IInteractable>();
     
-    // Chamado pelo componente Player Input quando a tecla "E" é pressionada
-    public void OnInteract(InputValue value)
-{
-    if (value.isPressed && interactablesInRange.Count > 0)
+    void Start()
     {
-        // LOG DE DIAGNÓSTICO
-        Debug.Log($"[PlayerInteractor] Tentando interagir com: {interactablesInRange[interactablesInRange.Count - 1]}");
-        interactablesInRange[interactablesInRange.Count - 1].Interact();
+        if (uiManager == null)
+        {
+            uiManager = FindFirstObjectByType<UIManager>();
+        }
     }
-}
 
-    // Chamado quando o círculo de alcance do jogador entra em um trigger
-    private void OnTriggerEnter2D(Collider2D other)
-{
-    IInteractable interactable = other.GetComponent<IInteractable>();
-    if (interactable != null)
+    public void OnInteract(InputValue value)
     {
-        // LOG DE DIAGNÓSTICO
-        Debug.Log($"[PlayerInteractor] Entrou no alcance de: {other.gameObject.name}");
-        interactablesInRange.Add(interactable);
-            // Se esta é a primeira interação no alcance, manda o UIManager mostrar o prompt
-            if (UIManager.Instance != null)
+        if (value.isPressed && interactablesInRange.Count > 0)
+        {
+            interactablesInRange[interactablesInRange.Count - 1].Interact();
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        IInteractable interactable = other.GetComponent<IInteractable>();
+        if (interactable != null)
+        {
+            interactablesInRange.Add(interactable);
+            if (uiManager != null)
             {
-                UIManager.Instance.ShowInteractionPrompt();
+                uiManager.ShowInteractionPrompt();
             }
         }
     }
 
-    // Chamado quando o círculo de alcance do jogador sai de um trigger
     private void OnTriggerExit2D(Collider2D other)
     {
         IInteractable interactable = other.GetComponent<IInteractable>();
         if (interactable != null)
         {
-            // Remove o objeto da lista
             interactablesInRange.Remove(interactable);
             
-            // Se a lista de interativos ficou vazia, manda o UIManager esconder o prompt
-            if (interactablesInRange.Count == 0 && UIManager.Instance != null)
+            if (interactablesInRange.Count == 0 && uiManager != null)
             {
-                UIManager.Instance.HideInteractionPrompt();
+                uiManager.HideInteractionPrompt();
             }
         }
     }

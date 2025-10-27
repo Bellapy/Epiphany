@@ -1,74 +1,101 @@
-// Em ZricSceneController.cs
-
 using UnityEngine;
 using System.Collections;
-using System.Collections.Generic; // Necessário para List<>
+using System.Collections.Generic;
 
 public class ZricSceneController : MonoBehaviour
 {
     [Header("Diálogos da Cena")]
-    // Mudamos de uma única referência para uma lista
     [SerializeField] private List<DialogueData> initialDialogueSequence;
-    [SerializeField] private DialogueData postPuzzleDialogue;
+    [SerializeField] private DialogueData postPuzzleDialogue; // Diálogo do Zric
+    
+    // --- NOVAS LINHAS ADICIONADAS ---
+    [Header("Sequência Pós-Puzzle de Ayla")]
+    [Tooltip("O diálogo que Ayla fala após Zric.")]
+    [SerializeField] private DialogueData aylaPosPuzzleDialogue;
+    [Tooltip("Referência ao componente NPCTourGuide no GameObject da Ayla.")]
+    [SerializeField] private NPCTourGuide aylaTourGuide;
+    [Tooltip("O GameObject que serve como gatilho da porta de transição.")]
+    [SerializeField] private GameObject transitionDoorTrigger;
+    // --- FIM DAS NOVAS LINHAS ---
 
     [Header("Configurações de Cena")]
     [SerializeField] private float delayToStartDialogue = 3.0f;
+    
+    // Removido: A transição agora é física, não mais controlada por este script.
+    // [Header("Configuração de Transição de Saída")]
+    // [SerializeField] private string nextSceneName = "Lojinha";
+    // [SerializeField] private string spawnPointInNextScene = "SpawnFromZric";
 
     private int currentDialogueIndex = 0;
-
-    private void OnEnable() { DialogueManager.OnDialogueEnd += HandleDialogueEnd; }
-    private void OnDisable() { DialogueManager.OnDialogueEnd -= HandleDialogueEnd; }
+    private bool isInitialSequenceComplete = false;
+    private FadeController fadeController;
 
     void Start()
     {
+        fadeController = FindFirstObjectByType<FadeController>();
+        
+        // --- NOVA LINHA ADICIONADA ---
+        // Garante que a porta comece desativada.
+        if (transitionDoorTrigger != null)
+        {
+            transitionDoorTrigger.SetActive(false);
+        }
+        // --- FIM DA NOVA LINHA ---
+
         StartCoroutine(SceneStartSequence());
+    }
+
+    private void OnEnable() 
+    { 
+        if (DialogueManager.Instance != null)
+        {
+            DialogueManager.Instance.OnDialogueEnd += HandleDialogueEnd;
+        }
+    }
+
+    private void OnDisable() 
+    { 
+        if (DialogueManager.Instance != null)
+        {
+            DialogueManager.Instance.OnDialogueEnd -= HandleDialogueEnd;
+        }
     }
 
     private IEnumerator SceneStartSequence()
     {
-        if (FadeController.Instance != null)
+        if (fadeController != null)
         {
-            FadeController.Instance.StartFadeIn(null, Color.white);
-            yield return new WaitForSeconds(FadeController.Instance.fadeDuration);
+            fadeController.StartFadeIn(null, Color.white);
+            yield return new WaitForSeconds(fadeController.fadeDuration);
         }
         yield return new WaitForSeconds(delayToStartDialogue);
         
-        // Inicia o primeiro diálogo da sequência
         StartNextDialogueInSequence();
     }
 
     private void StartNextDialogueInSequence()
-{
-    if (currentDialogueIndex < initialDialogueSequence.Count)
     {
-        DialogueManager.Instance.StartDialogue(initialDialogueSequence[currentDialogueIndex]);
-        currentDialogueIndex++;
-    }
-    else
-    {
-        Debug.Log("Sequência de diálogo inicial concluída. Devolvendo controle ao jogador.");
-        
-        // <<< ADIÇÃO COMEÇA AQUI >>>
-        // Encontra o PlayerController na cena e reabilita seu movimento.
-        // Isso também trocará o Action Map de volta para "Player".
-        PlayerController player = FindFirstObjectByType<PlayerController>();
-        if (player != null)
+        if (DialogueManager.Instance == null) return;
+
+        if (currentDialogueIndex < initialDialogueSequence.Count)
         {
-            player.EnableMovement();
+            DialogueManager.Instance.StartDialogue(initialDialogueSequence[currentDialogueIndex]);
+            currentDialogueIndex++;
         }
         else
         {
-            Debug.LogError("[ZricSceneController] Não foi possível encontrar o PlayerController para reativar o movimento!");
+            isInitialSequenceComplete = true;
+            PlayerController player = FindFirstObjectByType<PlayerController>();
+            if (player != null)
+            {
+                player.EnableMovement();
+            }
         }
-        // <<< ADIÇÃO TERMINA AQUI >>>
     }
-}
 
-    // O evento OnDialogueEnd agora serve para avançar na sequência
     private void HandleDialogueEnd()
     {
-        // Garante que só estamos avançando durante a sequência inicial
-        if (currentDialogueIndex <= initialDialogueSequence.Count)
+        if (!isInitialSequenceComplete)
         {
             StartNextDialogueInSequence();
         }
@@ -76,9 +103,45 @@ public class ZricSceneController : MonoBehaviour
 
     public void OnPuzzleSolved()
     {
-        // Remove a inscrição do evento para não interferir com o diálogo final
-        DialogueManager.OnDialogueEnd -= HandleDialogueEnd;
-        Debug.Log("Puzzle resolvido! Iniciando diálogo final.");
+        if (DialogueManager.Instance == null) return;
+
+        DialogueManager.Instance.OnDialogueEnd -= HandleDialogueEnd;
         DialogueManager.Instance.StartDialogue(postPuzzleDialogue);
+        DialogueManager.Instance.OnDialogueEnd += HandlePostPuzzleDialogueEnd;
     }
+
+    // --- LÓGICA COMPLETAMENTE ALTERADA ---
+    private void HandlePostPuzzleDialogueEnd()
+    {
+        // Esta função é chamada quando o diálogo do ZRIC termina.
+        if (DialogueManager.Instance == null) return;
+
+        // Agora, em vez de terminar a cena, iniciamos o diálogo da AYLA.
+        DialogueManager.Instance.OnDialogueEnd -= HandlePostPuzzleDialogueEnd;
+        DialogueManager.Instance.StartDialogue(aylaPosPuzzleDialogue);
+        DialogueManager.Instance.OnDialogueEnd += HandleAylaDialogueEnd;
+    }
+
+    // --- NOVA FUNÇÃO ADICIONADA ---
+    private void HandleAylaDialogueEnd()
+    {
+        // Esta função é chamada quando o diálogo da AYLA termina.
+        if (DialogueManager.Instance != null)
+        {
+            DialogueManager.Instance.OnDialogueEnd -= HandleAylaDialogueEnd;
+        }
+
+        // Inicia a caminhada da Ayla.
+        if (aylaTourGuide != null)
+        {
+            aylaTourGuide.StartTour();
+        }
+
+        // Ativa a porta para que o jogador possa usá-la.
+        if (transitionDoorTrigger != null)
+        {
+            transitionDoorTrigger.SetActive(true);
+        }
+    }
+    // --- FIM DA NOVA FUNÇÃO ---
 }

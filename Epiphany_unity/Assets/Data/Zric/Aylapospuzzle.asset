@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9228e584220b007488a3081b0ee915e9, type: 3}
+  m_Name: Aylapospuzzle
+  m_EditorClassIdentifier: 
+  speakerName: Ayla
+  speakerPortrait: {fileID: 0}
+  dialogueLines:
+  - sentence: "J\xE1 sei onde podemos ir agora. Eu\u2026 at\xE9 tinha combinado h\xE1
+      semanas de passar l\xE1, mas nunca consigo. "
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - sentence: " Acho que agora \xE9 a chance perfeita. Vamos ao caf\xE9 do Veth,
+      fica bem pertinho."
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  hasChoice: 0
+  choicePrompt: 
+  choiceOptions: []
+  nextDialogueOnEnd: {fileID: 0}

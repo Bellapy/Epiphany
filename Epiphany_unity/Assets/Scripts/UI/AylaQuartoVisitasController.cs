@@ -26,11 +26,9 @@ public class AylaQuartoVisitasController : MonoBehaviour
 
     void Awake()
     {
-        // Lógica de Persistência: Verifica se a cena já foi concluída.
         if (PlayerPrefs.GetInt(sceneCompletionFlag, 0) == 1)
         {
-            Debug.Log("Sequência do Quarto de Visitas já concluída. Desativando Ayla.");
-            gameObject.SetActive(false); // Desativa Ayla se a cena já foi feita.
+            gameObject.SetActive(false);
             return;
         }
 
@@ -38,19 +36,34 @@ public class AylaQuartoVisitasController : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
-    private void OnEnable() { DialogueManager.OnDialogueLineStart += HandleDialogueLineStart; }
-    private void OnDisable() { DialogueManager.OnDialogueLineStart -= HandleDialogueLineStart; }
-
     void Start()
     {
         StartCoroutine(StartSceneSequence());
     }
 
+    private void OnEnable() 
+    { 
+        if (DialogueManager.Instance != null)
+        {
+            DialogueManager.Instance.OnDialogueLineStart += HandleDialogueLineStart;
+        }
+    }
+
+    private void OnDisable() 
+    { 
+        if (DialogueManager.Instance != null)
+        {
+            DialogueManager.Instance.OnDialogueLineStart -= HandleDialogueLineStart;
+        }
+    }
+
     private IEnumerator StartSceneSequence()
     {
         yield return new WaitForSeconds(delayToStart);
-        // Inicia o diálogo em modo MANUAL (padrão, avançar com Enter).
-        DialogueManager.Instance.StartDialogue(sceneDialogue);
+        if (DialogueManager.Instance != null)
+        {
+            DialogueManager.Instance.StartDialogue(sceneDialogue);
+        }
     }
 
     private void HandleDialogueLineStart(int lineIndex)
@@ -63,19 +76,21 @@ public class AylaQuartoVisitasController : MonoBehaviour
         else if (lineIndex == fadeTriggerLineIndex)
         {
             if (walkCoroutine != null) StopCoroutine(walkCoroutine);
-            animator.SetInteger("MovementState", 0);
+            if (animator != null) animator.SetInteger("MovementState", 0);
             StartCoroutine(FadeOutAndDeactivate());
         }
     }
 
     private IEnumerator WalkToDestination()
     {
+        if (destinationPoint == null || animator == null) yield break;
+
         while (Vector3.Distance(transform.position, destinationPoint.position) > 0.1f)
         {
             Vector3 direction = (destinationPoint.position - transform.position).normalized;
             transform.position = Vector3.MoveTowards(transform.position, destinationPoint.position, walkSpeed * Time.deltaTime);
             animator.SetInteger("MovementState", 5);
-            spriteRenderer.flipX = direction.x < 0;
+            if (spriteRenderer != null) spriteRenderer.flipX = direction.x < 0;
             yield return null;
         }
         transform.position = destinationPoint.position;
@@ -84,6 +99,12 @@ public class AylaQuartoVisitasController : MonoBehaviour
 
     private IEnumerator FadeOutAndDeactivate()
     {
+        if (spriteRenderer == null) 
+        {
+            gameObject.SetActive(false);
+            yield break;
+        }
+
         float duration = 2.0f;
         float elapsedTime = 0f;
         Color startColor = spriteRenderer.color;
@@ -96,10 +117,8 @@ public class AylaQuartoVisitasController : MonoBehaviour
             yield return null;
         }
 
-        // Lógica de Persistência: Salva o estado de conclusão da cena.
         PlayerPrefs.SetInt(sceneCompletionFlag, 1);
         PlayerPrefs.Save();
-        Debug.Log($"Flag '{sceneCompletionFlag}' salva. Ayla não aparecerá novamente.");
 
         gameObject.SetActive(false);
     }

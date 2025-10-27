@@ -4,22 +4,12 @@ using System.Collections;
 
 public class UIManager : MonoBehaviour
 {
-    public static UIManager Instance { get; private set; }
+   
 
     // Referência privada, preenchida pelo UIDialogueConnector de cada cena
     private CanvasGroup interactionPromptCanvasGroup;
     private Coroutine promptFadeCoroutine;
 
-    void Awake()
-    {
-        if (Instance != null && Instance != this)
-        {
-            Destroy(gameObject);
-            return;
-        }
-        Instance = this;
-        DontDestroyOnLoad(gameObject);
-    }
     
     private void OnEnable() 
     {
