@@ -9,10 +9,14 @@ public class RubiTuningPuzzle : MonoBehaviour, IInteractable
     [SerializeField] private GameObject puzzlePanel;
     [SerializeField] private Slider redSlider;
     [SerializeField] private Slider greenSlider;
+     [Header("Gerenciamento de Estado")]
+    [SerializeField] private string completionFlag = "ZricSceneCompleted";
     [SerializeField] private Slider blueSlider;
     [SerializeField] private Image colorPreview;
     [SerializeField] private Image targetColorPreview;
     [SerializeField] private Button checkButton; // Referência para o botão de confirmação
+
+    [Header("Referências de UI")]
 
     [Header("Configuração do Puzzle")]
     [SerializeField] private Color targetColor;
@@ -38,6 +42,14 @@ public class RubiTuningPuzzle : MonoBehaviour, IInteractable
     // Método principal de interação, funciona como um interruptor (toggle)
     public void Interact()
     {
+        // --- NOVA VERIFICAÇÃO ADICIONADA ---
+        // Se a cena já foi concluída, não faz nada.
+        if (PlayerPrefs.GetInt(completionFlag, 0) == 1)
+        {
+            return;
+        }
+        // --- FIM DA NOVA VERIFICAÇÃO ---
+
         if (puzzlePanel.activeSelf)
         {
             ClosePuzzle();

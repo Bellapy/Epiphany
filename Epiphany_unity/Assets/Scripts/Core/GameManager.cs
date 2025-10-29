@@ -31,6 +31,11 @@ public class GameManager : MonoBehaviour
 
     [Header("Flags de Estado da História")]
     public bool HasCompletedKitchenDialogue { get; set; } = false;
+    
+    // --- LINHA CORRIGIDA ---
+    // Adiciona a flag para saber se o jogador possui a flauta.
+    public bool PlayerHasFlute { get; set; } = false;
+    // --- FIM DA CORREÇÃO ---
 
     private void OnEnable()
     {
@@ -76,8 +81,6 @@ public class GameManager : MonoBehaviour
 
     private void PositionPlayerInScene()
     {
-        // Usar FindFirstObjectByType aqui é aceitável, pois é uma operação centralizada
-        // que acontece apenas uma vez por carregamento de cena.
         PlayerController player = FindFirstObjectByType<PlayerController>();
         if (player == null) return;
         
