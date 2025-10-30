@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9228e584220b007488a3081b0ee915e9, type: 3}
-  m_Name: escolhafinal
+  m_Name: Cafe_Veth_Escolha_3_AlgoRuim
   m_EditorClassIdentifier: 
-  speakerName: 
+  speakerName: ... ... ...
   speakerPortrait: {fileID: 0}
   dialogueLines: []
   hasChoice: 1
-  choicePrompt: ... ... ...
+  choicePrompt: 
   choiceOptions:
   - optionText: "Voc\xEA acha que algo ruim vai acontecer?"
-    nextDialogue: {fileID: 11400000, guid: 2306c79ed59868d4eb67742f90825841, type: 2}
+    nextDialogue: {fileID: 11400000, guid: f687410e8e2835547a10357485c0df20, type: 2}
   nextDialogueOnEnd: {fileID: 0}

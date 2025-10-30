@@ -17,8 +17,8 @@ public class CafeSceneController : MonoBehaviour
     [Header("Sequência de Diálogos")]
     [Tooltip("Arraste todos os diálogos lineares na ordem correta.")]
     [SerializeField] private List<DialogueData> linearDialogues;
-    [Tooltip("O diálogo final de Veth que leva às escolhas.")]
-    [SerializeField] private DialogueData vethChoiceIntroDialogue;
+    [Tooltip("O diálogo que contém a PRIMEIRA pergunta para Veth.")]
+    [SerializeField] private DialogueData vethFirstChoiceDialogue;
 
     private int currentDialogueIndex = 0;
 
@@ -28,7 +28,7 @@ public class CafeSceneController : MonoBehaviour
         {
             if (aylaObject != null) aylaObject.SetActive(false);
             if (vethObject != null) vethObject.SetActive(false);
-            if (saidaBloqueio != null) saidaBloqueio.SetActive(false); // Libera a saída em visitas futuras
+            if (saidaBloqueio != null) saidaBloqueio.SetActive(false);
             this.enabled = false;
             return;
         }
@@ -41,7 +41,7 @@ public class CafeSceneController : MonoBehaviour
 
     private IEnumerator StartSceneSequence()
     {
-        
+        // O movimento do jogador não é mais desabilitado aqui.
         yield return new WaitForSeconds(1.5f); // Pequeno atraso para a cena assentar
 
         DialogueManager.Instance.OnDialogueEnd += HandleLinearDialogueEnd;
@@ -54,15 +54,13 @@ public class CafeSceneController : MonoBehaviour
         {
             DialogueManager.Instance.StartDialogue(linearDialogues[currentDialogueIndex]);
             
+            // Gatilho para a saída de Ayla
             if (linearDialogues[currentDialogueIndex].name == "Cafe_Veth_DespedidaAyla")
             {
                 if (aylaTourGuide != null)
                 {
-                    // --- LÓGICA CORRIGIDA AQUI ---
-                    // Adicionamos um listener para o evento de conclusão do tour de Ayla.
                     aylaTourGuide.OnTourCompleted.AddListener(HandleAylaTourCompletion);
                     aylaTourGuide.StartTour();
-                    // --- FIM DA CORREÇÃO ---
                 }
             }
             
@@ -73,16 +71,7 @@ public class CafeSceneController : MonoBehaviour
             // Fim da sequência linear, começa a parte das escolhas
             DialogueManager.Instance.OnDialogueEnd -= HandleLinearDialogueEnd;
             DialogueManager.Instance.OnDialogueEnd += HandleChoiceDialogueEnd;
-            DialogueManager.Instance.StartDialogue(vethChoiceIntroDialogue);
-        }
-    }
-
-    private void HandleAylaTourCompletion()
-    {
-        // Esta função é chamada quando Ayla chega ao seu destino final (a porta).
-        if (aylaObject != null)
-        {
-            aylaObject.SetActive(false); // Faz Ayla desaparecer.
+            DialogueManager.Instance.StartDialogue(vethFirstChoiceDialogue);
         }
     }
 
@@ -91,12 +80,18 @@ public class CafeSceneController : MonoBehaviour
         StartNextLinearDialogue();
     }
 
+    private void HandleAylaTourCompletion()
+    {
+        if (aylaObject != null)
+        {
+            aylaObject.SetActive(false);
+        }
+    }
+
     private void HandleChoiceDialogueEnd()
     {
-        // Este evento é chamado após o último diálogo de escolha terminar.
         DialogueManager.Instance.OnDialogueEnd -= HandleChoiceDialogueEnd;
         
-        // Inicia a saída de Veth
         if (vethTourGuide != null)
         {
             vethTourGuide.OnTourCompleted.AddListener(FinalizeScene);
@@ -107,11 +102,11 @@ public class CafeSceneController : MonoBehaviour
     private void FinalizeScene()
     {
         if (vethObject != null) vethObject.SetActive(false);
-        if (saidaBloqueio != null) saidaBloqueio.SetActive(false); // Libera a saída
+        if (saidaBloqueio != null) saidaBloqueio.SetActive(false);
         
         PlayerPrefs.SetInt(completionFlag, 1);
         PlayerPrefs.Save();
         
-        FindFirstObjectByType<PlayerController>()?.EnableMovement();
+        // Não precisamos reabilitar o movimento do jogador, pois ele nunca foi desabilitado.
     }
 }

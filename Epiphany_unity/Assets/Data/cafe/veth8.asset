@@ -112,4 +112,4 @@ MonoBehaviour:
   hasChoice: 0
   choicePrompt: 
   choiceOptions: []
-  nextDialogueOnEnd: {fileID: 0}
+  nextDialogueOnEnd: {fileID: 11400000, guid: 8b569f8dc77dfb74987127b57b78098e, type: 2}

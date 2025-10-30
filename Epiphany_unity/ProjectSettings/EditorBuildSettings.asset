@@ -71,6 +71,21 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/07_vila/despensa.unity
     guid: 25d8e4c8395d5294d8cacea471c126b2
+  - enabled: 1
+    path: Assets/Scenes/07_vila/vila2.unity
+    guid: 36676ad726a1f1e4fa553d814fbdd35e
+  - enabled: 1
+    path: Assets/Scenes/08_baleia/baleia.unity
+    guid: 9f7f2287987821a48aa99f74f3744574
+  - enabled: 1
+    path: Assets/Scenes/08_baleia/chegada.unity
+    guid: 23725cd06cc7143429b2fbd1ad1708cb
+  - enabled: 1
+    path: Assets/Scenes/09_arvoredavida/arvoredavida1.unity
+    guid: 3ab1073b6e510ac46aafc137da7fe7af
+  - enabled: 1
+    path: Assets/Scenes/09_arvoredavida/historiadeAyla.unity
+    guid: 7e30447ded522af40b383ec8af471fe4
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 9eb4347ff3ca42843b3c7d015ad8c7d0, type: 2}
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}

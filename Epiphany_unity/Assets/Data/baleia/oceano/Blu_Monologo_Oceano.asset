@@ -10,102 +10,105 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9228e584220b007488a3081b0ee915e9, type: 3}
-  m_Name: respostaalgoruim
+  m_Name: Blu_Monologo_Oceano
   m_EditorClassIdentifier: 
-  speakerName: Veth
+  speakerName: Blu
   speakerPortrait: {fileID: 0}
   dialogueLines:
-  - sentence: "Olha\u2026 n\xE3o tenho certeza. Mas tenho pressentimentos."
+  - sentence: "Espere, espere\u2026 acho que senti algo\u2026"
     triggerEventAfterLine: 0
     onLineCompleteEvent:
       m_PersistentCalls:
         m_Calls: []
-  - sentence: "E sinceramente, n\xE3o vou conseguir ficar de boca fechada."
+  - sentence: "ah, n\xE3o, era s\xF3 minha cauda batendo na \xE1gua."
     triggerEventAfterLine: 0
     onLineCompleteEvent:
       m_PersistentCalls:
         m_Calls: []
-  - sentence: "Acho que, vindo pra esse mundo de repente, voc\xEA merece saber pelo
-      menos uma parte\u2026 do que eu sei."
+  - sentence: "Ahhh\u2026 que dia espl\xEAndido, n\xE3o \xE9? Aposto que o oceano
+      at\xE9 se arrumou s\xF3 pra mim hoje."
     triggerEventAfterLine: 0
     onLineCompleteEvent:
       m_PersistentCalls:
         m_Calls: []
-  - sentence: "Desde que Ayla chegou, como eu j\xE1 disse antes, as coisas n\xE3o
-      andam como antes. Come\xE7aram a acontecer coisas estranhas \u2014 muito estranhas."
+  - sentence: "Olha esse brilho! Essas ondas! Eu diria que est\xE1 tudo\u2026 impec\xE1vel.
+      Como eu.\r\n"
     triggerEventAfterLine: 0
     onLineCompleteEvent:
       m_PersistentCalls:
         m_Calls: []
-  - sentence: "Mas ela sempre dizia que era normal, que tudo era por causa da \xE9poca,
-      que eu estava exagerando."
+  - sentence: "Alguns dizem que eu sou modesta demais \u2014 mas o que posso fazer
+      se os fatos s\xE3o os fatos?\r\n"
     triggerEventAfterLine: 0
     onLineCompleteEvent:
       m_PersistentCalls:
         m_Calls: []
-  - sentence: "S\xF3 que eu sei o que vi. Um tempo atr\xE1s, encontrei um esp\xEDrito
-      aqui. N\xE3o era como os outros \u2014 tinha cores escuras, uma presen\xE7a
-      pesada\u2026"
+  - sentence: "Falando em fatos\u2026 voc\xEA sabia que n\xF3s, baleias, somos os
+      maiores seres que j\xE1 existiram na Terra?"
     triggerEventAfterLine: 0
     onLineCompleteEvent:
       m_PersistentCalls:
         m_Calls: []
-  - sentence: "e me fez sentir algo que n\xE3o sei explicar, uma mistura de medo
-      e vazio."
+  - sentence: "Tr\xEAs vezes maiores que os dinossauros! E ainda assim, h\xE1 quem
+      ache que tamanho n\xE3o \xE9 documento."
     triggerEventAfterLine: 0
     onLineCompleteEvent:
       m_PersistentCalls:
         m_Calls: []
-  - sentence: "Ele desapareceu em segundos, mas\u2026 eu sinto que nunca realmente
-      foi embora.\n"
+  - sentence: "Minha l\xEDngua sozinha pesa seis toneladas. D\xE1 pra acreditar?"
     triggerEventAfterLine: 0
     onLineCompleteEvent:
       m_PersistentCalls:
         m_Calls: []
-  - sentence: "Pequena, esse mundo \xE9 incr\xEDvel, sim. Mas \xE0s vezes, parece
-      que tudo o que \xE9 incr\xEDvel aqui est\xE1 destinado a ser corrompido de
-      algum modo."
+  - sentence: "Se eu quisesse, poderia engolir um barco inteiro \u2014 mas n\xE3o
+      se preocupe, n\xE3o \xE9 o meu estilo."
     triggerEventAfterLine: 0
     onLineCompleteEvent:
       m_PersistentCalls:
         m_Calls: []
-  - sentence: "Quando contei isso \xE0 Ayla, ela ficou assustada, tentou me acalmar
-      \u2014 disse que talvez fosse coisa da minha cabe\xE7a, ou apenas um esp\xEDrito
-      comum."
+  - sentence: Sou muito mais refinada.
     triggerEventAfterLine: 0
     onLineCompleteEvent:
       m_PersistentCalls:
         m_Calls: []
-  - sentence: "Mas eu sei que n\xE3o era."
+  - sentence: "N\xE3o enxergamos muito bem, sabia? O mar \xE9 cheio de sombras, reflexos,
+      truques de luz\u2026"
     triggerEventAfterLine: 0
     onLineCompleteEvent:
       m_PersistentCalls:
         m_Calls: []
-  - sentence: "Depois daquilo, nunca mais vi outro esp\xEDrito. Mesmo assim, as flores
-      come\xE7aram a morrer de repente,"
+  - sentence: "ent\xE3o, para n\xF3s, ver n\xE3o \xE9 suficiente. N\xF3s ouvimos
+      o mundo."
     triggerEventAfterLine: 0
     onLineCompleteEvent:
       m_PersistentCalls:
         m_Calls: []
-  - sentence: "os rios mudaram de dire\xE7\xE3o e inundaram nossas vilas, \xE1rvores
-      perderam as folhas na esta\xE7\xE3o mais florida."
+  - sentence: "Cada som que fa\xE7o viaja quil\xF4metros, bate nas rochas, volta
+      e me conta hist\xF3rias."
     triggerEventAfterLine: 0
     onLineCompleteEvent:
       m_PersistentCalls:
         m_Calls: []
-  - sentence: "Tudo ficou\u2026 diferente."
+  - sentence: "\xC9 assim que encontro o caminho, como se eu desenhasse o mapa do
+      oceano com a minha pr\xF3pria voz."
     triggerEventAfterLine: 0
     onLineCompleteEvent:
       m_PersistentCalls:
         m_Calls: []
-  - sentence: "E o mais estranho \xE9 que ningu\xE9m parece notar. Vivem como se
-      nada tivesse acontecido, como se o mundo ainda fosse o mesmo."
+  - sentence: "E quando tudo fica em sil\xEAncio\u2026 ainda assim eu sei pra onde
+      ir."
     triggerEventAfterLine: 0
     onLineCompleteEvent:
       m_PersistentCalls:
         m_Calls: []
-  - sentence: "Parece que est\xE3o presos dentro de uma bolha \u2014 cegos para a
-      verdadeira realidade. Ou talvez\u2026 a realidade tenha sido escondida deles."
+  - sentence: "Sinto o cora\xE7\xE3o do mundo pulsando l\xE1 embaixo, bem no fundo
+      da \xE1gua.\r\n\xC9 o campo magn\xE9tico da Terra, dizem voc\xEAs."
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - sentence: "Mas pra mim, \xE9 o planeta sussurrando:\r\n\u201CPor aqui, Blu\u2026
+      por aqui.\u201D"
     triggerEventAfterLine: 0
     onLineCompleteEvent:
       m_PersistentCalls:

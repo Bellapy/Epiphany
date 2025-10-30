@@ -10,13 +10,23 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9228e584220b007488a3081b0ee915e9, type: 3}
-  m_Name: vethrespostaayla
+  m_Name: Blu_Success
   m_EditorClassIdentifier: 
-  speakerName: Veth
+  speakerName: Blu
   speakerPortrait: {fileID: 0}
   dialogueLines:
-  - sentence: "Por que ela tem uma rela\xE7\xE3o muito mais profunda com esse mundo
-      do que imaginamos\u2026 essas coisas mechem com a cabe\xE7a dela."
+  - sentence: "Blu:\r\nAhhh! Sim, \xE9 essa! Magn\xEDfica!\r\n"
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - sentence: "Nem eu teria tocado melhor \u2014 e olha que eu geralmente sou melhor
+      que todo mundo.\r\n"
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - sentence: "Pois bem, suba! Vamos para a \xC1rvore da Vida."
     triggerEventAfterLine: 0
     onLineCompleteEvent:
       m_PersistentCalls:
@@ -24,4 +34,4 @@ MonoBehaviour:
   hasChoice: 0
   choicePrompt: 
   choiceOptions: []
-  nextDialogueOnEnd: {fileID: 11400000, guid: 980756b5a456b6248a3af702b8924cec, type: 2}
+  nextDialogueOnEnd: {fileID: 0}

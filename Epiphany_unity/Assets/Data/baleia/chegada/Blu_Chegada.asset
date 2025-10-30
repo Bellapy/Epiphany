@@ -10,12 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9228e584220b007488a3081b0ee915e9, type: 3}
-  m_Name: vethrespostaimpacto
+  m_Name: Blu_Chegada
   m_EditorClassIdentifier: 
-  speakerName: Veth
+  speakerName: Blu
   speakerPortrait: {fileID: 0}
   dialogueLines:
-  - sentence: "Desculpe, n\xE3o posso falar sobre isso, pequena..."
+  - sentence: "Chegamos, meu bem! Des\xE7a com cuidado, hein? "
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - sentence: "Vou te esperar aqui quando quiser voltar, t\xE1 bom? Beijinhos da
+      Blu!"
     triggerEventAfterLine: 0
     onLineCompleteEvent:
       m_PersistentCalls:
@@ -23,4 +29,4 @@ MonoBehaviour:
   hasChoice: 0
   choicePrompt: 
   choiceOptions: []
-  nextDialogueOnEnd: {fileID: 11400000, guid: 980756b5a456b6248a3af702b8924cec, type: 2}
+  nextDialogueOnEnd: {fileID: 0}

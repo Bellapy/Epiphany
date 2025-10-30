@@ -1,0 +1,76 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9228e584220b007488a3081b0ee915e9, type: 3}
+  m_Name: Blu_Response_Option1
+  m_EditorClassIdentifier: 
+  speakerName: Blu
+  speakerPortrait: {fileID: 0}
+  dialogueLines:
+  - sentence: "Ahahah! BLUUU bla blu blu blu! \u2014 olha s\xF3, voc\xEA fala muito
+      bem! Que sotaque ador\xE1vel!\r\n"
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - sentence: "Ent\xE3o quer saber da \xC1rvore da Vida, \xE9 isso?"
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - sentence: "Bom, bom, bom\u2026 posso te levar at\xE9 ela, sim! Mas sabe como
+      \xE9\u2026 "
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - sentence: "nada \xE9 de gra\xE7a nesta vida, nem mesmo nadar com uma celebridade
+      aqu\xE1tica como eu.\r\n"
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - sentence: "Para os meus clientes, tenho uma pequena exig\xEAncia:"
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - sentence: "Para os meus clientes, tenho uma pequena exig\xEAncia:"
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - sentence: "adoraria que voc\xEA tocasse a minha m\xFAsica favorita."
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - sentence: "Baleias n\xE3o se d\xE3o muito bem com instrumentos, mas somos excelentes
+      cr\xEDticas musicais!"
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - sentence: "Ent\xE3o \xE9 s\xF3 eu te falar a melodia, e voc\xEA reproduz no seu
+      instrumento! Fechado?"
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - sentence: "Preste aten\xE7\xE3o! Vou cantar s\xF3 uma vez!"
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  hasChoice: 0
+  choicePrompt: 
+  choiceOptions: []
+  nextDialogueOnEnd: {fileID: 0}

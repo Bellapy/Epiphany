@@ -10,47 +10,55 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9228e584220b007488a3081b0ee915e9, type: 3}
-  m_Name: Despensa_Veth_Reflexao
+  m_Name: Blu_Response_Option2
   m_EditorClassIdentifier: 
-  speakerName: Veth
+  speakerName: Blu
   speakerPortrait: {fileID: 0}
   dialogueLines:
-  - sentence: 'Nunca consegui entender o que isso significa.
-
-'
+  - sentence: "Bom, bom, bom\u2026 posso te levar at\xE9 ela, sim! Mas sabe como
+      \xE9\u2026 "
     triggerEventAfterLine: 0
     onLineCompleteEvent:
       m_PersistentCalls:
         m_Calls: []
-  - sentence: " J\xE1 voc\xEA, pequena\u2026 veio de outra realidade.\r\n"
+  - sentence: "nada \xE9 de gra\xE7a nesta vida, nem mesmo nadar com uma celebridade
+      aqu\xE1tica como eu.\r\n"
     triggerEventAfterLine: 0
     onLineCompleteEvent:
       m_PersistentCalls:
         m_Calls: []
-  - sentence: " Talvez, se lembrar de onde veio, consiga entender o que est\xE1 acontecendo
-      aqui \u2014 porque \xE0s vezes, "
+  - sentence: "Para os meus clientes, tenho uma pequena exig\xEAncia:"
     triggerEventAfterLine: 0
     onLineCompleteEvent:
       m_PersistentCalls:
         m_Calls: []
-  - sentence: "\xE9 preciso primeiro lembrar de si.\r\n"
+  - sentence: 
     triggerEventAfterLine: 0
     onLineCompleteEvent:
       m_PersistentCalls:
         m_Calls: []
-  - sentence: "Acho que voc\xEA deveria ir a \xE1rvore da vida, talvez tire suas
-      d\xFAvidas..."
+  - sentence: "Para os meus clientes, tenho uma pequena exig\xEAncia:"
     triggerEventAfterLine: 0
     onLineCompleteEvent:
       m_PersistentCalls:
         m_Calls: []
-  - sentence: "voc\xEA tem que pegar uma carona com a...Bla...Ble...ahhh n\xE3o lembro! "
+  - sentence: "adoraria que voc\xEA tocasse a minha m\xFAsica favorita."
     triggerEventAfterLine: 0
     onLineCompleteEvent:
       m_PersistentCalls:
         m_Calls: []
-  - sentence: "Mas quando ver ela com certeza vai saber que \xE9 ela de quem eu estou
-      falando! "
+  - sentence: "Ent\xE3o quer saber da \xC1rvore da Vida, \xE9 isso?"
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - sentence: "Ent\xE3o \xE9 s\xF3 eu te falar a melodia, e voc\xEA reproduz no seu
+      instrumento! Fechado?"
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - sentence: "Preste aten\xE7\xE3o! Vou cantar s\xF3 uma vez!"
     triggerEventAfterLine: 0
     onLineCompleteEvent:
       m_PersistentCalls:

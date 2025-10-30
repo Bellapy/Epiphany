@@ -10,16 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9228e584220b007488a3081b0ee915e9, type: 3}
-  m_Name: vethescolhas
+  m_Name: Blu_Final
   m_EditorClassIdentifier: 
-  speakerName: 
+  speakerName: Blu
   speakerPortrait: {fileID: 0}
-  dialogueLines: []
-  hasChoice: 1
-  choicePrompt: ... ... ...
-  choiceOptions:
-  - optionText: "O que \xE9 o primeiro impacto?"
-    nextDialogue: {fileID: 11400000, guid: 13154ee49a63778488496978a785a354, type: 2}
-  - optionText: "Por que a Ayla est\xE1 preocupada?"
-    nextDialogue: {fileID: 11400000, guid: 62e2ae3fac18c6d4ab11df6dec96061a, type: 2}
+  dialogueLines:
+  - sentence: "Prepare-se... Blu est\xE1 em movimento!"
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  hasChoice: 0
+  choicePrompt: 
+  choiceOptions: []
   nextDialogueOnEnd: {fileID: 0}

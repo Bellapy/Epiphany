@@ -1,0 +1,48 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9228e584220b007488a3081b0ee915e9, type: 3}
+  m_Name: Blu_Intro
+  m_EditorClassIdentifier: 
+  speakerName: Blu
+  speakerPortrait: {fileID: 0}
+  dialogueLines:
+  - sentence: "BLUUUU! Bla bla blu blaaa!\r\n T\xF4 brincando \u2014 eu n\xE3o falo
+      assim, n\xE3o.\r\n "
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - sentence: "Quer dizer\u2026 com outras baleias sim, mas eu tamb\xE9m sei conversar
+      com voc\xEAs.\r\n "
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - sentence: "Prazer, prazer! Sou Blu, a baleia mais carism\xE1tica de Zelfin!"
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - sentence: " Espera a\xED\u2026 eu nunca vi voc\xEA por aqui. Quem \xE9 voc\xEA?
+      \xC9 nova em Zelfin?"
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  hasChoice: 1
+  choicePrompt: 
+  choiceOptions:
+  - optionText: Bla blu blu bla!
+    nextDialogue: {fileID: 11400000, guid: dbd9b77da56012f4294f6717665e5d66, type: 2}
+  - optionText: "Procuro a \xC1rvore da Vida."
+    nextDialogue: {fileID: 11400000, guid: bd3ff48adc3155f42ae74fa1e2ac3c54, type: 2}
+  nextDialogueOnEnd: {fileID: 0}
