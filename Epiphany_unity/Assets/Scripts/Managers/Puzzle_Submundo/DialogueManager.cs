@@ -273,4 +273,28 @@ public class DialogueManager : MonoBehaviour
             dialogueBox.SetActive(false);
         }
     }
+
+    public void StartFadeOutDialogueBox(float duration)
+    {
+        if (dialogueBoxCanvasGroup != null)
+        {
+            StartCoroutine(FadeOutDialogueBoxRoutine(duration));
+        }
+    }
+
+    private IEnumerator FadeOutDialogueBoxRoutine(float duration)
+    {
+        float startAlpha = dialogueBoxCanvasGroup.alpha;
+        float timer = 0f;
+
+        while (timer < duration)
+        {
+            timer += Time.unscaledDeltaTime; // Usar unscaledDeltaTime para funcionar mesmo se o jogo pausar
+            dialogueBoxCanvasGroup.alpha = Mathf.Lerp(startAlpha, 0f, timer / duration);
+            yield return null;
+        }
+
+        dialogueBoxCanvasGroup.alpha = 0f;
+        CloseDialogueBox(); // Chama a função original para desativar o painel
+    }
 }

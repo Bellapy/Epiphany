@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9228e584220b007488a3081b0ee915e9, type: 3}
+  m_Name: vethescolhas
+  m_EditorClassIdentifier: 
+  speakerName: 
+  speakerPortrait: {fileID: 0}
+  dialogueLines: []
+  hasChoice: 1
+  choicePrompt: ... ... ...
+  choiceOptions:
+  - optionText: "O que \xE9 o primeiro impacto?"
+    nextDialogue: {fileID: 11400000, guid: 13154ee49a63778488496978a785a354, type: 2}
+  - optionText: "Por que a Ayla est\xE1 preocupada?"
+    nextDialogue: {fileID: 11400000, guid: 62e2ae3fac18c6d4ab11df6dec96061a, type: 2}
+  nextDialogueOnEnd: {fileID: 0}

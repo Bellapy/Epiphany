@@ -1,0 +1,115 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9228e584220b007488a3081b0ee915e9, type: 3}
+  m_Name: veth8
+  m_EditorClassIdentifier: 
+  speakerName: Veth
+  speakerPortrait: {fileID: 0}
+  dialogueLines:
+  - sentence: "\u201CEnt\xE3o\u2026 \xE9 s\xF3 n\xF3s dois agora.\nPrazer em conhecer
+      voc\xEA, viajante!"
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - sentence: "Espero que a conversa de antes n\xE3o tenha te assustado \u2014 a
+      Ayla \xE0s vezes se preocupa demais."
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - sentence: "Meu nome \xE9 Veth, e eu sei todas as hist\xF3rias de Zelfin \u2014
+      hist\xF3rias, n\xE3o fofocas, ouviu?\n"
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - sentence: "Alguns me chamam de fofoqueiro\u2026 mas n\xE3o sou fofoqueiro! Eu
+      s\xF3 escuto, observo e guardo as coisas que o tempo esquece."
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - sentence: "J\xE1 estou aqui h\xE1 tanto tempo que alguns dizem que sou mais velho
+      que o pr\xF3prio tempo \u2014 e, veja s\xF3\u2026 \xE0s vezes eu acredito nisso."
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - sentence: "Imagino que voc\xEA ainda n\xE3o saiba de muita coisa\u2026 Ayla sempre
+      foi cuidadosa demais com o que revela \u2014 e talvez ela tenha seus motivos."
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - sentence: "Mas eu tamb\xE9m n\xE3o sou quem vai te contar tudo. H\xE1 verdades
+      que precisam ser descobertas\u2026 n\xE3o ditas."
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - sentence: "Mas sabe\u2026 \xE9 importante saber quem voc\xEA \xE9."
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - sentence: "J\xE1 pensou nos problemas que essa pergunta pode causar se ficar
+      sem resposta?"
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - sentence: "As pessoas acham que se entender \xE9 lembrar um nome, ou um passado\u2026
+      mas n\xE3o \xE9 bem assim."
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - sentence: "Cada mente \xE9 um universo inteiro \u2014 vasto, silencioso, cheio
+      de constela\xE7\xF5es de mem\xF3rias."
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - sentence: "Estrelas nascem e morrem dentro de n\xF3s o tempo todo."
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - sentence: "E \xE0s vezes\u2026 a resposta que procuramos fora, est\xE1 orbitando
+      l\xE1 dentro, esperando ser encontrada."
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - sentence: "Entender a si mesmo \xE9 entender o lugar que ocupa em tudo isso."
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - sentence: "E quando finalmente descobrir quem \xE9\u2026 talvez perceba que o
+      mundo \xE0 sua volta muda tamb\xE9m."
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - sentence: "Porque o que est\xE1 dentro e o que est\xE1 fora\u2026 nunca foram
+      coisas separadas.\nMas chega de filosofar, n\xE3o \xE9? Hahaha! voc\xEA quer
+      falar algo?\u201D"
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  hasChoice: 0
+  choicePrompt: 
+  choiceOptions: []
+  nextDialogueOnEnd: {fileID: 0}

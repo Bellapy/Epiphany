@@ -1,0 +1,49 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9228e584220b007488a3081b0ee915e9, type: 3}
+  m_Name: veth2
+  m_EditorClassIdentifier: 
+  speakerName: Veth
+  speakerPortrait: {fileID: 0}
+  dialogueLines:
+  - sentence: Hahaha, muito obrigado pela gentileza, querida.
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - sentence: "Novidade? Sempre tem algo novo, mesmo que pequenininho. Hoje, por
+      exemplo, troquei a\xE7\xFAcar por sal no caf\xE9."
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - sentence: "Rendeu risadas\u2026 e uma bela dor de barriga."
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - sentence: "Mas sabe, o movimento aqui aumentou. Antes o pessoal ia mais no caf\xE9
+      da Mila, mas desde que ela mudou de fun\xE7\xE3o, v\xEAm pra c\xE1."
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - sentence: "Descobriram que o velho Veth sabe preparar umas coisinhas\u2026 Mas
+      me conta\u2026 como essa pequena chegou at\xE9 aqui?"
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  hasChoice: 0
+  choicePrompt: 
+  choiceOptions: []
+  nextDialogueOnEnd: {fileID: 0}

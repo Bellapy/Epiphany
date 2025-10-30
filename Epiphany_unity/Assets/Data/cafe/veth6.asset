@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9228e584220b007488a3081b0ee915e9, type: 3}
+  m_Name: veth6
+  m_EditorClassIdentifier: 
+  speakerName: Veth
+  speakerPortrait: {fileID: 0}
+  dialogueLines:
+  - sentence: "Ok, ok\u2026 perd\xE3o. Eu realmente estava sendo meio chato. \xC9
+      que me preocupo com todos aqui."
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - sentence: "S\xF3 quero o bem de Zelfin. Talvez eu esteja mesmo caindo em hist\xF3rias.\nEnfim,
+      enfim!"
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - sentence: "Vamos deixar essa conversa pra l\xE1. Que tal um ch\xE1 e um cupcake?"
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  hasChoice: 0
+  choicePrompt: 
+  choiceOptions: []
+  nextDialogueOnEnd: {fileID: 0}

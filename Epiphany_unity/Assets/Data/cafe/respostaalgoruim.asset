@@ -1,0 +1,116 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9228e584220b007488a3081b0ee915e9, type: 3}
+  m_Name: respostaalgoruim
+  m_EditorClassIdentifier: 
+  speakerName: Veth
+  speakerPortrait: {fileID: 0}
+  dialogueLines:
+  - sentence: "Olha\u2026 n\xE3o tenho certeza. Mas tenho pressentimentos."
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - sentence: "E sinceramente, n\xE3o vou conseguir ficar de boca fechada."
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - sentence: "Acho que, vindo pra esse mundo de repente, voc\xEA merece saber pelo
+      menos uma parte\u2026 do que eu sei."
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - sentence: "Desde que Ayla chegou, como eu j\xE1 disse antes, as coisas n\xE3o
+      andam como antes. Come\xE7aram a acontecer coisas estranhas \u2014 muito estranhas."
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - sentence: "Mas ela sempre dizia que era normal, que tudo era por causa da \xE9poca,
+      que eu estava exagerando."
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - sentence: "S\xF3 que eu sei o que vi. Um tempo atr\xE1s, encontrei um esp\xEDrito
+      aqui. N\xE3o era como os outros \u2014 tinha cores escuras, uma presen\xE7a
+      pesada\u2026"
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - sentence: "e me fez sentir algo que n\xE3o sei explicar, uma mistura de medo
+      e vazio."
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - sentence: "Ele desapareceu em segundos, mas\u2026 eu sinto que nunca realmente
+      foi embora.\n"
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - sentence: "Pequena, esse mundo \xE9 incr\xEDvel, sim. Mas \xE0s vezes, parece
+      que tudo o que \xE9 incr\xEDvel aqui est\xE1 destinado a ser corrompido de
+      algum modo."
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - sentence: "Quando contei isso \xE0 Ayla, ela ficou assustada, tentou me acalmar
+      \u2014 disse que talvez fosse coisa da minha cabe\xE7a, ou apenas um esp\xEDrito
+      comum."
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - sentence: "Mas eu sei que n\xE3o era."
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - sentence: "Depois daquilo, nunca mais vi outro esp\xEDrito. Mesmo assim, as flores
+      come\xE7aram a morrer de repente,"
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - sentence: "os rios mudaram de dire\xE7\xE3o e inundaram nossas vilas, \xE1rvores
+      perderam as folhas na esta\xE7\xE3o mais florida."
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - sentence: "Tudo ficou\u2026 diferente."
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - sentence: "E o mais estranho \xE9 que ningu\xE9m parece notar. Vivem como se
+      nada tivesse acontecido, como se o mundo ainda fosse o mesmo."
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - sentence: "Parece que est\xE3o presos dentro de uma bolha \u2014 cegos para a
+      verdadeira realidade. Ou talvez\u2026 a realidade tenha sido escondida deles."
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  hasChoice: 0
+  choicePrompt: 
+  choiceOptions: []
+  nextDialogueOnEnd: {fileID: 0}

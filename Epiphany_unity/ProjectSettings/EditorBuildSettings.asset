@@ -32,7 +32,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/01_Submundo/Sub4.unity
     guid: 017017b530bd8c946ac6007add7d0c5a
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/01_Submundo/Sub5.unity
     guid: f383b4a84dc392448b897b61c41790de
   - enabled: 1
@@ -62,6 +62,15 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/05_tenda/zric.unity
     guid: 1aa843ad8c82fc746a34cc11b99cc03a
+  - enabled: 1
+    path: Assets/Scenes/06_flores/flores.unity
+    guid: 70ea6d842d7b0604ab1a9f231b7741cb
+  - enabled: 1
+    path: Assets/Scenes/07_vila/cafedoveth.unity
+    guid: 1169583d06ae0574783656d0adc37bb9
+  - enabled: 1
+    path: Assets/Scenes/07_vila/despensa.unity
+    guid: 25d8e4c8395d5294d8cacea471c126b2
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 9eb4347ff3ca42843b3c7d015ad8c7d0, type: 2}
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}

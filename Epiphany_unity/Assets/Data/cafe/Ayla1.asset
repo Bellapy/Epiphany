@@ -1,0 +1,44 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9228e584220b007488a3081b0ee915e9, type: 3}
+  m_Name: Ayla1
+  m_EditorClassIdentifier: 
+  speakerName: Ayla
+  speakerPortrait: {fileID: 0}
+  dialogueLines:
+  - sentence: "\u201COi, Veth! Eu tamb\xE9m estava com saudade.\nAh, n\xE3o andam
+      acontecendo muitas novidades n\xE3o, tudo tranquilo!"
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - sentence: "Eu testei aquela receita da torta de lim\xE3o que voc\xEA me ensinou,
+      mas\u2026 n\xE3o deu muito certo. Vou tentar de novo e te conto depois."
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - sentence: "A maior novidade foi a chegada dessa viajante aqui. Ela tem animado
+      Zelfin. Trouxe ela para conhecer a melhor cafeteria da vila e\u2026"
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - sentence: "o velho mais simp\xE1tico da cidade! E voc\xEA, novidades?"
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  hasChoice: 0
+  choicePrompt: 
+  choiceOptions: []
+  nextDialogueOnEnd: {fileID: 0}

@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9228e584220b007488a3081b0ee915e9, type: 3}
+  m_Name: vethrespostaayla
+  m_EditorClassIdentifier: 
+  speakerName: Veth
+  speakerPortrait: {fileID: 0}
+  dialogueLines:
+  - sentence: "Por que ela tem uma rela\xE7\xE3o muito mais profunda com esse mundo
+      do que imaginamos\u2026 essas coisas mechem com a cabe\xE7a dela."
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  hasChoice: 0
+  choicePrompt: 
+  choiceOptions: []
+  nextDialogueOnEnd: {fileID: 11400000, guid: 980756b5a456b6248a3af702b8924cec, type: 2}
