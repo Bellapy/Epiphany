@@ -1,0 +1,223 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9228e584220b007488a3081b0ee915e9, type: 3}
+  m_Name: Ayla_Confronto_Monologo
+  m_EditorClassIdentifier: 
+  speakerName: Ayla
+  speakerPortrait: {fileID: 0}
+  dialogueLines:
+  - sentence: 'Me perdoe, pequena. '
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - sentence: "Eu omiti coisas que n\xE3o deveria ter escondido de voc\xEA.\r\n"
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - sentence: ' Venho do mundo Lileras, um lugar muito distante daqui. '
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - sentence: " L\xE1, cometemos erros que jamais dever\xEDamos ter cometido. \r\n"
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - sentence: "Comprometemos um gigantesco ecossistema de vida e beleza que nunca
+      mais poder\xE1 ser recuperado."
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - sentence: " Esses erros se voltaram contra n\xF3s em algum momento \u2014 e \xE9
+      por isso que vim at\xE9 aqui.\r\n"
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - sentence: " E, bom... \xE9 tamb\xE9m por isso que Zelfin est\xE1 entrando em
+      colapso novamente. Por minha causa.\r\n"
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - sentence: "Mas voc\xEA, pequena\u2026 voc\xEA representa a \xFAnica lamparina
+      de esperan\xE7a que eu tive em milhares de anos.\r\n"
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - sentence: " O tempo, afinal, n\xE3o importa \u2014 desde que n\xE3o estejamos
+      no mesmo n\xEDvel de cegueira em que um dia estivemos.\r\n"
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - sentence: "Qualquer hora \xE9 a hora certa para a mudan\xE7a.\r\n"
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - sentence: "N\xF3s, seres humanos, somos mut\xE1veis.\r\n"
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - sentence: " N\xE3o possu\xEDmos verdades fixas sobre quem somos \u2014 estamos
+      sempre nos transformando, a cada momento.\r\n"
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - sentence: " Como um rio: quando voc\xEA pisa na \xE1gua, em dois segundos ela
+      j\xE1 n\xE3o \xE9 mais a mesma.\r\n"
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - sentence: "Podemos fazer a diferen\xE7a, por menor que seja o ato, desde que
+      a inten\xE7\xE3o seja grandiosa e venha do cora\xE7\xE3o.\r\n"
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - sentence: 'Ao ser humano foi dado o dom de ser os olhos do universo.
+
+'
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - sentence: "Enquanto estivermos vivos, podemos contemplar a maior maravilha que
+      existe: \r\n"
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - sentence: "a vida \u2014 e todas as maravilhas que ela carrega."
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - sentence: " N\xE3o precisamos de muito para alcan\xE7ar a felicidade; devemos
+      nos contentar com o necess\xE1rio.\r\n"
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - sentence: " N\xE3o devemos ter ego, nem ego\xEDsmo, nem cobi\xE7a \u2014 pois
+      esses s\xE3o males que v\xEAm de uma parte de n\xF3s que precisamos aprender
+      a lidar."
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - sentence: "S\xE3o dem\xF4nios que devemos carregar com sabedoria.\r\n"
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - sentence: 'Devemos contemplar tudo o que nos foi dado.
+
+'
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - sentence: " As coisas que est\xE3o diante de nossos olhos s\xE3o infinitamente
+      mais belas do que imaginamos.\r\n"
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - sentence: ' Sejamos gratos.'
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - sentence: " Sejamos gentis \u2014 conosco, com os outros e com o universo.\r\n"
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - sentence: " Pois tudo isso est\xE1 conectado.\r\n"
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - sentence: "Entenda, pequena: suas a\xE7\xF5es n\xE3o podem ser desfeitas.\r\n"
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - sentence: "Elas possuem consequ\xEAncias \u2014 que podem se manifestar na sua
+      vida ou na vida de outras pessoas.\r\n"
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - sentence: "Tenha consci\xEAncia de quem \xE9, do que est\xE1 fazendo e do que
+      pretende fazer.\r\n"
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - sentence: "Agora\u2026 o \xFAnico jeito de salvar Zelfin \xE9 sacrificando parte
+      da sua humanidade \r\n"
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - sentence: " Ela n\xE3o desaparecer\xE1, mas deixar\xE1 de dominar voc\xEA. "
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - sentence: "Ser\xE1 feliz com o que lhe \xE9 dado.\r\n"
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - sentence: " Agir\xE1 sabendo das consequ\xEAncias de seus atos.\r\n"
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - sentence: " E, principalmente, cuidar\xE1 da natureza, do universo e, por consequ\xEAncia,
+      de si mesma \u2014 e de quem ama. "
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - sentence: "A outra op\xE7\xE3o seria manter todos os seus luxos.\r\n"
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - sentence: " Ignorar suas a\xE7\xF5es, j\xE1 que as consequ\xEAncias para voc\xEA
+      seriam sempre moment\xE2neas.  Voc\xEA esbanjaria... e nadaria no vazio. "
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - sentence: "O futuro depende de voc\xEA.\r\n"
+    triggerEventAfterLine: 0
+    onLineCompleteEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  hasChoice: 0
+  choicePrompt: 
+  choiceOptions: []
+  nextDialogueOnEnd: {fileID: 0}

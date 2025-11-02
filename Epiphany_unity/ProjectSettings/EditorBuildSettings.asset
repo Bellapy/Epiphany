@@ -86,6 +86,15 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/09_arvoredavida/historiadeAyla.unity
     guid: 7e30447ded522af40b383ec8af471fe4
+  - enabled: 1
+    path: Assets/Scenes/08_baleia/oceano.unity
+    guid: 9d8489d0277ebc14c9430d165af935d9
+  - enabled: 1
+    path: Assets/Scenes/09_arvoredavida/EncontrocomAyla.unity
+    guid: 339896a552ebb0641892a063fbfbdc03
+  - enabled: 1
+    path: Assets/Scenes/00_Menu/Menu2.unity
+    guid: e1735083f75e1bc499ce471e81997063
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 9eb4347ff3ca42843b3c7d015ad8c7d0, type: 2}
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
