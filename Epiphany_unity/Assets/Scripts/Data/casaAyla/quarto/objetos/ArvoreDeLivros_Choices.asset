@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9228e584220b007488a3081b0ee915e9, type: 3}
   m_Name: ArvoreDeLivros_Choices
   m_EditorClassIdentifier: 
-  speakerName: 
+  speakerName: "\xC1rvore de livros"
   speakerPortrait: {fileID: 0}
   dialogueLines:
   - sentence: "Esta \xE9 uma \xC1rvore de Livros. Sim, ela realmente d\xE1 livros

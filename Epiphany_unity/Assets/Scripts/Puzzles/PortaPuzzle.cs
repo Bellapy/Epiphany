@@ -1,3 +1,5 @@
+// Em Scripts/World/PortaPuzzle.cs
+
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
@@ -6,15 +8,18 @@ using System.Linq;
 public class PortaPuzzle : MonoBehaviour
 {
     [Header("Configuração do Puzzle")]
-    [Tooltip("Arraste os 4 lampiões aqui, NA ORDEM CORRETA (1, 2, 3, 4).")]
     [SerializeField] private List<LampiaoController> lampioesDoPuzzle;
+    
+    // <<< CAMPO DA BARREIRA REMOVIDO, NÃO É MAIS NECESSÁRIO AQUI >>>
 
     [Header("Configuração de Transição")]
-    [SerializeField] private string nextSceneName;
-    [SerializeField] private string spawnPointInNextScene;
+    // <<< VALORES ALTERADOS PARA REFLETIR O NOVO FLUXO >>>
+    [Tooltip("A cena para onde o jogador é enviado APÓS resolver o puzzle.")]
+    [SerializeField] private string nextSceneName = "cozinha"; 
+    [Tooltip("O nome do ponto de spawn na próxima cena (cozinha).")]
+    [SerializeField] private string spawnPointInNextScene = "SpawnFromCorredor"; 
     
     [Header("Feedback para o Jogador")]
-    [Tooltip("Lista de mensagens de feedback para tentativas erradas.")]
     [SerializeField] private List<string> mensagensDeFeedback;
 
     private bool estaTrancada = true;
@@ -33,6 +38,15 @@ public class PortaPuzzle : MonoBehaviour
     void Start()
     {
         fadeController = FindFirstObjectByType<FadeController>();
+        
+        // <<< NOVA LÓGICA NO START >>>
+        // Se o puzzle já foi resolvido, este componente não precisa fazer mais nada.
+        if (GameManager.Instance != null && GameManager.Instance.HasSolvedCorridorPuzzle)
+        {
+            estaTrancada = false;
+            // Opcional: Desativar o componente para otimização.
+            // this.enabled = false; 
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -43,9 +57,9 @@ public class PortaPuzzle : MonoBehaviour
 
     private void VerificarSolucao()
     {
+        // Se a porta já está destrancada, não faz nada. A transição para a floresta é em outro objeto.
         if (!estaTrancada)
         {
-            IniciarTransicao();
             return;
         }
         
@@ -57,7 +71,18 @@ public class PortaPuzzle : MonoBehaviour
 
         if (solucaoCorreta)
         {
+            // <<< LÓGICA DE SUCESSO MODIFICADA >>>
+            
+            // 1. Define a flag global
+            if (GameManager.Instance != null)
+            {
+                GameManager.Instance.HasSolvedCorridorPuzzle = true;
+            }
+            
+            // 2. Destranca localmente
             Destrancar();
+            
+            // 3. Inicia a transição para a COZINHA
             IniciarTransicao();
         }
         else
@@ -66,10 +91,10 @@ public class PortaPuzzle : MonoBehaviour
         }
     }
 
+    // ... (A corrotina ProcessarTentativaErrada permanece a mesma) ...
     private IEnumerator ProcessarTentativaErrada()
     {
         podeVerificar = false;
-
         string mensagemAtual = "";
         if (mensagensDeFeedback != null && mensagensDeFeedback.Count > 0)
         {
@@ -77,12 +102,10 @@ public class PortaPuzzle : MonoBehaviour
             mensagemAtual = mensagensDeFeedback[indiceMensagem];
         }
         tentativasErradas++;
-
         foreach (var lampiao in lampioesDoPuzzle)
         {
             lampiao.ResetarLampiao();
         }
-
         if (!string.IsNullOrEmpty(mensagemAtual) && DialogueManager.Instance != null)
         {
             ReflectionData dadosDaMensagem = ScriptableObject.CreateInstance<ReflectionData>();
@@ -90,7 +113,6 @@ public class PortaPuzzle : MonoBehaviour
             DialogueManager.Instance.StartReflectionWithFadeOut(dadosDaMensagem, 2.0f, 0.5f);
             Destroy(dadosDaMensagem, 3.0f);
         }
-        
         yield return new WaitForSeconds(1.0f);
         podeVerificar = true;
     }

@@ -31,11 +31,12 @@ public class GameManager : MonoBehaviour
 
     [Header("Flags de Estado da História")]
     public bool HasCompletedKitchenDialogue { get; set; } = false;
-    
-    // --- LINHA CORRIGIDA ---
-    // Adiciona a flag para saber se o jogador possui a flauta.
     public bool PlayerHasFlute { get; set; } = false;
-    // --- FIM DA CORREÇÃO ---
+    public bool HasCompletedKitchenSequence { get; set; } = false;
+
+    // <<< NOVA FLAG ADICIONADA AQUI >>>
+    public bool HasSolvedCorridorPuzzle { get; set; } = false;
+    // <<< FIM DA ADIÇÃO >>>
 
     private void OnEnable()
     {

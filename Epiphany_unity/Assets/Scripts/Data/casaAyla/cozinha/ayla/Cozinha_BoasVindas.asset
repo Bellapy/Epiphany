@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Cozinha_BoasVindas
   m_EditorClassIdentifier: 
   speakerName: Ayla
-  speakerPortrait: {fileID: 0}
+  speakerPortrait: {fileID: -7597966105837201831, guid: 38a9defcf1a5a184d9d90ec7641c4d51, type: 3}
   dialogueLines:
   - sentence: "Ah \u2014 ol\xE1! Desculpe, pequena, eu esqueci de desativar o mecanismo
       das luzes na porta. Espero que voc\xEA n\xE3o tenha ficado presa por muito

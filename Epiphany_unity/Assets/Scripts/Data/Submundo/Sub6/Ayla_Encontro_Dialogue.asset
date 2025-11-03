@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Ayla_Encontro_Dialogue
   m_EditorClassIdentifier: 
   speakerName: Ayla
-  speakerPortrait: {fileID: -7319006059537635548, guid: 76804bf5f896d654ca7271eada5c222e, type: 3}
+  speakerPortrait: {fileID: -7597966105837201831, guid: 38a9defcf1a5a184d9d90ec7641c4d51, type: 3}
   dialogueLines:
   - sentence: "Ent\xE3o era isso... a pequena ondula\xE7\xE3o que senti na harmonia
       do mundo."

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Cozinha_ConversaPrincipal
   m_EditorClassIdentifier: 
   speakerName: Ayla
-  speakerPortrait: {fileID: 0}
+  speakerPortrait: {fileID: -7597966105837201831, guid: 38a9defcf1a5a184d9d90ec7641c4d51, type: 3}
   dialogueLines:
   - sentence: "Que bom que o bolo est\xE1 quase pronto! Agora podemos conversar com
       calma. Prazer, como j\xE1 disse, sou Ayla, a guardi\xE3 de Zelfin. Este \xE9

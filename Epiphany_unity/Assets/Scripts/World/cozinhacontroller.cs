@@ -7,9 +7,11 @@ public class CozinhaSceneController : MonoBehaviour
     [SerializeField] private Animator aylaAnimator;
     [SerializeField] private Transform aylaTransform;
     [SerializeField] private Transform aylaPontoDePartida;
-    [SerializeField] private NPCTourGuide aylaTourGuide;
-    [SerializeField] private SitController poltronaController;
+    [SerializeField] private SitController poltronaController; // O nome no seu Inspector é SitController
     [SerializeField] private SceneTransitionTrigger portaDeSaida;
+    
+    // <<< CORREÇÃO: A referência ao Ayla Tour Guide foi removida, pois não é mais necessária >>>
+    // [SerializeField] private NPCTourGuide aylaTourGuide;
 
     [Header("Conteúdo da Conversa")]
     [Tooltip("O diálogo principal que começa quando o jogador se senta.")]
@@ -54,40 +56,63 @@ public class CozinhaSceneController : MonoBehaviour
         StartCoroutine(SequenciaFinalAyla());
     }
     
+    // <<< CORREÇÃO APLICADA NESTA CORROTINA >>>
     private IEnumerator SequenciaFinalAyla()
     {
+        // 1. Destranca a porta de saída
         if (portaDeSaida != null)
         {
             portaDeSaida.Unlock();
         }
 
+        // 2. Levanta o jogador da poltrona
         if (poltronaController != null)
         {
             poltronaController.Levantar();
         }
-        else
-        {
-            yield break;
-        }
-
+        
+        // 3. Ayla se levanta
         if (aylaAnimator != null) aylaAnimator.SetBool("isSitting", false);
         
-        yield return new WaitForSeconds(0.5f);
+        // Pequena pausa para a animação de levantar acontecer
+        yield return new WaitForSeconds(0.75f);
 
+        // 4. Ayla se teleporta para o ponto de partida
         if (aylaPontoDePartida != null && aylaTransform != null)
         {
             aylaTransform.position = aylaPontoDePartida.position;
         }
         
+        // 5. Devolve o controle ao jogador
         PlayerController player = FindFirstObjectByType<PlayerController>();
         if (player != null)
         {
             player.EnableMovement();
         }
         
-        if (aylaTourGuide != null)
+        // 6. Lógica de caminhada manual
+        if (portaDeSaida != null && aylaTransform != null && aylaAnimator != null)
         {
-            aylaTourGuide.StartTour();
+            Transform pontoDestino = portaDeSaida.transform;
+            SpriteRenderer aylaSpriteRenderer = aylaTransform.GetComponent<SpriteRenderer>();
+            float velocidadeCaminhada = 1.2f; // Podemos ajustar essa velocidade
+
+            // Ativa a animação de caminhada
+            aylaAnimator.SetInteger("MovementState", 5);
+            if (aylaSpriteRenderer != null)
+            {
+                aylaSpriteRenderer.flipX = (pontoDestino.position.x < aylaTransform.position.x);
+            }
+
+            // Move a Ayla até o destino
+            while (Vector3.Distance(aylaTransform.position, pontoDestino.position) > 0.2f)
+            {
+                aylaTransform.position = Vector3.MoveTowards(aylaTransform.position, pontoDestino.position, velocidadeCaminhada * Time.deltaTime);
+                yield return null;
+            }
+
+            // Desativa Ayla ao chegar
+            aylaTransform.gameObject.SetActive(false);
         }
     }
 }

@@ -94,11 +94,26 @@ public class AylaCutsceneController : MonoBehaviour
 
     private IEnumerator SequenciaCaminhada()
     {
+        // <<< INÍCIO DOS LOGS DE DIAGNÓSTICO >>>
+        Debug.Log("<color=cyan>[AylaController] Iniciando SequenciaCaminhada...</color>");
+        
+        // LOG A: Verifica o estado das referências CRÍTICAS.
+        Debug.Log($"[AylaController] Verificando referências: pontoDestinoEscada é NULO? -> {pontoDestinoEscada == null}");
+        Debug.Log($"[AylaController] Verificando referências: aylaTransform é NULO? -> {aylaTransform == null}");
+        // <<< FIM DOS LOGS DE DIAGNÓSTICO >>>
+
         StartCoroutine(DoZoom(zoomOutSize));
         yield return new WaitForSeconds(zoomSpeed);
 
         if(playerController != null) playerController.EnableMovement();
         
+        if (pontoDestinoEscada == null || aylaTransform == null)
+        {
+            // LOG B: Confirma que a corrotina está parando aqui.
+            Debug.LogError("<color=red><b>[AylaController] SAINDO DA CORROTINA! Uma referência essencial (pontoDestinoEscada ou aylaTransform) está NULA.</b></color>");
+            yield break;
+        }
+
         Vector2 direcao = (pontoDestinoEscada.position - aylaTransform.position).normalized;
         AtualizarAnimacaoAyla(direcao);
         
@@ -106,9 +121,13 @@ public class AylaCutsceneController : MonoBehaviour
 
         while (Vector3.Distance(aylaTransform.position, pontoDestinoEscada.position) > 0.1f)
         {
+            if (aylaTransform == null || pontoDestinoEscada == null) yield break;
+
             aylaTransform.position = Vector3.MoveTowards(aylaTransform.position, pontoDestinoEscada.position, velocidadeCaminhada * Time.deltaTime);
             yield return null;
         }
+
+        if (aylaTransform == null || pontoDestinoEscada == null) yield break;
 
         aylaTransform.position = pontoDestinoEscada.position;
         AtualizarAnimacaoAyla(Vector2.zero);
@@ -122,12 +141,17 @@ public class AylaCutsceneController : MonoBehaviour
 
         while(tempoPassado < tempoDeSubida)
         {
+            if (aylaTransform == null) yield break;
+
             aylaTransform.position = Vector3.Lerp(posInicial, posFinalSubida, tempoPassado / tempoDeSubida);
             tempoPassado += Time.deltaTime;
             yield return null;
         }
         
-        aylaTransform.gameObject.SetActive(false);
+        if (aylaTransform != null)
+        {
+            aylaTransform.gameObject.SetActive(false);
+        }
     }
 
     private IEnumerator DoZoom(float targetSize)
@@ -139,13 +163,17 @@ public class AylaCutsceneController : MonoBehaviour
 
         while(timer < zoomSpeed)
         {
+            if (virtualCamera == null) yield break;
             timer += Time.deltaTime;
             float newSize = Mathf.Lerp(startSize, targetSize, timer / zoomSpeed);
             virtualCamera.Lens.OrthographicSize = newSize;
             yield return null;
         }
 
-        virtualCamera.Lens.OrthographicSize = targetSize;
+        if (virtualCamera != null)
+        {
+            virtualCamera.Lens.OrthographicSize = targetSize;
+        }
     }
 
     private void AtualizarAnimacaoAyla(Vector2 direcaoMovimento)
@@ -162,16 +190,8 @@ public class AylaCutsceneController : MonoBehaviour
             
             if (Mathf.Abs(moveY) > Mathf.Abs(moveX)) 
             {
-                if (moveY > 0) 
-                { 
-                    estadoMovimento = 3; 
-                    aylaLastVerticalDirection = 1; 
-                } 
-                else 
-                { 
-                    estadoMovimento = 1; 
-                    aylaLastVerticalDirection = -1; 
-                }
+                if (moveY > 0) { estadoMovimento = 3; aylaLastVerticalDirection = 1; } 
+                else { estadoMovimento = 1; aylaLastVerticalDirection = -1; }
             } 
             else 
             {
@@ -184,14 +204,8 @@ public class AylaCutsceneController : MonoBehaviour
         } 
         else 
         {
-            if (aylaLastVerticalDirection == 1) 
-            { 
-                estadoMovimento = 2; 
-            } 
-            else 
-            { 
-                estadoMovimento = 0; 
-            }
+            if (aylaLastVerticalDirection == 1) { estadoMovimento = 2; } 
+            else { estadoMovimento = 0; }
         }
         aylaAnimator.SetInteger("MovementState", estadoMovimento);
     }

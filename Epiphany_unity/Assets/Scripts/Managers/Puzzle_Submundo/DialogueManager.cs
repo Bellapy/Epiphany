@@ -43,18 +43,12 @@ public class DialogueManager : MonoBehaviour
     private bool isDialogueAutomatic = false; 
     public int LastChoiceIndex { get; private set; } = -1;
 
-    // REMOVIDO: OnEnable, OnDisable, e OnSceneLoaded não são mais necessários.
-    // A lógica de limpeza foi movida para ConnectUI para evitar race conditions.
-
     public void ConnectUI(UIDialogueConnector connector)
     {
-        // --- LÓGICA DE LIMPEZA MOVIDA PARA CÁ ---
-        // Garante que qualquer diálogo antigo seja interrompido antes de conectar a nova UI.
         StopAllCoroutines();
         isTyping = false;
         currentDialogueData = null;
         LastChoiceIndex = -1;
-        // --- FIM DA LÓGICA DE LIMPEZA ---
 
         if (connector == null) return;
 
@@ -159,6 +153,8 @@ public class DialogueManager : MonoBehaviour
             StopAllCoroutines();
             if (dialogueText != null) dialogueText.text = currentFullSentence;
             isTyping = false;
+            // Chama a lógica de auto-fechamento caso o jogador pule a digitação da última frase
+            StartCoroutine(HandleAutoCloseAfterSkip());
         } 
         else if (!isTyping && (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Space))) 
         {
@@ -198,11 +194,40 @@ public class DialogueManager : MonoBehaviour
         }
         isTyping = false;
 
+        // <<< INÍCIO DA CORREÇÃO >>>
+        // Verifica se esta foi a última linha E se não há uma escolha no final.
+        // Isso se aplica a reflexões (currentDialogueData == null) ou diálogos sem escolha.
+        if (lines.Count == 0 && (currentDialogueData == null || !currentDialogueData.hasChoice))
+        {
+            // Espera 2 segundos antes de fechar automaticamente.
+            yield return new WaitForSeconds(2.0f);
+            
+            // Fecha a caixa de diálogo e invoca o evento de finalização.
+            CloseDialogueBox();
+            OnDialogueEnd?.Invoke();
+            yield break; // Encerra a corrotina para não executar o código abaixo.
+        }
+        // <<< FIM DA CORREÇÃO >>>
+
         if (isDialogueAutomatic)
         {
             StartCoroutine(AutoAdvanceAfterDelay(2.0f));
         }
     }
+
+    // Função auxiliar para lidar com o caso de pular a digitação da última frase
+    private IEnumerator HandleAutoCloseAfterSkip()
+    {
+        // Espera um frame para garantir que o estado está atualizado
+        yield return null; 
+        if (!isTyping && lines.Count == 0 && (currentDialogueData == null || !currentDialogueData.hasChoice))
+        {
+            yield return new WaitForSeconds(2.0f);
+            CloseDialogueBox();
+            OnDialogueEnd?.Invoke();
+        }
+    }
+
     private IEnumerator AutoAdvanceAfterDelay(float delay)
     {
         yield return new WaitForSeconds(delay);
@@ -289,12 +314,12 @@ public class DialogueManager : MonoBehaviour
 
         while (timer < duration)
         {
-            timer += Time.unscaledDeltaTime; // Usar unscaledDeltaTime para funcionar mesmo se o jogo pausar
+            timer += Time.unscaledDeltaTime;
             dialogueBoxCanvasGroup.alpha = Mathf.Lerp(startAlpha, 0f, timer / duration);
             yield return null;
         }
 
         dialogueBoxCanvasGroup.alpha = 0f;
-        CloseDialogueBox(); // Chama a função original para desativar o painel
+        CloseDialogueBox();
     }
 }

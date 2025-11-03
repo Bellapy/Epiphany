@@ -1,21 +1,12 @@
+// Em Scripts/Player/PlayerInteractor.cs
+
 using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections.Generic;
 
 public class PlayerInteractor : MonoBehaviour
 {
-    [Header("Referências de Sistema")]
-    [SerializeField] private UIManager uiManager;
-
     private List<IInteractable> interactablesInRange = new List<IInteractable>();
-    
-    void Start()
-    {
-        if (uiManager == null)
-        {
-            uiManager = FindFirstObjectByType<UIManager>();
-        }
-    }
 
     public void OnInteract(InputValue value)
     {
@@ -31,9 +22,16 @@ public class PlayerInteractor : MonoBehaviour
         if (interactable != null)
         {
             interactablesInRange.Add(interactable);
-            if (uiManager != null)
+            
+            // LOG DE CHAMADA
+            if (UIManager.Instance != null)
             {
-                uiManager.ShowInteractionPrompt();
+                Debug.Log("<color=lime>[PlayerInteractor] Entrei no trigger. Chamando UIManager.Instance.ShowInteractionPrompt().</color>");
+                UIManager.Instance.ShowInteractionPrompt();
+            }
+            else
+            {
+                Debug.LogError("<color=red>[PlayerInteractor] Tentei chamar o UIManager, mas UIManager.Instance é NULO!</color>");
             }
         }
     }
@@ -45,9 +43,9 @@ public class PlayerInteractor : MonoBehaviour
         {
             interactablesInRange.Remove(interactable);
             
-            if (interactablesInRange.Count == 0 && uiManager != null)
+            if (interactablesInRange.Count == 0 && UIManager.Instance != null)
             {
-                uiManager.HideInteractionPrompt();
+                UIManager.Instance.HideInteractionPrompt();
             }
         }
     }

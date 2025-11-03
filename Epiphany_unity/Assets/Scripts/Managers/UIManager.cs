@@ -1,57 +1,50 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using System.Collections;
 
 public class UIManager : MonoBehaviour
 {
-   
+    public static UIManager Instance { get; private set; }
 
-    // Referência privada, preenchida pelo UIDialogueConnector de cada cena
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+            // Se este UIManager estiver em um objeto raiz, você pode adicionar DontDestroyOnLoad(gameObject);
+            // Se ele estiver no Player (que já é persistente), não precisa.
+        }
+        else if (Instance != this)
+        {
+            Destroy(gameObject);
+        }
+    }
+
     private CanvasGroup interactionPromptCanvasGroup;
     private Coroutine promptFadeCoroutine;
 
-    
-    private void OnEnable() 
-    {
-        SceneManager.sceneLoaded += OnSceneLoaded;
-    }
-
-    private void OnDisable() 
-    {
-        SceneManager.sceneLoaded -= OnSceneLoaded;
-    }
-
-    // Limpa as referências ao carregar uma nova cena para evitar que aponte para objetos destruídos.
-    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-    {
-        interactionPromptCanvasGroup = null;
-        if(promptFadeCoroutine != null)
-        {
-            StopCoroutine(promptFadeCoroutine);
-            promptFadeCoroutine = null;
-        }
-    }
-
-    /// <summary>
-    /// Recebe as referências da UI da cena atual através do UIDialogueConnector.
-    /// </summary>
     public void ConnectUI(UIDialogueConnector connector)
     {
+        // Se já temos uma referência, não fazemos nada.
+        // Isso evita que um UIDialogueConnector de uma cena não-persistente sobrescreva a conexão.
+        if (interactionPromptCanvasGroup != null) return;
+
         interactionPromptCanvasGroup = connector.interactionPromptCanvasGroup;
         if(interactionPromptCanvasGroup != null)
         {
-            interactionPromptCanvasGroup.alpha = 0; // Garante que comece invisível
+            Debug.Log("<color=green>[UIManager.ConnectUI] Conexão bem-sucedida. CanvasGroup do prompt recebido.</color>");
+            interactionPromptCanvasGroup.alpha = 0;
+        }
+        else
+        {
+            Debug.LogWarning("<color=yellow>[UIManager.ConnectUI] Conexão recebida, mas o CanvasGroup no Connector está NULO!</color>");
         }
     }
 
-    /// <summary>
-    /// Mostra o prompt de interação com um efeito de fade.
-    /// </summary>
     public void ShowInteractionPrompt()
     {
-        // VERIFICAÇÃO DE SEGURANÇA: Só tenta mostrar o prompt se ele existir nesta cena.
         if (interactionPromptCanvasGroup == null)
         {
+            Debug.LogError("[UIManager] Tentou mostrar o prompt, mas a referência do CanvasGroup é NULA. A conexão inicial falhou ou foi perdida.");
             return;
         }
 
@@ -59,12 +52,8 @@ public class UIManager : MonoBehaviour
         promptFadeCoroutine = StartCoroutine(FadePrompt(1f));
     }
 
-    /// <summary>
-    /// Esconde o prompt de interação com um efeito de fade.
-    /// </summary>
     public void HideInteractionPrompt()
     {
-        // VERIFICAÇÃO DE SEGURANÇA: Só tenta esconder o prompt se ele existir nesta cena.
         if (interactionPromptCanvasGroup == null)
         {
             return;
@@ -74,17 +63,13 @@ public class UIManager : MonoBehaviour
         promptFadeCoroutine = StartCoroutine(FadePrompt(0f));
     }
     
-    /// <summary>
-    /// Coroutine que controla o efeito de fade (aparecer/desaparecer) do prompt.
-    /// </summary>
     private IEnumerator FadePrompt(float targetAlpha)
     {
-        // Verificação extra dentro da coroutine, por segurança.
         if (interactionPromptCanvasGroup == null) yield break;
 
         float startAlpha = interactionPromptCanvasGroup.alpha;
         float timer = 0f;
-        float duration = 0.3f; // Duração do fade em segundos
+        float duration = 0.3f;
 
         while (timer < duration)
         {

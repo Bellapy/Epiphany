@@ -131,10 +131,15 @@ public class PlayerController : MonoBehaviour
         rb.bodyType = RigidbodyType2D.Kinematic;
         rb.linearVelocity = Vector2.zero;
 
-        while (Vector3.Distance(transform.position, startPoint.position) > 0.05f) {
+        // <<< CORREÇÃO DE SEGURANÇA 1 >>>
+        while (startPoint != null && Vector3.Distance(transform.position, startPoint.position) > 0.05f) {
             transform.position = Vector3.MoveTowards(transform.position, startPoint.position, moveSpeed * Time.deltaTime);
             yield return null;
         }
+        
+        // <<< CORREÇÃO DE SEGURANÇA 2 >>>
+        if (startPoint == null || endPoint == null) yield break;
+
         transform.position = startPoint.position;
         animator.SetInteger("MovementState", 2);
 
@@ -143,6 +148,8 @@ public class PlayerController : MonoBehaviour
         Vector3 initialPos = transform.position;
 
         while (timer < climbDuration) {
+            // <<< CORREÇÃO DE SEGURANÇA 3 >>>
+            if (endPoint == null) yield break;
             transform.position = Vector3.Lerp(initialPos, endPoint.position, timer / climbDuration);
             timer += Time.deltaTime;
             yield return null;

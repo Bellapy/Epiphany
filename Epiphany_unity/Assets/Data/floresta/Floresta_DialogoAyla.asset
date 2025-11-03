@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Floresta_DialogoAyla
   m_EditorClassIdentifier: 
   speakerName: Ayla
-  speakerPortrait: {fileID: 0}
+  speakerPortrait: {fileID: -7597966105837201831, guid: 38a9defcf1a5a184d9d90ec7641c4d51, type: 3}
   dialogueLines:
   - sentence: "Olhe ao seu redor... nunca me canso de admirar. Perto daqui h\xE1
       uma sequoia-gigante, capaz de chegar a 90 metros de altura "

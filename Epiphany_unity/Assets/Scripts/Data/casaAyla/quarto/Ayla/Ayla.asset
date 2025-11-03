@@ -178,7 +178,7 @@ MonoBehaviour:
             m_BoolArgument: 0
           m_CallState: 2
   - sentence: "At\xE9 logo, pequena!"
-    triggerEventAfterLine: 0
+    triggerEventAfterLine: 1
     onLineCompleteEvent:
       m_PersistentCalls:
         m_Calls:
