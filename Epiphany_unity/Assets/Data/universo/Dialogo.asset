@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Dialogo
   m_EditorClassIdentifier: 
   speakerName: Ayla
-  speakerPortrait: {fileID: 0}
+  speakerPortrait: {fileID: -7597966105837201831, guid: 38a9defcf1a5a184d9d90ec7641c4d51, type: 3}
   dialogueLines:
   - sentence: "Todos os dias, ou quase todos, eu venho a este lugar para olhar o
       c\xE9u. Sinto que algo t\xE3o simples \xE9 muito deixado de lado por todo mundo\u2026"

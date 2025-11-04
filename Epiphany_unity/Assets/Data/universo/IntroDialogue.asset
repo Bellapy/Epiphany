@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: IntroDialogue
   m_EditorClassIdentifier: 
   speakerName: Ayla
-  speakerPortrait: {fileID: 0}
+  speakerPortrait: {fileID: -7597966105837201831, guid: 38a9defcf1a5a184d9d90ec7641c4d51, type: 3}
   dialogueLines:
   - sentence: "Pronto chegamos! Venha, deite aqui tamb\xE9m. Agora relaxe e apenas
       olhe para cima."
