@@ -1,64 +1,10 @@
 fileFormatVersion: 2
-guid: 5139bf4808d85fe499611c85b1441ec7
+guid: 7afefa835997e124998d7b467ebc0751
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 3273503936731162666
-    second: ceu2_0
-  - first:
-      213: 7817975861361109747
-    second: ceu2_1
-  - first:
-      213: -5374685252858177483
-    second: ceu2_2
-  - first:
-      213: -494054682961298703
-    second: ceu2_3
-  - first:
-      213: 3354955982363662368
-    second: ceu2_4
-  - first:
-      213: 2076834430419385093
-    second: ceu2_5
-  - first:
-      213: -6835817973778430631
-    second: ceu2_6
-  - first:
-      213: 2222460186385184135
-    second: ceu2_7
-  - first:
-      213: -6364100164072670464
-    second: ceu2_8
-  - first:
-      213: 128528889744548046
-    second: ceu2_9
-  - first:
-      213: -8084324178397621788
-    second: ceu2_10
-  - first:
-      213: -3635007826486875635
-    second: ceu2_11
-  - first:
-      213: -4894856862484030103
-    second: ceu2_12
-  - first:
-      213: 6760417061343953268
-    second: ceu2_13
-  - first:
-      213: -3675472879972221184
-    second: ceu2_14
-  - first:
-      213: -6426570100679294662
-    second: ceu2_15
-  - first:
-      213: -7612883255170575689
-    second: ceu2_16
-  - first:
-      213: -8048817425823940389
-    second: ceu2_17
-  - first:
-      213: 8186488016002660389
-    second: ceu2_18
+      213: -62145937568375231
+    second: baleia22_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -154,419 +100,485 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: ceu2_0
+      name: baleia22_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 614
-        width: 321
-        height: 181
+        y: 720
+        width: 320
+        height: 180
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: a2824b79c72dd6d20800000000000000
-      internalID: 3273503936731162666
+      spriteID: 14ed00b5996332ff0800000000000000
+      internalID: -62145937568375231
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ceu2_1
+      name: baleia22_1
       rect:
         serializedVersion: 2
-        x: 344
-        y: 614
-        width: 322
-        height: 181
+        x: 320
+        y: 720
+        width: 320
+        height: 180
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 3fae10fdf970f7c60800000000000000
-      internalID: 7817975861361109747
+      spriteID: a350eb3bbbeb34342ac0769fdd1bea61
+      internalID: -1456066826
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ceu2_2
+      name: baleia22_2
       rect:
         serializedVersion: 2
-        x: 689
-        y: 614
-        width: 322
-        height: 181
+        x: 640
+        y: 720
+        width: 320
+        height: 180
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 5389bd32d384965b0800000000000000
-      internalID: -5374685252858177483
+      spriteID: 4cd0c955bce5b8248a1810bd381a5b28
+      internalID: 1702682204
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ceu2_3
+      name: baleia22_3
       rect:
         serializedVersion: 2
-        x: 1034
-        y: 614
-        width: 322
-        height: 181
+        x: 960
+        y: 720
+        width: 320
+        height: 180
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 1fa397a22e3c429f0800000000000000
-      internalID: -494054682961298703
+      spriteID: 181d5683ecc758043b83058b42706a24
+      internalID: 433950944
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ceu2_4
+      name: baleia22_4
       rect:
         serializedVersion: 2
-        x: 1379
-        y: 614
-        width: 321
-        height: 181
+        x: 1280
+        y: 720
+        width: 320
+        height: 180
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 0289bddc0b23f8e20800000000000000
-      internalID: 3354955982363662368
+      spriteID: bf8a70bc900cdff4f8269a225868aade
+      internalID: -174876808
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ceu2_5
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 409
-        width: 321
-        height: 182
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 50bb27239e562dc10800000000000000
-      internalID: 2076834430419385093
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: ceu2_6
-      rect:
-        serializedVersion: 2
-        x: 344
-        y: 409
-        width: 322
-        height: 182
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 955c4b345cb4221a0800000000000000
-      internalID: -6835817973778430631
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: ceu2_7
-      rect:
-        serializedVersion: 2
-        x: 689
-        y: 409
-        width: 322
-        height: 182
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 785ffe0b3c3c7de10800000000000000
-      internalID: 2222460186385184135
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: ceu2_8
-      rect:
-        serializedVersion: 2
-        x: 1034
-        y: 409
-        width: 322
-        height: 182
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 00b71758e9c2ea7a0800000000000000
-      internalID: -6364100164072670464
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: ceu2_9
-      rect:
-        serializedVersion: 2
-        x: 1379
-        y: 409
-        width: 321
-        height: 182
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: ec069902850a8c100800000000000000
-      internalID: 128528889744548046
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: ceu2_10
+      name: baleia22_5
       rect:
         serializedVersion: 2
         x: 0
-        y: 204
-        width: 321
-        height: 182
+        y: 540
+        width: 320
+        height: 180
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 4e112890ef5becf80800000000000000
-      internalID: -8084324178397621788
+      spriteID: dfb2e2e18c56761458a15b3098219965
+      internalID: -200520975
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ceu2_11
+      name: baleia22_6
       rect:
         serializedVersion: 2
-        x: 344
-        y: 204
-        width: 322
-        height: 182
+        x: 320
+        y: 540
+        width: 320
+        height: 180
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: d0a2c7214abdd8dc0800000000000000
-      internalID: -3635007826486875635
+      spriteID: 320798a96ed59f945b4701418e9db98a
+      internalID: 40736976
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ceu2_12
+      name: baleia22_7
       rect:
         serializedVersion: 2
-        x: 689
-        y: 204
-        width: 322
-        height: 182
+        x: 640
+        y: 540
+        width: 320
+        height: 180
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 96d914d1e99f11cb0800000000000000
-      internalID: -4894856862484030103
+      spriteID: 5d9df9e6d83f85a44bf3c5863c7aec1c
+      internalID: 958273147
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ceu2_13
+      name: baleia22_8
       rect:
         serializedVersion: 2
-        x: 1034
-        y: 204
-        width: 322
-        height: 182
+        x: 960
+        y: 540
+        width: 320
+        height: 180
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 47185e2cf73d1dd50800000000000000
-      internalID: 6760417061343953268
+      spriteID: de6b9835b6ba090489db8fbf3dedc3d6
+      internalID: 525952425
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ceu2_14
+      name: baleia22_9
       rect:
         serializedVersion: 2
-        x: 1379
-        y: 204
-        width: 321
-        height: 182
+        x: 1280
+        y: 540
+        width: 320
+        height: 180
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 00f7caf93e81efcc0800000000000000
-      internalID: -3675472879972221184
+      spriteID: 54427e8cfffb9f54cb91df468646409a
+      internalID: 190857210
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ceu2_15
+      name: baleia22_10
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 360
+        width: 320
+        height: 180
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 21c7f00e994863c41a5d4267ca7e25f3
+      internalID: 420159186
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: baleia22_11
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 360
+        width: 320
+        height: 180
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4a63b49896dd12a4c8e9e78a6bc45acc
+      internalID: 316456231
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: baleia22_12
+      rect:
+        serializedVersion: 2
+        x: 640
+        y: 360
+        width: 320
+        height: 180
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: aa638227e3545a34bb1705273233d180
+      internalID: -493767224
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: baleia22_13
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 360
+        width: 320
+        height: 180
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c56dc44585e95ff499c1ad7bd7aced6a
+      internalID: -631158236
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: baleia22_14
+      rect:
+        serializedVersion: 2
+        x: 1280
+        y: 360
+        width: 320
+        height: 180
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3cad9adba963ffc4f8ac8ad4745e3393
+      internalID: 452313753
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: baleia22_15
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 180
+        width: 320
+        height: 180
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 68ed6804da1906640b4a5fe7d0038427
+      internalID: -617964986
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: baleia22_16
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 180
+        width: 320
+        height: 180
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 49bfa9ffec2e9c44a9b10f9c3eea71aa
+      internalID: 1246185883
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: baleia22_17
+      rect:
+        serializedVersion: 2
+        x: 640
+        y: 180
+        width: 320
+        height: 180
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d831653c7cffe3d41a027f891c0bf66a
+      internalID: -1243298422
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: baleia22_18
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 180
+        width: 320
+        height: 180
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 13b670ea1cbc21c40861067df0c3fa76
+      internalID: 1586710803
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: baleia22_19
+      rect:
+        serializedVersion: 2
+        x: 1280
+        y: 180
+        width: 320
+        height: 180
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3aa27fb61b76def4a94dccf33f7cbc8e
+      internalID: -2090493465
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: baleia22_20
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 321
-        height: 181
+        width: 320
+        height: 180
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: a314dd8fa8c30d6a0800000000000000
-      internalID: -6426570100679294662
+      spriteID: 66722fde1fcba3846b5b60c511b36df5
+      internalID: -912497488
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ceu2_16
+      name: baleia22_21
       rect:
         serializedVersion: 2
-        x: 344
+        x: 320
         y: 0
-        width: 322
-        height: 181
+        width: 320
+        height: 180
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 7b2d903a30b995690800000000000000
-      internalID: -7612883255170575689
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: ceu2_17
-      rect:
-        serializedVersion: 2
-        x: 689
-        y: 0
-        width: 322
-        height: 181
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: bd04ac7123bdc4090800000000000000
-      internalID: -8048817425823940389
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: ceu2_18
-      rect:
-        serializedVersion: 2
-        x: 1034
-        y: 0
-        width: 322
-        height: 181
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 528b4d70a7f3c9170800000000000000
-      internalID: 8186488016002660389
+      spriteID: 54cedc5d90a3fd743ae70e6d58f449dc
+      internalID: 2038494794
       vertices: []
       indices: 
       edges: []
@@ -575,7 +587,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 4a4866d9a45d2fe419428b5ec0f62464
     internalID: 0
     vertices: []
     indices: 
@@ -585,25 +597,28 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      ceu2_0: 3273503936731162666
-      ceu2_1: 7817975861361109747
-      ceu2_10: -8084324178397621788
-      ceu2_11: -3635007826486875635
-      ceu2_12: -4894856862484030103
-      ceu2_13: 6760417061343953268
-      ceu2_14: -3675472879972221184
-      ceu2_15: -6426570100679294662
-      ceu2_16: -7612883255170575689
-      ceu2_17: -8048817425823940389
-      ceu2_18: 8186488016002660389
-      ceu2_2: -5374685252858177483
-      ceu2_3: -494054682961298703
-      ceu2_4: 3354955982363662368
-      ceu2_5: 2076834430419385093
-      ceu2_6: -6835817973778430631
-      ceu2_7: 2222460186385184135
-      ceu2_8: -6364100164072670464
-      ceu2_9: 128528889744548046
+      baleia22_0: -62145937568375231
+      baleia22_1: -1456066826
+      baleia22_10: 420159186
+      baleia22_11: 316456231
+      baleia22_12: -493767224
+      baleia22_13: -631158236
+      baleia22_14: 452313753
+      baleia22_15: -617964986
+      baleia22_16: 1246185883
+      baleia22_17: -1243298422
+      baleia22_18: 1586710803
+      baleia22_19: -2090493465
+      baleia22_2: 1702682204
+      baleia22_20: -912497488
+      baleia22_21: 2038494794
+      baleia22_3: 433950944
+      baleia22_4: -174876808
+      baleia22_5: -200520975
+      baleia22_6: 40736976
+      baleia22_7: 958273147
+      baleia22_8: 525952425
+      baleia22_9: 190857210
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

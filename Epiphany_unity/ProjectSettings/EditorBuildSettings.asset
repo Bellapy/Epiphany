@@ -59,10 +59,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/04_universo/gramado.unity
     guid: 89754eb498f711a498c9f54bbdf7a681
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/05_tenda/zric.unity
     guid: 1aa843ad8c82fc746a34cc11b99cc03a
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/06_flores/flores.unity
     guid: 70ea6d842d7b0604ab1a9f231b7741cb
   - enabled: 1
@@ -95,6 +95,18 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/00_Menu/Menu2.unity
     guid: e1735083f75e1bc499ce471e81997063
+  - enabled: 1
+    path: Assets/Scenes/07_vila/vila1.unity
+    guid: 8ef67a9e2d052eb469ec7c7f7450ba67
+  - enabled: 1
+    path: Assets/Scenes/09_arvoredavida/confrontamento.unity
+    guid: 8b5af166cd1dae74baa7a8357e20f30d
+  - enabled: 1
+    path: Assets/Scenes/10_finais/naosacrificou.unity
+    guid: dabf41ebaba7a164b9b42e0ca88f4bf8
+  - enabled: 1
+    path: Assets/Scenes/10_finais/sacrificou.unity
+    guid: 0f18cd44018707947acc9bfbfa9a2892
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 9eb4347ff3ca42843b3c7d015ad8c7d0, type: 2}
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}

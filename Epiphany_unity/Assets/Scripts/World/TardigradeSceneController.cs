@@ -1,5 +1,5 @@
 using UnityEngine;
-using System.Collections; // Importante: Adicionar para usar Corrotinas
+using System.Collections;
 
 public class TardigradeSceneController : MonoBehaviour
 {
@@ -10,61 +10,46 @@ public class TardigradeSceneController : MonoBehaviour
     [SerializeField] private GameObject aylaObject;
     [SerializeField] private GameObject tardigradeObject;
     [SerializeField] private NPCTourGuide aylaTourGuide;
-    [SerializeField] private DialogueData aylaDialogue;
+    // A referência ao DialogueData foi removida, pois não é mais necessária.
 
     private void Awake()
     {
         if (PlayerPrefs.GetInt(completionFlag, 0) == 1)
         {
             if (aylaObject != null) aylaObject.SetActive(false);
-            if (tardigradeObject != null) tardigradeObject.SetActive(false);
+            // Mantemos o tardígrado visível se o jogador retornar à cena.
+            // if (tardigradeObject != null) tardigradeObject.SetActive(false); 
             this.enabled = false;
             return;
         }
     }
 
-    // --- LÓGICA CORRIGIDA AQUI ---
     private IEnumerator Start()
     {
-        // Espera por um único frame.
-        // Isso garante que a cena seja renderizada uma vez com Ayla na sua posição inicial.
+        // Garante que o evento de conclusão esteja conectado desde o início.
+        if (aylaTourGuide != null)
+        {
+            aylaTourGuide.OnTourCompleted.AddListener(HandleTourCompletion);
+        }
+
+        // Espera um frame para garantir que tudo na cena foi inicializado.
         yield return null; 
 
-        // Agora, no frame seguinte, o tour é iniciado.
+        // Inicia o tour da Ayla.
         if (aylaTourGuide != null)
         {
             aylaTourGuide.StartTour();
         }
     }
-    // --- FIM DA CORREÇÃO ---
 
-    public void TriggerAylaDialogue()
-    {
-        if (aylaTourGuide != null) aylaTourGuide.enabled = false;
-
-        if (DialogueManager.Instance != null && aylaDialogue != null)
-        {
-            DialogueManager.Instance.OnDialogueEnd += HandleAylaDialogueEnd;
-            DialogueManager.Instance.StartDialogue(aylaDialogue);
-        }
-    }
-
-    private void HandleAylaDialogueEnd()
-    {
-        if (DialogueManager.Instance != null)
-        {
-            DialogueManager.Instance.OnDialogueEnd -= HandleAylaDialogueEnd;
-        }
-
-        if (aylaTourGuide != null) aylaTourGuide.enabled = true;
-
-        aylaTourGuide.OnTourCompleted.AddListener(HandleTourCompletion);
-    }
+    // As funções TriggerAylaDialogue e HandleAylaDialogueEnd foram removidas.
 
     private void HandleTourCompletion()
     {
+        // Quando Ayla termina o percurso, seu GameObject é desativado.
         if (aylaObject != null) aylaObject.SetActive(false);
         
+        // Salva o estado para que a Ayla não apareça novamente nesta cena.
         PlayerPrefs.SetInt(completionFlag, 1);
         PlayerPrefs.Save();
     }

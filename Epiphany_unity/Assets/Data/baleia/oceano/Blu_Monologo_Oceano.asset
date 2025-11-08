@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Blu_Monologo_Oceano
   m_EditorClassIdentifier: 
   speakerName: Blu
-  speakerPortrait: {fileID: 0}
+  speakerPortrait: {fileID: -7473812523907517744, guid: 83bcb7ab64252e74d9f290d8759b294b, type: 3}
   dialogueLines:
   - sentence: "Espere, espere\u2026 acho que senti algo\u2026"
     triggerEventAfterLine: 0

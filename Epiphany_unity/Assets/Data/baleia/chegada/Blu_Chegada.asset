@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Blu_Chegada
   m_EditorClassIdentifier: 
   speakerName: Blu
-  speakerPortrait: {fileID: 0}
+  speakerPortrait: {fileID: -7473812523907517744, guid: 884a68e4c574b31499e4ae5ac20956e3, type: 3}
   dialogueLines:
   - sentence: "Chegamos, meu bem! Des\xE7a com cuidado, hein? "
     triggerEventAfterLine: 0

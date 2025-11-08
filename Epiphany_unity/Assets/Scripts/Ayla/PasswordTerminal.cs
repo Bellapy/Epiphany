@@ -8,19 +8,22 @@ public class PasswordTerminal : MonoBehaviour, IInteractable
     [Header("Configuração do Puzzle")]
     [SerializeField] private string correctPassword = "gatomolhado";
     [SerializeField] private int passwordLength = 11;
+    [SerializeField] private string sceneToLoadOnSuccess = "vila1";
 
     [Header("Referências de UI")]
     [SerializeField] private GameObject passwordPanel;
     [SerializeField] private TextMeshProUGUI passwordInputText;
     [SerializeField] private CanvasGroup passwordPanelCanvasGroup;
 
-    [Header("Referências de Efeitos")]
-    [Tooltip("Arraste o Prefab do efeito de partículas de teletransporte aqui.")]
-    [SerializeField] private GameObject teleportEffectPrefab;
+    // <<< NOVAS LINHAS ADICIONADAS AQUI >>>
+    [Header("Referências de Transição")]
+    [Tooltip("Arraste aqui o painel de UI com uma imagem branca e um CanvasGroup.")]
+    [SerializeField] private CanvasGroup whiteFadePanel;
+    [SerializeField] private float fadeDuration = 1.5f;
+    // <<< FIM DA ADIÇÃO >>>
 
     private StringBuilder currentInput;
     private bool isPanelOpen = false;
-    private FadeController fadeController;
 
     void Awake()
     {
@@ -29,17 +32,20 @@ public class PasswordTerminal : MonoBehaviour, IInteractable
         {
             passwordPanel.SetActive(false);
         }
-        
         if (passwordPanel != null && passwordPanelCanvasGroup == null)
         {
             passwordPanelCanvasGroup = passwordPanel.GetComponent<CanvasGroup>();
         }
+        
+        // Garante que o painel de fade comece invisível
+        if (whiteFadePanel != null)
+        {
+            whiteFadePanel.gameObject.SetActive(false);
+            whiteFadePanel.alpha = 0;
+        }
     }
 
-    void Start()
-    {
-        fadeController = FindFirstObjectByType<FadeController>();
-    }
+    // O método Start() não precisa mais encontrar o FadeController.
 
     public void Interact()
     {
@@ -123,55 +129,61 @@ public class PasswordTerminal : MonoBehaviour, IInteractable
         passwordInputText.text = displayText.ToString().ToUpper();
     }
 
+    // <<< FUNÇÃO CHECKPASSWORD MODIFICADA >>>
     private void CheckPassword()
     {
         if (currentInput.ToString() == correctPassword)
         {
             isPanelOpen = false;
-
-            if (teleportEffectPrefab != null)
-            {
-                PlayerController player = FindFirstObjectByType<PlayerController>();
-                if (player != null)
-                {
-                    Instantiate(teleportEffectPrefab, player.transform.position, Quaternion.identity);
-                }
-            }
-            
-            StartCoroutine(FadeOutPasswordPanel());
-
-            if (fadeController != null && GameManager.Instance != null)
-            {
-                fadeController.StartFadeOut(() => {
-                    GameManager.Instance.LoadScene("zric");
-                }, Color.white);
-            }
-            else if (GameManager.Instance != null)
-            {
-                GameManager.Instance.LoadScene("zric");
-            }
+            // Inicia a sequência de transição completa
+            StartCoroutine(SuccessSequence());
         }
         else
         {
             StartCoroutine(IncorrectPasswordRoutine());
         }
     }
-    
-    private IEnumerator FadeOutPasswordPanel()
-    {
-        if (passwordPanelCanvasGroup == null || fadeController == null) yield break;
 
-        float duration = fadeController.fadeDuration;
-        float elapsedTime = 0f;
-        
-        while (elapsedTime < duration)
+    // <<< NOVA CORROTINA ADICIONADA AQUI >>>
+    private IEnumerator SuccessSequence()
+    {
+        // 1. Faz o fade out do painel da senha
+        if (passwordPanelCanvasGroup != null)
         {
-            elapsedTime += Time.deltaTime;
-            passwordPanelCanvasGroup.alpha = Mathf.Lerp(1f, 0f, elapsedTime / duration);
-            yield return null;
+            float panelFadeDuration = 0.5f;
+            float elapsedTime = 0f;
+            while (elapsedTime < panelFadeDuration)
+            {
+                elapsedTime += Time.deltaTime;
+                passwordPanelCanvasGroup.alpha = Mathf.Lerp(1f, 0f, elapsedTime / panelFadeDuration);
+                yield return null;
+            }
+            passwordPanel.SetActive(false);
         }
 
-        passwordPanel.SetActive(false);
+        // 2. Faz o fade in do painel branco
+        if (whiteFadePanel != null)
+        {
+            whiteFadePanel.gameObject.SetActive(true);
+            float elapsedTime = 0f;
+            while (elapsedTime < fadeDuration)
+            {
+                elapsedTime += Time.deltaTime;
+                whiteFadePanel.alpha = Mathf.Lerp(0f, 1f, elapsedTime / fadeDuration);
+                yield return null;
+            }
+            whiteFadePanel.alpha = 1f;
+        }
+
+        // 3. Carrega a próxima cena
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.LoadScene(sceneToLoadOnSuccess);
+        }
+        else
+        {
+            Debug.LogError("[PasswordTerminal] ERRO CRÍTICO: GameManager.Instance é NULO! Não é possível carregar a cena.");
+        }
     }
     
     private IEnumerator IncorrectPasswordRoutine()
