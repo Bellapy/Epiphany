@@ -60,7 +60,7 @@ Esta seção é para desenvolvedores que desejam executar o projeto a partir do 
 
 1.  **Clone o repositório:**
     ```bash
-    git clone https://github.com/seu-usuario/seu-repositorio.git
+    git clone https://github.com/Bellapy/Epiphany
     ```
 2.  **Abra no Unity:** Abra o projeto com o Unity Hub, utilizando a versão **2022.3.x LTS** ou superior.
 3.  **Execute o jogo:**
@@ -75,7 +75,6 @@ Esta seção é para desenvolvedores que desejam executar o projeto a partir do 
 | **W, A, S, D** | Mover a personagem |
 | **E** | Interagir com objetos e personagens |
 | **F** | Abrir/Fechar Menu de Pausa/Opções |
-| **I** | Abrir/Fechar Inventário |
 | **Espaço / Enter** | Avançar diálogos |
 
 ---
